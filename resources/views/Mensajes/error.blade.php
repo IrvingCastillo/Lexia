@@ -1,0 +1,20 @@
+<div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pb-0">
+                {{-- <h5 class="modal-title" id="exampleModalLabel">Nuestros Planes</h5> --}}
+                {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> --}}
+            </div>
+            <div class="modal-body mb-0 pb-0 mt-0 pt-0">
+                <h5 class="textAzul d-flex justify-content-center">Ha ocurrido un error</h5>
+                <div class="d-flex justify-content-center">
+                    <canvas class="animError" style="width: 250px; height:150px"></canvas>
+                </div>
+            <div class="modal-footer">
+                {{-- <button type="button" class="btn bg-blue" data-dismiss="modal">Cerrar</button> --}}
+            </div>
+        </div>
+    </div>
+</div>
