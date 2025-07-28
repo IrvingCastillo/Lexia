@@ -43,9 +43,14 @@ Route::get('/nueva_contrasena', function(){
     return view('auth.nueva_contrasena');
 })->name('nuevaContrasena');
 
-Auth::routes();
+/* Auth::routes(); */
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+/* Aquí van todas tus rutas protegidas para validar el usuario logeado */
+Route::group(['middleware' => ['api.token']], function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
+
+
 
 Route::get('/', function () {
     return view('dashboard');

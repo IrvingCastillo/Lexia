@@ -85,10 +85,11 @@ btnLogin.addEventListener('click', function(e){
         return;
     }
     else{
-        fetch('https://f2cfbd702bbb.ngrok-free.app/api/register/user', {
+        fetch('https://f2cfbd702bbb.ngrok-free.app/api/login', {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
             body: datosJson
         })
