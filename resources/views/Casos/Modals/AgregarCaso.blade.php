@@ -3,9 +3,9 @@
         <div class="modal-content" style="border-radius: 25px 25px 25px 25px !important;">
             <div class="modal-header pb-0">
                 <h1 class="modal-title" id="exampleModalLabel">Agregar Caso</h1>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button>
+                </span>
             </div>
             <div class="modal-body pl-3 pr-3">
                 <input type="text" placeholder="Nombre del caso" class="form-control mb-2" style="border-radius: 15px; 15px; background-color:#f5f5f5">

@@ -850,6 +850,10 @@ template {
     display: none !important;
 }
 
+.hidden {
+    display: none !important;
+}
+
 h1,
 h2,
 h3,
@@ -12828,7 +12832,7 @@ a.item.item-link-pop:active {
 
 .timeline {
     position: relative;
-    padding: 1rem 0;
+    padding: 0 0;
     padding-left: 0;
     list-style: none;
 }
@@ -12836,10 +12840,10 @@ a.item.item-link-pop:active {
 .timeline::before {
     position: absolute;
     top: 0;
-    left: 1.25rem;
+    left: .5rem;
     height: 100%;
     width: .25rem;
-    background-color: #ebebeb;
+    background-color: var(--azul);
     content: "";
     border-radius: 0.25rem;
 }
@@ -24419,6 +24423,26 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 
 /* Casos Modulo inicio */
 
+@keyframes slideDownFade{
+    from { opacity: 0; transform: translate(-50%, -70%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+@keyframes slideUpFade{
+    from { opacity: 1; transform: translate(-50%, -50%); }
+    to { opacity: 0; transform: translate(-50%, -70%); }
+}
+
+@keyframes slideUpFadeIn{
+    from { opacity: 0; transform: translate(-50%, 100%); }
+    to { opacity: 1; transform: translate(-52%, -15%); }
+}
+
+@keyframes slideLeftFadeIn{
+    from { opacity: 0; transform: translateX(100%); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
 .inputBarSearch{
  border-radius: 0 15px 15px 0 !important;
  background: #f5f5f5;
@@ -24437,8 +24461,51 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
   bottom: 20px;
   right: 20px;
   width: 250px;
-  z-index: 1000;
+  /* max-height: 500px; */
+  display: none;
 }
+
+.chatbox-fixed.show{
+    display: block;
+    animation: slideLeftFadeIn 0.5s ease forwards;
+}
+.DatosSup{
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.DatosHoras{
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    opacity: 0;
+    transform: translateY(0);
+}
+
+.DatosHoras.show{
+    opacity: 1;
+}
+
+.DatosSup.hide{
+    opacity: 0;
+    transform: translateY(-40px);
+    pointer-events: none;
+}
+
+.DatosInf{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 65vw;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.DatosInf.show{
+    animation: slideUpFadeIn 0.5s ease forwards;
+    pointer-events: auto;
+}
+
 .cardChat {
   border-radius: 25px 25px;
   padding: 1rem;
@@ -24447,15 +24514,10 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 .messages-container {
   max-height: 450px;
   overflow-y: auto;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem .5rem;
   background: white;
 }
-.timeline-event {
-  display: flex;
-  align-items: start;
-  margin-bottom: 1rem;
-  position: relative;
-}
+
 .event-badge {
   width: 32px;
   height: 32px;
@@ -24515,3 +24577,64 @@ a.stretched-link:hover {
 }
 
 /* Casos modulo fin */
+
+.time-line {
+    font-size: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+.time-line-item {
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 20px;
+}
+
+.content-time-line.active{
+    color: var(--azul);
+    font-weight: bold;
+}
+/* icono con fondo azul */
+.time-line-item .icon {
+    color: white;
+  width: 24px;
+  height: 24px;
+  background-color: var(--azul);
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+}
+
+.time-line-item .icon-pending{
+  color: var(--azul);
+  width: 24px;
+  height: 24px;
+  background-color: #CCCACA;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+}
+
+/* línea vertical que crece automáticamente */
+.time-line-item::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  background-color: var(--line-color, #132c47);
+  left: 11px; /* centrar bajo el icono */
+  top: 28px;  /* justo debajo del icono */
+  bottom: -20px; /* cubre hacia el siguiente ítem, ajusta margin-bottom */
+}
+/* quitar línea en último elemento */
+.time-line-item:last-child::after {
+  display: none;
+}
+
+.time-line-item.status-completed::after { --line-color: #132c47; }
+.time-line-item.status-pending::after {
+    background-color: transparent;
+    border-left: 2px dashed grey;
+}
+
+

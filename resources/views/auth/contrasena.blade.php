@@ -11,7 +11,7 @@
         <div class="container py-5 divContrasena d-grid justify-content-center align-items-center">
             {{-- <div class="vh-100 d-flex justify-content-center align-items-center"> --}}
             <div>
-                <div class="card shadow campoRounded" style="width: 50vw;">
+                <div class="card shadow campoRounded" >
                     <div class="card-body">
                         <div class="p-2">
                             <h2>Recuperar contraseña</h2>

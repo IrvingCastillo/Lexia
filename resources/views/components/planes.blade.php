@@ -75,7 +75,7 @@
             </div> --}}
             <div class="card-body">
                 <h1 class="text-left text-white">Corporativo</h1>
-                <h1 class="card-title pricing-card-title mb-0">$7999 MXN </h1>
+                <h1 class="text-white card-title pricing-card-title mb-0">$7999 MXN </h1>
                 <small class="text-muted text-white offset-6" style="font-size: 20px">/ mes</small>
                 <div>Firmas medianas y grandes</div>
                 <ul class="list-unstyled mt-3 mb-4 text-left">

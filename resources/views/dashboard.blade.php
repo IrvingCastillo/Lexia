@@ -3,9 +3,8 @@
 @section('content')
 <div>
     <body>
-        {{-- <div id="imgLOAD" style="text-align:center; width: 100%; height: 100%; z-index: 1000000 !important; position: absolute; background: aliceblue; opacity: 0.4; padding-top: 20%;">
-            <b style="color: black; font-weight: 900 !important;">Cargando...</b>
-            <img src="{{ asset('img/ajax-loader.gif') }}"/>
+        {{-- <div style="text-align:center; width: 100%; height: 100%; z-index: 1000000 !important; position: absolute; background: aliceblue; opacity: 0.4; padding-top: 20%;">
+            <canvas class="animError" style="width: 250px; height:150px"></canvas>
         </div> --}}
         <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed">
             {{-- @include('Includes.Menu.Derecho') --}}
