@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('contenido')
-@vite(['resources/login_f/login.css', 'resources/recuperarContrasena/recuperarContrasena.js'])
+@vite(['resources/login_f/login.css', 'resources/js/recuperarContrasena/recuperarContrasena.js'])
     <div>
         <div class="navLogin">
         <x-nav-guess color="blue"></x-nav-guess>

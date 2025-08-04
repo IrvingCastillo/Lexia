@@ -3,7 +3,7 @@
 @section('Contenido')
 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
-@vite(['resources/css/app.css', 'resources/ia/ia.js'])
+@vite(['resources/css/app.css', 'resources/js/ia/ia.js'])
 
 <div class="container-fluid bg-white my-5 py-5">
     <div class="card w-100" style="height: 65vh">

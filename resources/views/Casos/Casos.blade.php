@@ -2,18 +2,18 @@
 {{-- @section('Contenedor','main-container') --}}
 @section('Contenido')
 
-@vite(['resources/css/app.css', 'resources/casos/casos.js'])
+@vite(['resources/css/app.css', 'resources/js/casos/casos.js'])
 
 
 <div class="container-fluid bg-white my-5 py-5">
-    <div id="listaCasos" class="">
+    <div id="listaCasos">
         <div class="row justify-content-center">
             <div class="col-12 col-md-6">
                 <div class="input-group mb-3" id="barraBusqueda">
                     <div class="input-group-prepend">
-                        <span class="input-group-text icon" style="border-radius: 15px 0 0 15px !important; border-color: transparent"> <i class="fas fa-search"></i> </span>
+                        <span class="input-group-text icon leftRounded" > <i class="fas fa-search"></i> </span>
                     </div>
-                    <input class="form-control inputBarSearch" placeholder="Search">
+                    <input type="text" class="form-control inputBarSearch" placeholder="Search">
                 </div>
             </div>
             <div class="col-12 col-md-12 px-4 casoDatos DatosHoras">
@@ -22,14 +22,14 @@
                         <div style="font-size: 2rem">CASO A</div>
                     </div>
                     <div>
-                        <i class="fa fa-regular fa-clock" style="font-size: 1.5rem"></i> <span id="reloj" style="font-weight: bold; font-size: 1.5rem"></span> <small style="font-size: 1rem">Horas trabajadas</small>
+                        <i class="fa fa-regular fa-clock font-size15"></i> <span id="reloj" class="font-weight-bold font-size15"></span> <small class="font-size1">Horas trabajadas</small>
                     </div>
                 </div>
             </div>
         </div><hr id="separadorHr" style="">
         <div class="d-flex justify-content-between">
             <div class="btn-group">
-                <button type="button" class="btn pl-4 pr-4 dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background: #f5f5f5; border-radius: 15px 15px">
+                <button type="button" class="btn pl-4 pr-4 dropdown-toggle campoRounded bg-claro" data-toggle="dropdown" aria-expanded="false">
                     Recorded by me
                 </button>
                 {{-- <div class="dropdown-menu">
@@ -40,7 +40,14 @@
                     <a class="dropdown-item" href="#">Separated link</a>
                 </div> --}}
             </div>
-            <span class="btn btn-sm mr-3" data-toggle="modal" data-target="#modalNuevoCaso"><i class="fas fa-plus-circle" style="font-size: 20px"></i></span>
+            <span class="mr-1" data-toggle="modal" data-target="#modalNuevoCaso">
+                <span class="fa-stack fa-lg">
+                    <i class="btn btn-sm "><img src="{{ asset('dist/fontawesome-6/svgs/brands/add.svg') }}" style="width: 1.5rem"></i>
+                </span>
+                <div>
+
+                </div>
+            </span>
         </div>
         <div class="my-4 DatosSup" id="DatosSup">
               <div class="card mb-3 shadow-sm">
@@ -58,18 +65,18 @@
                     <div class="d-flex d-flex justify-content-between">
                         <small class="text-muted mt-5">Estado Actual: <strong class="text-dark">En Revisión de Documentos</strong></small>
                         <div class="text-right mt-4">
-                            <button type="button" id="gestionarCaso" class="bg-blue px-4 py-2" style="border-radius: 5px; 5px; width: 20rem">Gestionar Caso</button>
+                            <button type="button" id="gestionarCaso" class="bg-blue px-4 py-2 gestionarCaso">Gestionar Caso</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="pt-2  casoDatos DatosInf shadow-sm " id="DatosInf"  style="height: 75vh; border:1px solid #f5f5f5; border-radius: 15px 15px">
+        <div class="pt-2 DatosInf shadow-sm " id="DatosInf" >
             <div class="card mb-3 border-0 ">
-                <div class="card-body border-bottom position-relative" style="border: 1px solid transparent;">
-                    <a href="#" class="text-muted position-absolute" style="top: .2rem; right: .5rem;">
-                        <i class="fa fa-trash-light"></i>
+                <div class="card-body border-bottom position-relative">
+                    <a href="#" class="text-muted position-absolute">
+                        <i class="fa fa-trash"></i>
                     </a>
                     <div class="file-item">
                         <i class="far fa-file-alt file-icon"></i>
@@ -82,8 +89,8 @@
                 </div>
 
                 {{--  --}}
-                <div class="card-body border-bottom position-relative" style="border: 1px solid transparent;">
-                    <a href="#" class="text-muted position-absolute" style="top: .2rem; right: .5rem;">
+                <div class="card-body border-bottom position-relative">
+                    <a href="#" class="text-muted position-absolute">
                         <i class="fa fa-trash"></i>
                     </a>
                     <div class="file-item">
@@ -97,7 +104,7 @@
 
                 {{--  --}}
 
-                <div class="card-body border-bottom position-relative" style="border: 1px solid transparent;">
+                <div class="card-body border-bottom position-relative">
                     <div class="file-item">
                         <i class="far fa-file-alt file-icon"></i>
                         <div class="file-info">
@@ -121,15 +128,21 @@
             <div class="d-flex justify-content-between align-items-center p-3">
                 <strong>Timeline</strong>
                 <div class="dropdown d-inline-block ml-2">
-                    <button class="btn btn-sm btn-link text-secondary p-0" id="menu-options-notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cog"></i></button>
+                    <button class="btn btn-sm btn-link text-secondary p-0" id="menu-options-notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="icon"><img src="{{ asset('dist/fontawesome-6/svgs/brands/cog.svg') }}" alt="" style="width: 1.3rem; font-weight: bold;"></i>
+                    </button>
                     <div class="dropdown-menu drop-notify font-size-sm" aria-labelledby="menu-options-notifications" style="min-width: 23rem; left: -12rem !important;">
                         <div class="pt-0 pb-0">
                             <div class="pl-2" href="">
-                                <h5 class="textAzul mb-0 p-1"><i class="fas fa-cog"></i> Opciones de notificación</h5>
+                                <h5 class="textAzul mb-0 p-1">
+                                    <i class="icon"><img src="{{ asset('dist/fontawesome-6/svgs/brands/cog.svg') }}" alt="" style="width: 1.3rem; font-weight: bold;"></i>
+                                    Opciones de notificación</h5>
                                 <div class="card p-2 m-2">
                                     <div class="d-flex justify-content-between">
                                         <div class="file-item">
-                                            <i class="far fa-file-alt file-icon"></i>
+                                            <div class="icon d-flex justify-content-center align-items-center rounded-circle">
+                                                <i class="far fa-envelope file-icon"></i>
+                                            </div>
                                             <div class="file-info">
                                                 <div class="file-title">Notificar por correo electrónico</div>
                                                 <div class="file-time"><small>Enviar un correo electrónico con el estado actual del caso</small></div>
@@ -143,7 +156,9 @@
 
                                     <div class="d-flex justify-content-between mt-2">
                                         <div class="file-item">
-                                            <i class="far fa-file-alt file-icon"></i>
+                                            <div class="icon d-flex justify-content-center align-items-center rounded-circle">
+                                                <i class="fa fa-bars file-icon"></i>
+                                            </div>
                                             <div class="file-info">
                                                 <div class="file-title">Notificar al cliente</div>
                                                 <div class="file-time"><span>Se actualizaran los documentos y estado para el cliente</span></div>
@@ -157,7 +172,9 @@
 
                                     <div class="d-flex justify-content-between pt-2">
                                         <div class="file-item">
-                                            <i class="far fa-file-alt file-icon"></i>
+                                            <div class="icon d-flex justify-content-center align-items-center rounded-circle">
+                                                <i class="far fa-user file-icon"></i>
+                                            </div>
                                             <div class="file-info">
                                                 <div class="file-title">Notificar a los otros abogados</div>
                                                 <div class="file-time"><span>Actualizar el estado directamente en el portal de los otros abogados</span></div>
@@ -183,7 +200,7 @@
                     <ul class="time-line">
                     <li class="time-line-item status-completed">
                         <div class="icon d-flex justify-content-center align-items-center rounded-circle">
-                            <i class="fas fa-user text-white"></i>
+                            <i class="fa fa-gavel text-white" style="transform: scaleX(-1);"></i>
                         </div>
                         <div class="content-time-line">
                             <div>Inicio de caso</div>
@@ -199,7 +216,7 @@
                     </li>
                     <li class="time-line-item status-pending">
                         <div class="icon-pending d-flex justify-content-center align-items-center rounded-circle">
-                            <i class="fas fa-download"></i>
+                            <i class="fas fa-circle-notch"></i>
                         </div>
                         <div class="content-time-line">Proceso</div>
                     </li>
@@ -255,7 +272,7 @@
                 </div> --}}
             </div>
             <div class="text-center bg-white" style="padding: 0.5rem 1rem;">
-            <button class="btn btn-sm px-5 py-2" style="background: #132c47; border-radius: 5px 5px; color:whitesmoke">Editar Status</button>
+            <button class="btn btn-sm px-5 py-2 campoRoundedX bg-blue">Editar Status</button>
             </div>
         </div>
     </div>

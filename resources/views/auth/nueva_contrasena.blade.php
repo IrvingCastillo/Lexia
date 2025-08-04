@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('contenido')
-@vite(['resources/login_f/login.css', 'resources/nuevaContrasena/nuevaContrasena.js'])
+@vite(['resources/login_f/login.css', 'resources/js/nuevaContrasena/nuevaContrasena.js'])
 
     <div>
         <div class="navLogin">

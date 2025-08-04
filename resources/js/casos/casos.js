@@ -1,5 +1,3 @@
-console.log("hola")
-
 const GestionarCaso = document.querySelector('#gestionarCaso'),
 TimeLine = document.querySelector('#time-line'),
 InfoInferior = document.querySelector('#DatosInf'),

@@ -2,103 +2,168 @@
 {{-- @section('Contenedor','main-container') --}}
 @section('Contenido')
 
-<style>
-    .topFinance, .bottomFinance {
-      flex: 1;
-      display: flex;
-      padding: 10px;
-      box-sizing: border-box;
-    }
-    .topFinance {
-      border-bottom: 1px solid #ccc;
-    }
-    .leftFinance {
-      flex: 1;
-      margin-right: 10px;
-      overflow-y: auto;
-    }
-    .cardFinance {
-      flex: 1;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      max-height: 40vh;
-    }
-    .bottomFinance > div {
-      flex: 1;
-      margin: 0 5px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      padding: 20px;
-    }
-    .bottomFinance > div:first-child { margin-left: 0; }
-    .bottomFinance > div:last-child { margin-right: 0; }
-</style>
-<div>
-    @include('Includes.HeadModule',['DireccionArea' => 'FINANZAS'])
+@vite(['resources/css/app.css', 'resources/js/finanzas/finanzas.js'])
 
-    <div class="container-fluid">
-        <div class="d-flex flex-row-reverse" >
-            <div>
-                <select name="" id="" class="custom-select">
-                    <option value="" selected disabled>Estado de Pago</option>
-                    <option value="">Formato 1</option>
-                </select>
-            </div>
-        </div>
 
-        <div class="topFinance">
-            <!-- Tabla en el lado izquierdo -->
-            <div class="leftFinance">
-                <div class="cardFinance">
-                    {{-- <table border="1" cellpadding="8" cellspacing="0" width="100%"> --}}
-                        <table class="table table-sm table-striped font-size-table" id="tblFinanzas">
-                            <thead>
-                                <tr>
-                                    <th>Caso</th>
-                                    <th>Cliente</th>
-                                    <th>Cobrado</th>
-                                    <th>Saldo Pendiente</th>
-                                </tr>
-                            </thead>
-                            <tbody id="data-table">
-                                <tr><td>Garcia VS Martinez</td><td>Juan Garcia</td><td>$2,200</td><td>$13,400</td></tr>
-                                <tr><td>Lopez VS Rodriguez</td><td>Ana Lopez</td><td>$1,100</td><td>$20,300</td></tr>
-                            </tbody>
-                        </table>
+<div class="container-fluid bg-white my-5 py-5">
+    <div class="d-flex justify-content-md-start">
+        <div style="color: gray; font-size: 2.5rem;">PAGOS</div>
+    </div>
+    <hr>
+
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text icon" style="border-radius: 15px 0 0 15px !important; border-color: transparent"> <i class="fas fa-search"></i> </span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Buscar Pago">
+                </div>
+
+                <div class="pt-1 shadow-sm mt-3 "  style="height: 45vh; border:1px solid #f5f5f5; border-radius: 15px 15px; overflow-y: scroll;  scrollbar-color: #132c47 transparent; scrollbar-width: thin;">
+                    <div class="card mb-3 border-0 ">
+                        <div class="card-body border-bottom position-relative" style="border: 1px solid transparent;">
+                            <div class="d-flex justify-content-between">
+                                <div class="file-item">
+                                    <i class="far fa-file-alt file-icon"></i>
+                                    <div class="file-info">
+                                        <div class="file-title">Primer Pago mes</div>
+                                        <div class="file-time"><span>Caso Ulises</span></div>
+                                    </div>
+                                </div>
+                                <span>15/05/2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3 border-0 ">
+                        <div class="card-body border-bottom position-relative" style="border: 1px solid transparent;">
+                            <div class="d-flex justify-content-between">
+                                <div class="file-item">
+                                    <i class="far fa-file-alt file-icon"></i>
+                                    <div class="file-info">
+                                        <div class="file-title">Primer Pago mes</div>
+                                        <div class="file-time"><span>Caso Ulises</span></div>
+                                    </div>
+                                </div>
+                                <span>15/05/2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3 border-0 ">
+                        <div class="card-body border-bottom position-relative" style="border: 1px solid transparent;">
+                            <div class="d-flex justify-content-between">
+                                <div class="file-item">
+                                    <i class="far fa-file-alt file-icon"></i>
+                                    <div class="file-info">
+                                        <div class="file-title">Primer Pago mes</div>
+                                        <div class="file-time"><span>Caso Ulises</span></div>
+                                    </div>
+                                </div>
+                                <span>15/05/2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3 border-0 ">
+                        <div class="card-body border-bottom position-relative" style="border: 1px solid transparent;">
+                            <div class="d-flex justify-content-between">
+                                <div class="file-item">
+                                    <i class="far fa-file-alt file-icon"></i>
+                                    <div class="file-info">
+                                        <div class="file-title">Primer Pago mes</div>
+                                        <div class="file-time"><span>Caso Ulises</span></div>
+                                    </div>
+                                </div>
+                                <span>15/05/2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3 border-0 ">
+                        <div class="card-body border-bottom position-relative" style="border: 1px solid transparent;">
+                            <div class="d-flex justify-content-between">
+                                <div class="file-item">
+                                    <i class="far fa-file-alt file-icon"></i>
+                                    <div class="file-info">
+                                        <div class="file-title">Primer Pago mes</div>
+                                        <div class="file-time"><span>Caso Ulises</span></div>
+                                    </div>
+                                </div>
+                                <span>15/05/2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3 border-0 ">
+                        <div class="card-body border-bottom position-relative" style="border: 1px solid transparent;">
+                            <div class="d-flex justify-content-between">
+                                <div class="file-item">
+                                    <i class="far fa-file-alt file-icon"></i>
+                                    <div class="file-info">
+                                        <div class="file-title">Primer Pago mes</div>
+                                        <div class="file-time"><span>Caso Ulises</span></div>
+                                    </div>
+                                </div>
+                                <span>15/05/2025</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Card con gráfico de pie -->
-            <div class="cardFinance">
-            <canvas id="pieChart" width="300" height="300"></canvas>
+        <div class="col-sm-3">
+            <div class="card px-2 pb-2" style=" border-radius: 8px 8px;">
+                <div>
+                    <div class="d-flex">
+                        <i class="fa fa-plus d-flex align-items-center textAzul" style="font-size: .8rem"></i>
+                        <div class="textAzul ml-1" style="font-size: 1.5rem;">Pago</div>
+                    </div>
+                    <div class="text-muted" style="font-size: .8rem; margin-top: -.2rem">Agrega el pago correspondiente</div>
+                </div>
+                <div class="mt-3">
+                    <div class="d-flex">
+                        <span class="textAzul mr-3">Monto</span>
+                        <i class="fa fa-arrow-left d-flex align-items-center" style="font-size: .8rem"></i>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text icon" style="background: transparent; border-color: transparent"> <i class="fas fa-dollar"></i> </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <span class="textAzul mr-3">Estado</span>
+                </div>
+                <div class="mt-3">
+                    <span class="textAzul mr-3">Fecha</span>
+                    <input type="date" class="form-control">
+                </div>
+                <div class="mt-3">
+                    <span class="textAzul mr-3">Caso</span>
+                    <select name="" id="" class="form-control">
+                        <option value="" selected>Nombre del caso <i class="fa fa-arrow-down" style="font-size: .8rem"></i></option>
+                    </select>
+                </div>
+                <div class="mt-3 py-3">
+                    <span class="textAzul mr-3">Descripción</span>
+                    <textarea name="" id="" rows="3" class="form-control" placeholder="Opcional" style="min-height: 35px"></textarea>
+                </div>
+                <span type="button" class="bg-blue text-center px-4 py-1" style="border-radius: 5px 5px">Agregar</span>
+            </div>
+
+        </div>
+
+        <div class="col-sm-8" style="margin-top: -15vh">
+            <div class="">
+                <div class="d-flex justify-content-md-start">
+                    <div style="color: gray; font-size: 2.5rem;">Estadísticas</div>
+                </div>
             </div>
         </div>
 
-        <div class="bottomFinance">
-            <!-- Gráficas de barra -->
-            <div class="cardFinance">
-            <canvas id="barChart1" width="300" height="300"></canvas>
-            </div>
-            <div class="cardFinance">
-            <canvas id="barChart2" width="300" height="300"></canvas>
-            </div>
-        </div>
+
     </div>
+
+
 </div>
-
-@php
-    $d = new DateTime();
-    $s = $d->format("v");
-@endphp
-
-@push('scripts')
-    <script src="{{asset('js/Finanzas/Finanzas.js?q=')}}{{ $s }}"></script>
-@endpush
-
 @stop

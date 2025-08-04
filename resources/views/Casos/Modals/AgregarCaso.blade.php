@@ -8,11 +8,11 @@
                 </span>
             </div>
             <div class="modal-body pl-3 pr-3">
-                <input type="text" placeholder="Nombre del caso" class="form-control mb-2" style="border-radius: 15px; 15px; background-color:#f5f5f5">
-                <input type="text" placeholder="Nombre del cliente" class="form-control" style="border-radius: 15px; 15px; background-color:#f5f5f5">
+                <input type="text" placeholder="Nombre del caso" class="form-control mb-2 campoRounded bg-input">
+                <input type="text" placeholder="Nombre del cliente" class="form-control campoRounded bg-input">
             </div>
             <div class="modal-footer">
-                <button type="button" class="bg-blue px-4 py-2" data-dismiss="modal" style="border-radius: 15px; 15px">Agregar</button>
+                <button type="button" class="bg-blue px-4 py-2 campoRounded" data-dismiss="modal">Agregar</button>
             </div>
         </div>
     </div>

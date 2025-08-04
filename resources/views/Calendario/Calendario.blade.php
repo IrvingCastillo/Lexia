@@ -1,33 +1,19 @@
 @extends('dashboard')
-{{-- @section('Contenedor','main-container') --}}
 @section('Contenido')
+@vite(['resources/css/app.css', 'resources/js/calendario/calendario.js'])
+
 
 <div>
-    {{-- @include('Includes.HeadModule',['DireccionArea' => 'AGENDA']) --}}
-
-    <div class="container-fluid">
-
-        {{-- @include('Directivos.Agenda.Menu') --}}
-
+    <div class="container-fluid bg-white my-5 py-5">
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active"
-                    data-toggle="tab"
-                    href="#Calendario"
-                    role="tab"
-                    aria-controls="nav-calendario"
-                    aria-selected="true">
+                <a class="nav-item nav-link active" data-toggle="tab" href="#Calendario" role="tab" aria-controls="nav-calendario" aria-selected="true">
                         Calendario
                 </a>
-                <a class="nav-item nav-link"
-                    data-toggle="tab"
-                    href="#Resgistradas"
-                    role="tab"
-                    aria-controls="nav-home"
-                    aria-selected="true">
+                {{-- <a class="nav-item nav-link" data-toggle="tab" href="#Resgistradas" role="tab" aria-controls="nav-home" aria-selected="true">
                         Lista de Eventos
-                        <span class="badge badge-secondary" id="Registrados" v-html="Registrados"> 0 </span>
-                </a>
+                        <span class="badge badge-secondary" id="Registrados"> 0 </span>
+                </a> --}}
             </div>
         </nav>
 

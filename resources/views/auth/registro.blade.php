@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('contenido')
-@vite(['resources/login_f/login.css', 'resources/registro/registro.js'])
+@vite(['resources/login_f/login.css', 'resources/js/registro/registro.js'])
 <div>
     <div class="navLogin">
         <x-nav-guess color="claro"></x-nav-guess>
