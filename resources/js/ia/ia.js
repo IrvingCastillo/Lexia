@@ -82,3 +82,14 @@ Dropzone.options.myDropzone = {
     });
   }
 };
+
+document.getElementById("startIA").addEventListener('click', function(){
+    setTimeout(()=> {
+        document.getElementById("listadoDocumento").classList.add('hide')
+        document.getElementById("divEditor").classList.add('show')
+    }, 500)
+})
+
+ const quill = new Quill('#editor', {
+    theme: 'snow'
+  });

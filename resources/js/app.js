@@ -1,5 +1,8 @@
 import './bootstrap';
 import { DotLottie } from '@lottiefiles/dotlottie-web';
+import * as modalHelper from '@/modales/modalHelper';
+window.modalHelper = modalHelper;
+
 
 const SuccessAnim = document.querySelector('.animSuccess'),
 ErrorAnim = document.querySelector('.animError'),

@@ -24351,6 +24351,9 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     opacity: 1;
 }
 
+.textAzul{
+    color: var(--azul) !important;
+}
 
 .bg-blue{
     background: var(--azul);
@@ -24439,6 +24442,30 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
   vertical-align: top;
   margin: 16px;
 }
+
+/* .fade-document{
+      transition: opacity 0.6s ease;
+}
+
+#listadoDocumento.hide{
+    opacity: 0;
+    pointer-events: none;
+}
+
+#divEditor{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    transform: translate(-50%, -50%);
+    /* opacity: 0; *
+    pointer-events: none;
+}
+#divEditor.show{
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+} */
 
 /* IA modulo fin */
 

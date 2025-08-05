@@ -1,12 +1,20 @@
 @extends('dashboard')
 
+<style>
+    .ql-toolbar.ql-snow{
+        display: none;
+    }
+</style>
+
 @section('Contenido')
-<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+@push('styles')
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+@endpush
 @vite(['resources/css/app.css', 'resources/js/ia/ia.js'])
 
 <div class="container-fluid bg-white my-5 py-5">
-    <div class="card w-100" style="height: 65vh">
+    {{-- <div class="fade-document position-relative card w-100" style="height: 65vh" id="listadoDocumento">
         <div class="d-flex justify-content-end px-3 py-2" style="font-size: 1.2rem">
             <i class="far fa-trash-alt px-3"></i>
             <i class="fas fa-pencil-alt" style="transform: scaleX(-1)"></i>
@@ -14,14 +22,6 @@
         <div class="pt-3 pl-3">
             <h3>Documento</h3>
             <div class="file-item">
-                {{-- <i class="far fa-file-alt"></i>       <!-- Documento -->
-                <i class="far fa-lightbulb"></i>      <!-- Bombilla (idea) -->
-                <i class="fas fa-chart-line"></i>     <!-- Gráfica de línea -->
-                <i class="fas fa-chart-bar active"></i>      <!-- Reporte --> --}}
-    {{-- <i class="fas fa-gavel active" ></i>
-    <i class="fas fa-head-side-gear"></i>
-    <i class="far fa-calendar-check"></i>        <!-- Calendario -->
-    <i class="fas fa-cog"></i>                   <!-- Configuración --> --}}
                 <i class="far fa-file-alt file-icon"></i>
                 <div class="file-info">
                     <div class="file-title">Q2 2024 Financial Report</div>
@@ -31,6 +31,18 @@
         </div>
         <div style="position: absolute; top:50%; left:50%; transform:translate(-50%, -50%)">
             <div style="font-size: 4rem; color: #f5f5f5">LEX-IA</div>
+        </div>
+    </div> --}}
+
+    <div class="fade-document " id="divEditor">
+        <h2 class="textAzul font-size15 mb-0" style="font-family: 'Times New Roman'">Editor de documento</h2>
+        <div class="card w-100" style="height: 65vh">
+            <div id="editor">
+                <p>Propuesta de Proyecto Digital</p><br>
+                <p>Fecha: 24 de Octubre, 2023</p>
+                <p>Para: Cliente Potencial</p>
+                <p>De: Soluciones Creativas S.A.</p>
+            </div>
         </div>
     </div>
 
@@ -70,7 +82,7 @@
                 </div>
                 <div class="d-flex justify-content-end">
                     <div class="text-left mt-4">
-                        <button type="button" class="bg-blue px-4 py-1" style="border-radius: 5px; 5px; width: 10rem">Empezar</button>
+                        <button id="startIA" type="button" class="bg-blue px-4 py-1" style="border-radius: 5px; 5px; width: 10rem">Empezar</button>
                     </div>
                 </div>
             </div>
@@ -84,6 +96,7 @@
 @endphp
 
 @push('scripts')
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 @endpush
-
 @stop
