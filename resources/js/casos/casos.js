@@ -6,9 +6,11 @@ InfoHoras = document.querySelector('.DatosHoras')
 
 GestionarCaso.addEventListener('click', function(){
     setTimeout(()=> {
+        InfoSuperior.classList.add('cardHide')
         TimeLine.classList.add('show')
-        InfoSuperior.classList.add('hide')
-        InfoInferior.classList.add('show')
+        //  setTimeout(()=> {
+            InfoInferior.classList.remove('cardHide')
+        // }, 300)
         InfoHoras.classList.add('show')
         actualizarContador()
     }, 500)

@@ -56,6 +56,18 @@ Route::get('/', function () {
     return view('dashboard');
 });
 
+Route::get('/cuenta', function(){
+    return view('Configuracion.Cuenta');
+})->name('cuenta');
+
+Route::get('/modificar_plan', function(){
+    return view('Configuracion.ModificarPlan');
+})->name('modificarPlan');
+
+Route::get('/modificar_contrasena', function(){
+    return view('Configuracion.Contrasena');
+})->name('modificarContrasena');
+
 Route::get('/ia', function(){
     return view('IA.Main');
 })->name('ia');

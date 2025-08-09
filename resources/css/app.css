@@ -3680,7 +3680,7 @@ input[type="button"].btn-block {
     z-index: 1000;
     display: none;
     float: left;
-    min-width: 20rem;
+    min-width: 22rem;
     padding: 0.5rem 0;
     margin: 0.125rem 0 0;
     font-size: 1rem;
@@ -3694,7 +3694,7 @@ input[type="button"].btn-block {
 
     will-change: transform;
     top: -20px !important;
-    left: -9rem !important;
+    left: -11rem !important;
     transform: translate3d(-160px, 32px, 0px) !important;
 }
 
@@ -24355,7 +24355,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     color: var(--azul) !important;
 }
 
-.bg-blue{
+.bg-blue, .bg-blue:hover{
     background: var(--azul);
     color: var(--gris);
 }
@@ -24443,33 +24443,75 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
   margin: 16px;
 }
 
-/* .fade-document{
-      transition: opacity 0.6s ease;
-}
-
-#listadoDocumento.hide{
-    opacity: 0;
-    pointer-events: none;
+#listadoDocumento{
+    display: block;
+    opacity: 1;
+    transform: translate(0);
+    transition: display 1.2s, opacity 1.2s, transform 1.2s;
+    transition-behavior: allow-discrete;
 }
 
 #divEditor{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100vw;
-    transform: translate(-50%, -50%);
-    /* opacity: 0; *
-    pointer-events: none;
-}
-#divEditor.show{
-    display: block;
     opacity: 1;
-    pointer-events: auto;
-} */
+    transform: translate(0);
+    transition: display 1.5s, opacity 1.5s, transform 1.5s;
+    transition-behavior: allow-discrete;
+}
+.cardHide{
+    display: none !important;
+    transform: translateY(-100%) !important;
+    opacity: 0 !important;
+}
+
 
 /* IA modulo fin */
 
 
+
+/* Menu dropdow */
+.dropdown-main{
+    min-height: 18rem;
+}
+
+.dropMain{
+    display: block;
+    opacity: 1;
+    transform: translate(0);
+    transition: display 1.2s, opacity 1.2s, transform 1.2s;
+    transition-behavior: allow-discrete;
+}
+
+#dropConfiguracion, #dropSuscripcion{
+    opacity: 1;
+    transform: translate(0);
+    transition: display 1.5s, opacity 1.5s, transform 1.5s;
+    transition-behavior: allow-discrete;
+}
+
+.dropHide{
+    display: none !important;
+    transform: translateY(-100%) !important;
+    opacity: 0 !important;
+}
+
+
+
+/* fin menu dropdown */
+
+@starting-style{
+    #divEditor{
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    #DatosInf{
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    #dropConfiguracion, #dropSuscripcion{
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
 /* Casos Modulo inicio */
 
 @keyframes slideDownFade{
@@ -24514,23 +24556,29 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 250px;
+  width: 230px;
   /* max-height: 500px; */
   display: none;
 }
 
 .chatbox-fixed.show{
     display: block;
-    animation: slideLeftFadeIn 0.5s ease forwards;
+    animation: slideLeftFadeIn 2.5s ease forwards;
 }
 .DatosSup{
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    display: block;
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(0);
+    transition: display 1s, opacity 1s, transform 1s;
+    transition-behavior: allow-discrete;
+
+    /* transition: opacity 0.5s ease, transform 0.5s ease;
+    opacity: 1;
+    transform: translateY(0); */
 }
 
 .DatosHoras{
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition: opacity 2s ease, transform 2s ease;
     opacity: 0;
     transform: translateY(0);
 }
@@ -24541,21 +24589,18 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 
 .DatosSup.hide{
     opacity: 0;
-    transform: translateY(-40px);
+    transform: translateY(-100%);
     pointer-events: none;
 }
 
 .DatosInf{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 65vw;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    pointer-events: none;
-    height: 75vh;
-     border:1px solid #f5f5f5;
-     border-radius: var(--borderAmplio);
+    opacity: 1;
+    transform: translate(0);
+    transition: display 3.5s ease, opacity 3.5s ease, transform 3.5s ease;
+    transition-behavior: allow-discrete;
+    height: 55vh;
+    border:1px solid #f5f5f5;
+    border-radius: var(--borderAmplio);
 }
 
 .DatosInf .card-body{
@@ -24566,10 +24611,6 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     right: .5rem !important;
 }
 
-.DatosInf.show{
-    animation: slideUpFadeIn 0.5s ease forwards;
-    pointer-events: auto;
-}
 
 .cardChat {
   border-radius: 25px 25px;

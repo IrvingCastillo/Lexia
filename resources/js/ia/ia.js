@@ -84,12 +84,31 @@ Dropzone.options.myDropzone = {
 };
 
 document.getElementById("startIA").addEventListener('click', function(){
+    document.getElementById("listadoDocumento").classList.add('cardHide')
     setTimeout(()=> {
-        document.getElementById("listadoDocumento").classList.add('hide')
-        document.getElementById("divEditor").classList.add('show')
-    }, 500)
+        document.getElementById("divEditor").classList.remove('cardHide')
+    }, 1500)
 })
 
  const quill = new Quill('#editor', {
     theme: 'snow'
   });
+
+//   document.getElementById('startIA').addEventListener('click', () => {
+//     console.log("editar")
+//   const listado = document.getElementById('listadoDocumento');
+//   const editor = document.getElementById('divEditor');
+
+//   // Fade out listadoDocumento
+//   listado.classList.remove('show');
+//   listado.addEventListener('transitionend', function handler() {
+//     listado.classList.add('d-none');
+
+//     // Mostrar editor
+//     editor.classList.remove('d-none');
+//     void editor.offsetWidth; // forzar reflow
+//     editor.classList.add('show');
+
+//     listado.removeEventListener('transitionend', handler);
+//   });
+// });

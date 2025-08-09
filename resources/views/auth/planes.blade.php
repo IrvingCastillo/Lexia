@@ -13,6 +13,10 @@
     <div class="container-fluid bg-white">
 
         <div class="py-5">
+            <div class="text-center mb-3">
+                <h1 class="textAzul">Planes</h1>
+                <span style="color: #5e6674">Elige la opción que más se adecúe a tus necesidades</span>
+            </div>
             <x-planes></x-planes>
         </div>
 

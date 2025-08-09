@@ -72,7 +72,24 @@
             </div>
         </div>
 
-        <div class="pt-2 DatosInf shadow-sm " id="DatosInf" >
+        <div class="my-4 mx-2 col-md-9 DatosInf cardHide shadow-sm " id="DatosInf" >
+            <div class="card mb-3 border-0 ">
+                <div class="">
+                    <div class="card-body border-bottom ">
+                            <a href="#" class="text-muted position-absolute">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                            <div class="file-item">
+                                <i class="far fa-file-alt file-icon"></i>
+                                <div class="file-info">
+                                    <div class="file-title">Alegato Inicial</div>
+                                    <div class="file-time"><span>Escrito Legal</span> - <span>20 MAR 2024</span></div>
+                                </div>
+                            </div>
+
+                        </div>
+                </div>
+            </div>
             <div class="card mb-3 border-0 ">
                 <div class="card-body border-bottom position-relative">
                     <a href="#" class="text-muted position-absolute">

@@ -8,6 +8,15 @@ const SuccessAnim = document.querySelector('.animSuccess'),
 ErrorAnim = document.querySelector('.animError'),
 CargaAnim = document.querySelector('.animCarga')
 
+const dropMain = document.querySelector(".dropMain"),
+dropSuscripcion = document.querySelector("#dropSuscripcion"),
+dropConfiguracion = document.querySelector("#dropConfiguracion"),
+btnSuscripcion = document.querySelector(".showSus"),
+btnConfiguracion = document.querySelector(".showConf"),
+btnBackSuscripcion = document.querySelector(".backSuscripcion"),
+btnBackConfiguracion = document.querySelector(".backConfiguracion"),
+btnDropMain = document.querySelector(".btnShowDrop")
+
 
 const animationSuccess = new DotLottie({
     autoplay: true,
@@ -29,6 +38,48 @@ const animationLoad = new DotLottie({
     loop: true,
     canvas: CargaAnim,
     src: "https://lottie.host/16d17efc-47f1-4ecd-a52e-1c638044e891/Id7GM0IlEM.lottie", // or .json file
+})
+
+$('.dropdown-main').on('click', function(e) {
+  e.stopPropagation();
+});
+
+btnDropMain.addEventListener('click', function(){
+    dropConfiguracion.classList.add('dropHide')
+    dropSuscripcion.classList.add('dropHide')
+    dropMain.classList.remove('dropHide')
+})
+
+btnSuscripcion.addEventListener('click', function(){
+    dropMain.classList.add('dropHide')
+    dropConfiguracion.classList.add('dropHide')
+    setTimeout(()=> {
+        dropSuscripcion.classList.remove('dropHide')
+    }, 1550)
+})
+
+btnConfiguracion.addEventListener('click', function(){
+    dropMain.classList.add('dropHide')
+    dropSuscripcion.classList.add('dropHide')
+    setTimeout(()=> {
+        dropConfiguracion.classList.remove('dropHide')
+    }, 1550)
+})
+
+btnBackConfiguracion.addEventListener('click', function (){
+    dropConfiguracion.classList.add('dropHide')
+    dropSuscripcion.classList.add('dropHide')
+    setTimeout(()=> {
+        dropMain.classList.remove('dropHide')
+    }, 1550)
+})
+
+btnBackSuscripcion.addEventListener('click', function (){
+    dropConfiguracion.classList.add('dropHide')
+    dropSuscripcion.classList.add('dropHide')
+    setTimeout(()=> {
+        dropMain.classList.remove('dropHide')
+    }, 1550)
 })
 
 

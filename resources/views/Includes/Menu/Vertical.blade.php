@@ -39,6 +39,6 @@ $routeName2 = (!isset($routeName[1])) ? '0' : $routeName[1];
         <li class="nav-main-item">
             <a class="nav-main-link {{ (\Request::route()->getName() == 'usuarios') ? 'active' : '' }}" href="{{ asset('usuarios') }}">
                 <i class="nav-main-link-icon"><img src="{{ asset('dist/fontawesome-6/svgs/brands/cog.svg') }}" alt="" style="width: 1.3rem; font-weight: bold;"></i>
-                <span class="nav-main-link-name">Informes</span>
+                <span class="nav-main-link-name">Administrar usuarios</span>
             </a>
         </li>

@@ -1,9 +1,19 @@
+import { showModal, hideModal, sleep } from '@/modales/modalHelper';
+import * as bootstrap from 'bootstrap';
+window.bootstrap = bootstrap;
+
+
 const Pass = document.querySelector("#password_new"),
 PassC = document.querySelector("#confirm_password"),
 ErrorRestaurar = document.querySelector("#errorRestaurarContra"),
 BtnGuardar = document.querySelector("#btnNuevaContrasena")
 
+const modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'), { backdrop: 'static', keyboard: false }),
+modalError  = new bootstrap.Modal(document.getElementById('modalError')),
+modalSuccess = new bootstrap.Modal(document.getElementById('modalSuccess'))
 
+const errorMsj = document.getElementById('errorLogin'),
+successMsj = document.getElementById('mensajeExito')
 
 function ValidarContraseña(contraseña) {
     const regex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
@@ -21,42 +31,6 @@ PassC.addEventListener('input', function(){
 })
 
 
-function mostrarModalCarga(){
-    $('#modalCarga').modal('show')
-    animationLoad.setSegment(0,120, true)
-}
-
-function ocultarModalCarga(){
-    setTimeout(function() {
-        $("#modalCarga").modal('hide')
-    }, 5000)
-}
-
-function mostrarModalError(){
-    setTimeout(function() {
-        $('#modalError').modal('show')
-    }, 5010)
-}
-
-function ocultarModalError(){
-    setTimeout(function() {
-        $('#modalError').modal('hide')
-    }, 7000)
-}
-
-function mostrarModalSuccess(){
-    setTimeout(function() {
-        $('#modalSuccess').modal('show')
-        $("#mensajeExito").html('Contraseña restaurada')
-    }, 5010)
-}
-
-function ocultarModalSuccess(){
-    setTimeout(function() {
-        $('#modalSuccess').modal('hide')
-        // redireccionar
-    }, 6500)
-}
 
 function Verificar(){
     let validatePass = ValidarContraseña(Pass.value),
@@ -100,40 +74,48 @@ function Verificar(){
     }
 }
 
-BtnGuardar.addEventListener('click', function(event){
-    event.preventDefault();
+BtnGuardar.addEventListener('click', async (e) => {
+    e.preventDefault();
+
     let formulario = document.querySelector("#RecuperarContrasenaForm"),
-    datos = new FormData(formulario)
+    datos = new FormData(formulario),
+    pwd = Pass.value.trim(),
+    pwdC = PassC.value.trim()
 
     let datosCompletos = Object.fromEntries(datos.entries())
     let datosJson = JSON.stringify(datosCompletos)
 
-    mostrarModalCarga()
-    ocultarModalCarga()
-    if (Pass.value == "" || PassC == "") {
-        mostrarModalError()
-        ocultarModalError()
+    showModal(modalCarga)
+    await new Promise(r => setTimeout(r, 2000))
+    hideModal(modalCarga)
+
+    if (!pwd || !pwdC) {
+        showModal(modalError)
+        errorMsj.textContent = 'Confirma la nueva contraseña'
+        hideModal(modalError, 2000)
         return;
     }
-    else{
-        fetch('https://api.lexialegal.site/api/reset-password', { //regresar al login
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: datosJson
-        })
-        .then(response => {
-            console.log("ok ", response)
-            mostrarModalSuccess()
-            ocultarModalSuccess()
-        })
-        .catch(error => {
-            console.log(error)
-            mostrarModalError()
-            ocultarModalError()
-        })
+    try {
+        const res = await fetch('https://f2cfbd702bbb.ngrok-free.app/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: datosJson
+    })
+    if(res.ok){
+        showModal(modalSuccess)
+        successMsj.textContent = '¡Contraseña reestablecida!'
+        hideModal(modalSuccess, 2000, () => {
+            window.location.href = 'http://localhost:8000/login'
+        });
+    } else {
+        throw new Error('Credenciales inválidas')
     }
+    } catch (err) {
+        console.error(err)
+        showModal(modalError)
+        // errorMsj.textContent = 'Ha ocurrido un error'
+        hideModal(modalError, 2000)
+    }
+
 })
 
