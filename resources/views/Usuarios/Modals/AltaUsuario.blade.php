@@ -32,13 +32,14 @@
                         <label>Teléfono</label>
                         <div class="form-group col-md-12 pl-0 d-flex">
                             <select class="form-control campoRounded col-3" name="" id="">
-                                <option value="">+ 07</option>
+                                <option value="">+ 1</option>
+                                <option value="">+ 52</option>
                             </select>
                             <div class="input-group offset-1">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-phone" style="transform: scaleX(-1)"></i></span>
+                                    <span class="input-group-text group-text-transparent"><i class="fa fa-phone" style="transform: scaleX(-1)"></i></span>
                                 </div>
-                                <input type="text" class="form-control campoRounded">
+                                <input type="text" class="form-control rounded-right-input">
                             </div>
                         </div>
                     </div>

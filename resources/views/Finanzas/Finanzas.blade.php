@@ -2,6 +2,31 @@
 {{-- @section('Contenedor','main-container') --}}
 @section('Contenido')
 
+<style>
+        .btn-toggle-group {
+        border-radius: 0.75rem;
+        overflow: hidden;
+        background-color: #f8f9fa;
+        padding: 3px;
+        display: inline-flex;
+    }
+    .btn-toggle-group input[type="radio"] {
+        display: none;
+    }
+    .btn-toggle {
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 0.65rem;
+        font-weight: 600;
+        color: gray;
+        background: transparent;
+        transition: 0.3s;
+    }
+    .btn-toggle.active {
+        background-color: #112b44;
+        color: white;
+    }
+</style>
 @vite(['resources/css/app.css', 'resources/js/finanzas/finanzas.js'])
 
 
@@ -16,40 +41,12 @@
             <div class="">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text icon" style="border-radius: 15px 0 0 15px !important; border-color: transparent"> <i class="fas fa-search"></i> </span>
+                        <span class="input-group-text group-text-transparent"> <i class="fas fa-search"></i> </span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Buscar Pago">
+                    <input type="text" class="form-control rounded-right-input" placeholder="Buscar Pago">
                 </div>
 
                 <div class="pt-1 shadow-sm mt-3 "  style="height: 45vh; border:1px solid #f5f5f5; border-radius: 15px 15px; overflow-y: scroll;  scrollbar-color: #132c47 transparent; scrollbar-width: thin;">
-                    <div class="card mb-3 border-0 ">
-                        <div class="card-body border-bottom position-relative" style="border: 1px solid transparent;">
-                            <div class="d-flex justify-content-between">
-                                <div class="file-item">
-                                    <i class="far fa-file-alt file-icon"></i>
-                                    <div class="file-info">
-                                        <div class="file-title">Primer Pago mes</div>
-                                        <div class="file-time"><span>Caso Ulises</span></div>
-                                    </div>
-                                </div>
-                                <span>15/05/2025</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 border-0 ">
-                        <div class="card-body border-bottom position-relative" style="border: 1px solid transparent;">
-                            <div class="d-flex justify-content-between">
-                                <div class="file-item">
-                                    <i class="far fa-file-alt file-icon"></i>
-                                    <div class="file-info">
-                                        <div class="file-title">Primer Pago mes</div>
-                                        <div class="file-time"><span>Caso Ulises</span></div>
-                                    </div>
-                                </div>
-                                <span>15/05/2025</span>
-                            </div>
-                        </div>
-                    </div>
                     <div class="card mb-3 border-0 ">
                         <div class="card-body border-bottom position-relative" style="border: 1px solid transparent;">
                             <div class="d-flex justify-content-between">
@@ -126,13 +123,20 @@
                     </div>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text icon" style="background: transparent; border-color: transparent"> <i class="fas fa-dollar"></i> </span>
+                            <span class="input-group-text group-text-transparent"> <i class="fas fa-dollar"></i> </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="0.00">
+                        <input type="text" class="form-control rounded-right-input" placeholder="0.00">
                     </div>
                 </div>
                 <div class="mt-3">
                     <span class="textAzul mr-3">Estado</span>
+                    <div class="btn-toggle-group">
+                        <input type="radio" id="porPagar" name="estado" checked>
+                        <label for="porPagar" class="btn-toggle">Por Pagar</label>
+
+                        <input type="radio" id="pagado" name="estado">
+                        <label for="pagado" class="btn-toggle active">Pagado</label>
+                    </div>
                 </div>
                 <div class="mt-3">
                     <span class="textAzul mr-3">Fecha</span>
@@ -166,4 +170,6 @@
 
 
 </div>
+
 @stop
+
