@@ -65,10 +65,9 @@ Route::group(['middleware' => ['api.token']], function () {
         return view('IA.Main');
     })->name('ia');
 
-    Route::get('/casos', function () {
-    $usuario = Auth::user();
-        return view('Casos.Casos', compact('usuario'));
-    })->middleware('auth')->name('casos');
+    Route::get('/casos', function(){
+        return view('Casos.Casos');
+    })->name('casos');
 
     Route::get('/calendario', function(){
         return view('Calendario.Calendario');
