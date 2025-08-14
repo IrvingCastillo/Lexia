@@ -39,17 +39,18 @@ btnLogin.addEventListener('click', async (e) => {
 
 
     try {
-        const res = await fetch('https://f2cfbd702bbb.ngrok-free.app/api/login', {
+        const res = await fetch('https://api.lexialegal.site/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: datosJson
     });
 
     if (res.ok) {
+        console.log(res)
         showModal(modalSuccess)
         successMsj.textContent = '¡Bienvenido!'
         hideModal(modalSuccess, 2000, () => {
-            window.location.href = 'http://localhost:8000/'
+            window.location.href = 'http://localhost:8000/casos'
         });
     } else {
         throw new Error('Credenciales inválidas')

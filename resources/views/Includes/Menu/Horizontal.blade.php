@@ -1,4 +1,5 @@
 <header id="page-header">
+    {{ dd(Auth::user()) }}
         <div class="content-header">
             <div class="d-flex align-items-center">
             </div>
@@ -15,6 +16,7 @@
                             <div class="pt-0 pb-0">
                                 <div class="pl-2 d-flex align-items-center justify-content-between">
                                     <h5 class="textAzul mb-0 p-1">Lic. Ulises A. González</h5>
+
                                 </div>
 
                                 <div role="separator" class="dropdown-divider"></div>

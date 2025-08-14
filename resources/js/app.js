@@ -1,4 +1,5 @@
 import './bootstrap';
+import './loader.js';
 import { DotLottie } from '@lottiefiles/dotlottie-web';
 import * as modalHelper from '@/modales/modalHelper';
 window.modalHelper = modalHelper;

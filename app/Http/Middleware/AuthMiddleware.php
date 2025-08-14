@@ -17,7 +17,10 @@ class AuthMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $authToken = session('access_token');
+        // dd(session('_token'));
+        $authToken = session('_token');
+
+        // dd($authToken);
 
         if (!$authToken) {
             return response()->json([
@@ -28,7 +31,7 @@ class AuthMiddleware
 
         try {
             $client = new Client();
-            $url = env('URL_API', 'https://api.lexialegal.site') . '/api/me';
+            $url = env('URL_API', 'https://api.lexialegal.site') . '/';
 
             $response = $client->get($url, [
                 'headers' => [

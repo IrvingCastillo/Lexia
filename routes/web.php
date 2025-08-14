@@ -32,9 +32,6 @@ Route::get('/registro', function(){
     return view('auth.registro');
 })->name('registro');
 
-// Route::get('/register/user', [App\Http\Controllers\HomeController::class, 'registro'])->name('registro');
-
-
 Route::get('/recuperar_contrasena', function(){
     return view('auth.contrasena');
 })->name('recuperarContrasena');
@@ -47,43 +44,44 @@ Route::get('/nueva_contrasena', function(){
 
 /* Aquí van todas tus rutas protegidas para validar el usuario logeado */
 Route::group(['middleware' => ['api.token']], function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/', function () {
+        return view('dashboard');
+    });
+
+    Route::get('/cuenta', function(){
+        return view('Configuracion.Cuenta');
+    })->name('cuenta');
+
+    Route::get('/modificar_plan', function(){
+        return view('Configuracion.ModificarPlan');
+    })->name('modificarPlan');
+
+    Route::get('/modificar_contrasena', function(){
+        return view('Configuracion.Contrasena');
+    })->name('modificarContrasena');
+
+    Route::get('/ia', function(){
+        return view('IA.Main');
+    })->name('ia');
+
+    Route::get('/casos', function () {
+    $usuario = Auth::user();
+        return view('Casos.Casos', compact('usuario'));
+    })->middleware('auth')->name('casos');
+
+    Route::get('/calendario', function(){
+        return view('Calendario.Calendario');
+    })->name('calendario');
+
+    Route::get('/usuarios', function(){
+        return view('Usuarios.Usuarios');
+    })->name('usuarios');
+
+    Route::get('/finanzas', function(){
+        return view('Finanzas.Finanzas');
+    })->name('finanzas');
 });
 
 
 
-Route::get('/', function () {
-    return view('dashboard');
-});
-
-Route::get('/cuenta', function(){
-    return view('Configuracion.Cuenta');
-})->name('cuenta');
-
-Route::get('/modificar_plan', function(){
-    return view('Configuracion.ModificarPlan');
-})->name('modificarPlan');
-
-Route::get('/modificar_contrasena', function(){
-    return view('Configuracion.Contrasena');
-})->name('modificarContrasena');
-
-Route::get('/ia', function(){
-    return view('IA.Main');
-})->name('ia');
-
-Route::get('/casos', function(){
-    return view('Casos.Casos');
-})->name('casos');
-
-Route::get('/calendario', function(){
-    return view('Calendario.Calendario');
-})->name('calendario');
-
-Route::get('/usuarios', function(){
-    return view('Usuarios.Usuarios');
-})->name('usuarios');
-
-Route::get('/finanzas', function(){
-    return view('Finanzas.Finanzas');
-})->name('finanzas');

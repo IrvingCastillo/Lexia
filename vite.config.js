@@ -17,6 +17,7 @@ export default defineConfig({
                 'resources/js/finanzas/finanzas.js',
                 'resources/js/calendario/calendario.js',
                 'resources/js/modales/modalHelper.js',
+                'resources/js/loader.js',
             ],
             refresh: true,
         }),
