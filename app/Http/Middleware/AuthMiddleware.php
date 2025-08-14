@@ -2,9 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -47,6 +49,19 @@ class AuthMiddleware
                     'message' => 'Usuario no autorizado',
                 ], 401);
             }
+            $payload = json_decode((string) $response->getBody(), true);
+            $apiUser = $payload['data']['user'] ?? $payload['data'] ?? $payload['user'] ?? $payload;
+            if (!$apiUser || empty($apiUser['email'])) {
+                return response()->json([
+                    'status_code' => 401,
+                    'message' => 'Respuesta inválida del servidor de autenticación'
+                ], 401);
+            }
+
+            Auth::setUser($apiUser);
+            $request->setUserResolver(fn () => $apiUser);
+            /* Si utilizas el guard web */
+            /* Auth::login($apiUser); */
 
         } catch (\Exception $e) {
             Log::error('Error en AuthMiddleware: ' . $e->getMessage());
