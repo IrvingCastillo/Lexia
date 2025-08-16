@@ -3,12 +3,12 @@ import { DotLottie } from '@lottiefiles/dotlottie-web';
 const loader = document.getElementById("page-loader"),
 CargaAnim = document.querySelector('#pageLoad')
 // Inicializar la animación Lottie
-const animationLoad = new DotLottie({
-    autoplay: true,
-    loop: true,
-    canvas: CargaAnim,
-    src: "https://lottie.host/16d17efc-47f1-4ecd-a52e-1c638044e891/Id7GM0IlEM.lottie", // or .json file
-})
+// const animationLoad = new DotLottie({
+//     autoplay: true,
+//     loop: true,
+//     canvas: CargaAnim,
+//     src: "https://lottie.host/16d17efc-47f1-4ecd-a52e-1c638044e891/Id7GM0IlEM.lottie", // or .json file
+// })
 
 document.addEventListener("DOMContentLoaded", () => {
 

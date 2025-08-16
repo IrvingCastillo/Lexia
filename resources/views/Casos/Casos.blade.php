@@ -2,6 +2,10 @@
 {{-- @section('Contenedor','main-container') --}}
 @section('Contenido')
 
+<script>
+    window.user = @json($user);
+</script>
+
 @vite(['resources/css/app.css', 'resources/js/casos/casos.js'])
 
 

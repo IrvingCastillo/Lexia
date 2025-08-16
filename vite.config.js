@@ -18,6 +18,7 @@ export default defineConfig({
                 'resources/js/calendario/calendario.js',
                 'resources/js/modales/modalHelper.js',
                 'resources/js/loader.js',
+                'resources/js/auth.js',
             ],
             refresh: true,
         }),

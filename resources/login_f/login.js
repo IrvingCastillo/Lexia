@@ -38,27 +38,116 @@ btnLogin.addEventListener('click', async (e) => {
     }
 
 
-    try {
-        const res = await fetch('https://api.lexialegal.site/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: datosJson
-    });
 
-    if (res.ok) {
-        console.log(res)
-        showModal(modalSuccess)
-        successMsj.textContent = '¡Bienvenido!'
-        hideModal(modalSuccess, 2000, () => {
-            window.location.href = 'http://localhost:8000/casos'
-        });
-    } else {
-        throw new Error('Credenciales inválidas')
-    }
-    } catch (err) {
-        console.error(err)
-        showModal(modalError)
-        errorMsj.textContent = 'La contraseña o correo son incorrectos'
-        hideModal(modalError, 2000)
-    }
+    try{
+            const res = await fetch('https://api.lexialegal.site/api/login', {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: datosJson
+            })
+        .then(response => response.json())
+        .then(data => {
+            const tokenRecibido = data.access_token;
+            // Verifica si el registro fue exitoso
+            if (tokenRecibido) {
+                // Guardar token en Laravel Web
+                return fetch('/guardar-token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({ token: tokenRecibido })
+                });
+            } else {
+                // throw new Error('Inicio de sesión fallido');
+                errorMsj.textContent = 'La contraseña o correo son incorrectos'
+
+            }
+        })
+        .then(respuesta => {
+            if (respuesta) {
+                showModal(modalSuccess)
+                successMsj.textContent = '¡Bienvenido!'
+                hideModal(modalSuccess, 2000, () => {
+                    window.location.href = 'http://localhost:8000/casos'
+                });
+            } else {
+                throw new Error('No se pudo iniciar sesión')
+            }
+        })
+        } catch (err) {
+            console.error(err)
+            showModal(modalError)
+            errorMsj.textContent = 'La contraseña o correo son incorrectos'
+            hideModal(modalError, 2000)
+        }
+
+
+
+
+
+
+    // fetch('https://api.lexialegal.site/api/login', {
+    // method: 'POST',
+    // headers: { 'Content-Type': 'application/json' },
+    // body: datosJson
+    // })
+    // .then(res => res.json())
+    // .then(data => {
+    //     const tokenRecibido = data.access_token;
+
+    //     // Guardar token en Laravel Web
+    //     return fetch('/guardar-token', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+    //         },
+    //         body: JSON.stringify({ token: tokenRecibido })
+    //     });
+    // })
+    // .then(res => res.json())
+    // .then(data => {
+    //     console.log(data.status)
+    //     // Redirigir a una vista protegida
+    //     showModal(modalSuccess)
+    //     successMsj.textContent = '¡Bienvenido!'
+    //     // hideModal(modalSuccess, 2000, () => {
+    //     //     window.location.href = 'http://localhost:8000/casos'
+    //     // });
+    // });
+
+
+
+
+
+
+
+    // try {
+    //     const res = await fetch('https://api.lexialegal.site/api/login', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    //     body: datosJson
+    // });
+
+    // if (res.ok) {
+    //     console.log(res)
+    //     showModal(modalSuccess)
+    //     successMsj.textContent = '¡Bienvenido!'
+    //     hideModal(modalSuccess, 2000, () => {
+    //         window.location.href = 'http://localhost:8000/casos'
+    //     });
+    // } else {
+    //     throw new Error('Credenciales inválidas')
+    // }
+    // } catch (err) {
+    //     console.error(err)
+    //     showModal(modalError)
+    //     errorMsj.textContent = 'La contraseña o correo son incorrectos'
+    //     hideModal(modalError, 2000)
+    // }
+
+
+
 });

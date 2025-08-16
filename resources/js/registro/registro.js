@@ -1,4 +1,6 @@
- import { DotLottie } from '@lottiefiles/dotlottie-web';
+ import { showModal, hideModal, sleep } from '@/modales/modalHelper';
+ import * as bootstrap from 'bootstrap';
+ window.bootstrap = bootstrap;
 
  const NombreCliente = document.querySelector('#nombre_cliente'),
     ApellidoPaterno = document.querySelector('#apellido_paterno'),
@@ -37,32 +39,9 @@
     ErrorPlan = document.querySelector("#errorPlan"),
     ErrorTerminos = document.querySelector("#errorTerminos")
 
-    const SuccessAnim = document.querySelector('.animSuccess'),
-    ErrorAnim = document.querySelector('.animError'),
-    CargaAnim = document.querySelector('.animCarga')
-
-    const animationSuccess = new DotLottie({
-        autoplay: true,
-        loop: true,
-        canvas: SuccessAnim,
-        src: "https://lottie.host/fa61eb1b-c103-4ba1-8f1e-4e6e7fd5a24c/2RhlL3wpKz.lottie", // or .json file
-    })
-
-    const animationError = new DotLottie({
-        autoplay: true,
-        loop: true,
-        canvas: ErrorAnim,
-        // src: "https://lottie.host/16d17efc-47f1-4ecd-a52e-1c638044e891/Id7GM0IlEM.lottie", // or .json file
-        src: "https://lottie.host/56f3f712-d49d-4d0d-a1c8-b8bd8ad1e184/kOVctgJg6M.lottie", // or .json file
-    })
-
-    const animationLoad = new DotLottie({
-        autoplay: true,
-        loop: true,
-        canvas: CargaAnim,
-        src: "https://lottie.host/16d17efc-47f1-4ecd-a52e-1c638044e891/Id7GM0IlEM.lottie", // or .json file
-    })
-
+const modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'), { backdrop: 'static', keyboard: false }),
+modalError  = new bootstrap.Modal(document.getElementById('modalError')),
+modalSuccess = new bootstrap.Modal(document.getElementById('modalSuccess'));
 
 Pill1.addEventListener("click", function() {
     Paginacion.innerHTML = ''
@@ -258,44 +237,7 @@ function Validado(inputCampo, errorCampo){
     errorCampo.innerHTML = ""
 }
 
-function mostrarModalCarga(){
-    $('#modalCarga').modal('show')
-}
 
-function ocultarModalCarga(){
-    setTimeout(function() {
-        $("#modalCarga").modal('hide')
-    }, 5000)
-}
-
-function mostrarModalError(){
-    setTimeout(function() {
-        $('#modalError').modal('show')
-        $('#errorLogin').html('La contraseña o correo son incorrectos')
-    }, 5010)
-}
-
-function ocultarModalError(mensaje){
-    setTimeout(function() {
-        $('#modalError').modal('hide')
-        $('#errorLogin').html(mensaje)
-    }, 7000)
-}
-
-function mostrarModalSuccess(){
-    setTimeout(function() {
-        $('#modalSuccess').modal('show')
-        $("#mensajeExito").html('¡Usuarios creado exitosamente, será dirigido a Inicio de Sesión!')
-    }, 5010)
-}
-
-function ocultarModalSuccess(){
-    setTimeout(function() {
-        $('#modalSuccess').modal('hide')
-        // redireccionar
-        // location.href ="http://localhost:8000/";
-    }, 8500)
-}
 
 function ValidarContraseña(contraseña) {
     const regex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
@@ -343,32 +285,148 @@ function rfcValido(rfc, aceptarGenerico = true) {
 }
 
 
+function StriepWindow(URL, Titulo, features, myWidth, myHeight, isCenter) {
+    if (window.screen) if (isCenter) if (isCenter == "true") {
+        var myLeft = (screen.width - myWidth) / 2;
+        var myTop = (screen.height - myHeight) / 2;
+        features += (features != '') ? ',' : '';
+        features += ',left=' + myLeft + ',top=' + myTop;
+    }
+    window.open(URL, Titulo, features + ((features != '') ? ',' : '') + 'width=' + myWidth + ',height=' + myHeight + ",status = no, toolbar = no, menubar = no, location = no ," + " directories=no");
+}
 
 
-BtnSuscribirse.addEventListener('click',  function(){
+
+BtnSuscribirse.addEventListener('click', async (e) => {
     let formulario = document.querySelector("#AltaUsuarioForm"),
     datos = new FormData(formulario)
 
     let datosCompletos = Object.fromEntries(datos.entries())
     let datosJson = JSON.stringify(datosCompletos)
 
-    mostrarModalCarga()
-    ocultarModalCarga()
+    showModal(modalCarga)
+    await new Promise(r => setTimeout(r, 2000))
+    hideModal(modalCarga)
 
-    fetch('https://214479d7409c.ngrok-free.app/api/register/user', {
+    console.log(datosJson)
+
+
+
+    try {
+    // Paso 1: Registrar usuario
+    const res = await fetch('https://api.lexialegal.site/api/register/user', {
         method: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
         },
         body: datosJson
-    })
-    .then(data => {
-        mostrarModalSuccess()
-        ocultarModalSuccess()
+    });
 
-    })
-    .catch(error => {
-        mostrarModalError()
-        ocultarModalError()
-    })
+    const data = await res.json();
+    console.log(data);
+
+    const tokenRecibido = data.access_token;
+
+    // Paso 2: Verificar si se recibió el token
+    if (!tokenRecibido) {
+        throw new Error('Registro fallido');
+    }
+
+    // Paso 3: Guardar token en Laravel Web
+    const guardarTokenRes = await fetch('/guardar-token', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({ token: tokenRecibido })
+    });
+
+    const respuesta = await guardarTokenRes.json();
+
+    // Paso 4: Usar los datos originales de `data`
+    if (respuesta) {
+        console.log(respuesta);
+        console.log(data.data);  // Usamos `data` (el del registro)
+
+        StriepWindow(data.data.stripe_session.url, "Transacción de pago", "", 1000, 800, 'true');
+
+        showModal(modalSuccess);
+        document.getElementById('mensajeExito').value = data.message;
+
+        hideModal(modalSuccess, 2000, () => {
+            // Puedes redirigir después si quieres
+            // Paso 5: Redirigir
+            window.location.href = 'http://localhost:8000/casos';
+        });
+
+    } else {
+        throw new Error('El usuario no pudo ser creado');
+    }
+} catch (err) {
+    console.error(err);
+    showModal(modalError);
+    hideModal(modalError, 2000);
+}
+
+
+
+
+
+
+
+
+
+    // try{
+    //     const res = await fetch('https://api.lexialegal.site/api/register/user', {
+    //         method: "POST",
+    //         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    //         body: datosJson
+    //     })
+    // .then(response => response.json())
+    // .then(data => {
+    //     console.log(data)
+    //     const tokenRecibido = data.access_token;
+    //     // Verifica si el registro fue exitoso
+    //     if (tokenRecibido) {
+    //         // Guardar token en Laravel Web
+    //         return fetch('/guardar-token', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+    //             },
+    //             body: JSON.stringify({ token: tokenRecibido })
+    //         });
+    //     } else {
+    //         throw new Error('Registro fallido');
+    //     }
+    // })
+    // .then(response => response.json())
+    // .then(respuesta => {
+    //     if (respuesta) {
+    //         console.log(respuesta)
+    //         console.log(respuesta.data)
+
+    //         StriepWindow(respuesta.data.stripe_session.url, "Transaccion de pago", "", 1000, 800, 'true');
+
+    //         showModal(modalSuccess)
+    //         document.getElementById('mensajeExito').value = respuesta.message
+    //         hideModal(modalSuccess, 2000, () => {
+    //             // window.location.href = 'http://localhost:8000/casos'
+    //         });
+    //     }
+    //     else {
+    //         throw new Error('El usuario no pudo ser creado')
+    //     }
+    // })
+    // .then(() =>{
+    //     window.location.href = 'http://localhost:8000/casos'
+    // })
+    // } catch (err) {
+    //     console.error(err)
+    //     showModal(modalError)
+    //     hideModal(modalError, 2000)
+    // }
 })

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +41,23 @@ Route::get('/nueva_contrasena', function(){
     return view('auth.nueva_contrasena');
 })->name('nuevaContrasena');
 
+Route::get('/pago_confirmado', function(){
+    return view('auth.pago');
+})->name('pago_confirmado');
+
+
+Route::post('/guardar-token', function (Request $request) {
+    if (!$request->token) {
+        return response()->json(['error' => 'Token no enviado'], 400);
+    }
+
+    // Guardar el token en la sesión de Laravel
+    session(['auth_token' => $request->token]);
+
+    return response()->json(['message' => 'Token guardado en sesión']);
+})->name('guardar.token');
+
+
 /* Auth::routes(); */
 
 /* Aquí van todas tus rutas protegidas para validar el usuario logeado */
@@ -66,7 +84,9 @@ Route::group(['middleware' => ['api.token']], function () {
     })->name('ia');
 
     Route::get('/casos', function(){
-        return view('Casos.Casos');
+        return view('Casos.Casos', [
+        'user' => Auth::user()
+    ]);
     })->name('casos');
 
     Route::get('/calendario', function(){

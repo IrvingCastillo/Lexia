@@ -99,7 +99,7 @@
                                         <label>País</label>
                                         <div class="form-group col-md-12 pl-0">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" value="México" id="pais" name="pais" disabled>
+                                                <input type="text" class="form-control" value="México" id="pais" name="pais" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -162,9 +162,9 @@
                                     <div>
                                         <label>Plan seleccionado</label>
                                         <select class="custom-select" id="plan_seleccionado" name="plan_seleccionado">
-                                            <option value="Personal">Personal</option>
-                                            <option value="Profesional">Profesional</option>
-                                            <option value="Corporativo">Corporativo</option>
+                                            <option value="1">Personal</option>
+                                            <option value="2">Profesional</option>
+                                            <option value="3">Corporativo</option>
                                         </select>
                                         <span class="text-left text-danger text-sm text-bold" id="errorPlan"></span>
                                     </div>

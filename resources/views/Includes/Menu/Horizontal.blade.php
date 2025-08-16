@@ -1,9 +1,8 @@
 <header id="page-header">
-    {{ dd(Auth::user()) }}
+    {{-- {{ dd(Auth::user()) }} --}}
         <div class="content-header">
             <div class="d-flex align-items-center">
             </div>
-
             <div class="d-flex align-items-center">
                 <div class="dropdown d-inline-block ml-2">
                     <button type="button" class="btn btn-sm btn-dual rounded-circle btnShowDrop" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -15,7 +14,7 @@
                         <div class="dropMain" style="min-height: 17rem;">
                             <div class="pt-0 pb-0">
                                 <div class="pl-2 d-flex align-items-center justify-content-between">
-                                    <h5 class="textAzul mb-0 p-1">Lic. Ulises A. González</h5>
+                                    <h5 class="textAzul mb-0 p-1">{{ Auth::user()->nombre_cliente }}</h5>
 
                                 </div>
 
