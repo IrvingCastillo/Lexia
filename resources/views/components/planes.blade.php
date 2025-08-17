@@ -1,3 +1,17 @@
+@php
+    if (Auth::user() ){
+        $redirectPage = "#";
+
+    }
+    else{
+        $redirectPage = route('registro');
+        $btnTitleP = "Seleccionar";
+        $btnTitlePr = "Seleccionar";
+        $btnTitleC = "Seleccionar";
+        $dis = " ";
+    }
+@endphp
+
 <div class="container">
     {{-- <div class="text-center mb-3">
         <h1 class="textAzul">Planes</h1>
@@ -32,8 +46,22 @@
                         <span>Sin inteligencia artificial</span>
                     </li>
                 </ul>
-                <a href="{{ route('registro') }}">
-                    <button type="button" class="btnPlan btnPlanInactivo campoRounded" >Elegir</button>
+                @php
+                if (Auth::user()) {
+                    if (Auth::user()->lawfirm["plan"]["id"] == 1) {
+                        $btnTitleP = "Plan actual";
+                        $dis = " disabled";
+                    }
+                    else{
+                        $btnTitleP = "Seleccionar";
+                        $dis = " ";
+                    }
+                }
+                @endphp
+                <a href="{{ $redirectPage }}">
+                <button type="button" class="btnPlan btnPlanInactivo campoRounded " {{ $dis }}>
+                    {{ $btnTitleP }}
+                </button>
                 </a>
             </div>
         </div>
@@ -62,8 +90,20 @@
                         <span>Límite de hasta 10 documentos</span>
                     </li><br>
                 </ul>
-                <a href="{{ route('registro') }}">
-                    <button type="button" class="btnPlan btnPlanInactivo campoRounded">Elegir</button>
+                @php
+                if (Auth::user()) {
+                    if (Auth::user()->lawfirm["plan"]["id"] == 2) {
+                        $btnTitlePr = "Plan actual";
+                        $dis = " disabled";
+                    }
+                    else{
+                        $btnTitlePr = "Seleccionar";
+                        $dis = " ";
+                    }
+                }
+                @endphp
+                <a href="{{ $redirectPage }}">
+                    <button type="button" class="btnPlan btnPlanInactivo campoRounded" {{ $dis }}>{{ $btnTitlePr }}</button>
                 </a>
             </div>
         </div>
@@ -96,8 +136,20 @@
                         <span>Sin límite de documentos</span>
                     </li>
                 </ul>
-                <a href="{{ route('registro') }}">
-                    <button type="button" class="btnPlan btnPlanActivo mt-3 campoRounded">Elegir</button>
+                @php
+                if (Auth::user()) {
+                    if (Auth::user()->lawfirm["plan"]["id"] == 3) {
+                        $btnTitleC = "Plan actual";
+                        $dis = " disabled";
+                    }
+                    else{
+                        $btnTitleC = "Seleccionar";
+                        $dis = " ";
+                    }
+                }
+                @endphp
+                <a href="{{ $redirectPage }}">
+                    <button type="button" class="btnPlan btnPlanActivo mt-3 campoRounded" {{ $dis }}>{{ $btnTitleC }}</button>
                 </a>
             </div>
         </div>

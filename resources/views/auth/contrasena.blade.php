@@ -24,7 +24,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fas fa-envelope"></i> </span>
                                     </div>
-                                    <input type="email" class="form-control inputLogin campoRounded" id="email_recuperacion" name="email" placeholder="Email" minlength="8" required>
+                                    <input type="email" class="form-control inputLogin rounded-left" id="email_recuperacion" name="email" placeholder="Email" minlength="8" required>
                                 </div>
                                 <span class="text-left text-danger text-sm text-bold" id="errorEmailRecuperacion"></span>
                                 <button type="submit" id="btnEnviarCorreoRecuperar" class="btnStep campoRounded" disabled>Recuperar contraseña</button>

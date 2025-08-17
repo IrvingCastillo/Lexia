@@ -23,9 +23,7 @@ btnLogin.addEventListener('click', async (e) => {
     const correo = email.value.trim(),
     pwd = password.value.trim(),
     datosJson = JSON.stringify({ email: correo, password: pwd });
-    console.log(datosJson)
 
-    // Mostrar modal de carga antes de cualquier acción y esperar fijo
     showModal(modalCarga)
     await new Promise(r => setTimeout(r, 2000))
     hideModal(modalCarga)
@@ -37,47 +35,47 @@ btnLogin.addEventListener('click', async (e) => {
         return;
     }
 
-
-
     try{
-            const res = await fetch('https://api.lexialegal.site/api/login', {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-                body: datosJson
-            })
-        .then(response => response.json())
-        .then(data => {
-            const tokenRecibido = data.access_token;
-            // Verifica si el registro fue exitoso
-            if (tokenRecibido) {
-                // Guardar token en Laravel Web
-                return fetch('/guardar-token', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                    },
-                    body: JSON.stringify({ token: tokenRecibido })
-                });
-            } else {
-                // throw new Error('Inicio de sesión fallido');
-                errorMsj.textContent = 'La contraseña o correo son incorrectos'
+        const res = await fetch('https://api.lexialegal.site/api/login', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json' },
+            body: datosJson
+        })
 
-            }
-        })
-        .then(respuesta => {
-            if (respuesta) {
-                showModal(modalSuccess)
-                successMsj.textContent = '¡Bienvenido!'
-                hideModal(modalSuccess, 2000, () => {
-                    window.location.href = 'http://localhost:8000/casos'
-                });
-            } else {
-                throw new Error('No se pudo iniciar sesión')
-            }
-        })
+        const data = await res.json();
+
+        const tokenRecibido = data.access_token;
+
+        if (!tokenRecibido) {
+            throw new Error('Registro fallido');
+        }
+
+        const guardarTokenRes = await fetch('/guardar-token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                token: tokenRecibido,
+                // expires_in: data.expires_in
+                })
+        });
+
+        const respuesta = await guardarTokenRes.json();
+
+        if (respuesta) {
+            showModal(modalSuccess)
+            successMsj.textContent = '¡Bienvenido!'
+            hideModal(modalSuccess, 2000, () => {
+                window.location.href = 'http://localhost:8000/casos'
+            });
+        } else {
+            throw new Error('No se pudo iniciar sesión')
+        }
         } catch (err) {
-            console.error(err)
             showModal(modalError)
             errorMsj.textContent = 'La contraseña o correo son incorrectos'
             hideModal(modalError, 2000)

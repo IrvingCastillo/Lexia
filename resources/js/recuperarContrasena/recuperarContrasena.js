@@ -46,31 +46,36 @@ BtnRecuperar.addEventListener('click', async function (event) {
     datos = new FormData(formulario);
 
     let datosCompletos = Object.fromEntries(datos.entries());
-    let datosJson = JSON.stringify(datosCompletos);
+    const datosJson = JSON.stringify(datosCompletos);
 
     showModal(modalCarga);
-    await sleep(2000); // espera 2 segundos
+    await new Promise(r => setTimeout(r, 2000))
     hideModal(modalCarga);
 
-    fetch('https://api.lexialegal.site/api/forgot-password', {
-        method: "POST",
-        headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        },
-        body: datosJson
-    })
-    .then(response => {
-        console.log("ok ", response);
-        showModal(modalSuccess);
-        successMsj.textContent = 'Un enlace se ha enviado al correo proporcionado';
-        hideModal(modalSuccess, 2000, () => {
-            window.location.href = 'http://localhost:8000/login';
-        });
-    })
-    .catch(error => {
+    try{
+        const res = await fetch('https://api.lexialegal.site/api/forgot-password', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: datosJson
+        })
+
+        const data = await res.json()
+
+        if(data.status == 200){
+            console.log("ok ", data);
+            showModal(modalSuccess);
+            successMsj.textContent = 'Un enlace se ha enviado al correo proporcionado';
+            hideModal(modalSuccess, 2000, () => {
+                window.location.href = 'http://localhost:8000/login';
+            });
+        }
+    }
+    catch(error) {
         console.log(error);
         showModal(modalError);
         hideModal(modalError, 2000);
-    });
+    }
 });

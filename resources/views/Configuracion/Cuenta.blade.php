@@ -9,15 +9,15 @@
         <div class="textAzul font-size15 text-bold" style="margin-top: 8rem"> <i class="far fa-user mr-2"></i>Información de la cuenta</div><hr>
         <div>
             <p class="textAzul font-size1 mb-0">Despacho asociado</p>
-            <small class="text-muted">Despacho de abogados </small>
+            <small class="text-muted">{{ Auth::user()->lawfirm["nombre_despacho"] }} </small>
         </div><hr>
         <div>
             <p class="textAzul font-size1 mb-0">Nombre</p>
-            <small class="text-muted">Ulises</small>
+            <small class="text-muted">{{ Auth::user()->nombre_cliente }}</small>
         </div><hr>
         <div>
             <p class="textAzul font-size1 mb-0">RFC asociado</p>
-            <small class="text-muted">GOHU875421AV1</small>
+            <small class="text-muted">{{ (Auth::user()->rfc) ? Auth::user()->rfc : 'Sin registrar' }}</small>
         </div><hr>
         <div>
             <p class="textAzul font-size1 mb-0">Eliminar cuenta</p>

@@ -282,6 +282,15 @@ input[type="checkbox"] {
     border-radius: var(--borderAmplio);
 }
 
+.rounded-left {
+    border-top-left-radius: 0.25rem !important;
+    border-bottom-left-radius: 0.25rem !important;
+}
+
+.rounded-right {
+    border-top-right-radius: 0.25rem !important;
+    border-bottom-right-radius: 0.25rem !important;
+}
 
 .modal-content {
     border-radius: 8px;

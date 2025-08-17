@@ -28,7 +28,7 @@
                                         <i class="fas fa-angle-right mr-2"></i>
                                     </span>
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center justify-content-between showSus">
+                                <a class="dropdown-item d-flex align-items-center justify-content-between showSus" href="#">
                                     <span>
                                         <i class="nav-main-link-icon"><img src="{{ asset('dist/fontawesome-6/svgs/brands/credit-card.svg') }}" alt="" style="width: 1.3rem;"></i>
                                         <span>Suscripción</span>
@@ -38,7 +38,7 @@
                                     </span>
                                 </a>
 
-                                <a class="dropdown-item d-flex align-items-center justify-content-between showConf">
+                                <a class="dropdown-item d-flex align-items-center justify-content-between showConf" href="#">
                                     <span>
                                         <i class="nav-main-link-icon"><img src="{{ asset('dist/fontawesome-6/svgs/brands/shield.svg') }}" alt="" style="width: 1.3rem;"></i>
                                         <span>Configuración</span>
@@ -63,8 +63,8 @@
                                 </div> --}}
 
                                 <div class="col-12 my-2">
-                                    <form method="post" action=""> {{-- logout --}}
-                                        {{ csrf_field() }}
+                                    <form method="post" action="{{ route('logout') }}"> {{-- logout --}}
+                                         @csrf
                                         <button type="submit" class="btn bg-blue campoRounded" style="width: 100%">Cerrar Sesión</button>
                                     </form>
                                 </div>
@@ -80,10 +80,10 @@
 
                                 <div class="card campoRounded shadow-sm">
                                     <div class="card-body">
-                                        <span class="p-2 campoRounded" style="background: aliceblue">Plan <b class="textAzul">Personal</b></span>
+                                        <span class="p-2 campoRounded" style="background: aliceblue">Plan <b class="textAzul">{{ Auth::user()->lawfirm["plan"]["name"] }}</b></span>
                                         <div class="d-flex justify-content-between mt-2">
                                             <span>Pago Mensual</span>
-                                            <span>$19.90</span>
+                                            <span>$ {{ Auth::user()->lawfirm["plan"]["price"] }}</span>
                                         </div>
                                         <div class="d-flex justify-content-between mt-2">
                                             <span>Siguiente Pago</span>

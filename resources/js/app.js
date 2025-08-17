@@ -16,14 +16,16 @@ btnSuscripcion = document.querySelector(".showSus"),
 btnConfiguracion = document.querySelector(".showConf"),
 btnBackSuscripcion = document.querySelector(".backSuscripcion"),
 btnBackConfiguracion = document.querySelector(".backConfiguracion"),
-btnDropMain = document.querySelector(".btnShowDrop")
+btnDropMain = document.querySelector(".btnShowDrop"),
+btnCerrarSesion = document.querySelector("#closeSession")
 
 
 const animationSuccess = new DotLottie({
     autoplay: true,
     loop: true,
     canvas: SuccessAnim,
-    src: "https://lottie.host/fa61eb1b-c103-4ba1-8f1e-4e6e7fd5a24c/2RhlL3wpKz.lottie", // or .json file
+    src: "/images/AIlogoForiday.json", // or .json file
+    // src: "https://lottie.host/fa61eb1b-c103-4ba1-8f1e-4e6e7fd5a24c/2RhlL3wpKz.lottie", // or .json file
 })
 
 const animationError = new DotLottie({
@@ -83,4 +85,10 @@ btnBackSuscripcion.addEventListener('click', function (){
     }, 1550)
 })
 
+btnCerrarSesion.addEventListener('click', function(){
+    console.log("hola",)
+    const dataM = document.querySelector('meta[name="csrf-token"]')
+    const descriptionM = dataM.getAttribute('content')
+    console.log(descriptionM)
+})
 

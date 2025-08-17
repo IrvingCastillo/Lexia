@@ -308,12 +308,7 @@ BtnSuscribirse.addEventListener('click', async (e) => {
     await new Promise(r => setTimeout(r, 2000))
     hideModal(modalCarga)
 
-    console.log(datosJson)
-
-
-
     try {
-    // Paso 1: Registrar usuario
     const res = await fetch('https://api.lexialegal.site/api/register/user', {
         method: "POST",
         headers: {
@@ -328,12 +323,10 @@ BtnSuscribirse.addEventListener('click', async (e) => {
 
     const tokenRecibido = data.access_token;
 
-    // Paso 2: Verificar si se recibió el token
     if (!tokenRecibido) {
         throw new Error('Registro fallido');
     }
 
-    // Paso 3: Guardar token en Laravel Web
     const guardarTokenRes = await fetch('/guardar-token', {
         method: 'POST',
         headers: {
@@ -345,30 +338,24 @@ BtnSuscribirse.addEventListener('click', async (e) => {
 
     const respuesta = await guardarTokenRes.json();
 
-    // Paso 4: Usar los datos originales de `data`
     if (respuesta) {
-        console.log(respuesta);
-        console.log(data.data);  // Usamos `data` (el del registro)
-
         StriepWindow(data.data.stripe_session.url, "Transacción de pago", "", 1000, 800, 'true');
 
         showModal(modalSuccess);
         document.getElementById('mensajeExito').value = data.message;
 
         hideModal(modalSuccess, 2000, () => {
-            // Puedes redirigir después si quieres
-            // Paso 5: Redirigir
             window.location.href = 'http://localhost:8000/casos';
         });
 
     } else {
         throw new Error('El usuario no pudo ser creado');
     }
-} catch (err) {
-    console.error(err);
-    showModal(modalError);
-    hideModal(modalError, 2000);
-}
+    } catch (err) {
+        console.error(err);
+        showModal(modalError);
+        hideModal(modalError, 2000);
+    }
 
 
 

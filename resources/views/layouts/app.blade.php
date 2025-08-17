@@ -19,9 +19,8 @@
     <div id="page-loader" style="text-align:center; width: 100%; height: 100%; z-index: 1000000 !important; position: absolute; background: #BFBFBF; opacity: 0.4; top:50%; left:50%; transform:translate(-50%, -50%)">
         <div class="d-flex justify-content-center">
             <canvas id="pageLoad" class="Carga"  style="width: 550px; height:550px"></canvas>
-            {{-- <img src="{{ url('https://media.tenor.com/WX_LDjYUrMsAAAAj/loading.gif') }}" alt="Cargando..." class="w-50"> --}}
         </div>
-</div>
+    </div>
     <div id="app">
         @guest
             <main class="bg-white">

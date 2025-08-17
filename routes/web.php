@@ -21,6 +21,33 @@ Route::get('/login', function(){
     return view('auth.login');
 })->name('login');
 
+Route::post('logout', function(Request $request){
+if (session('auth_token')) {
+    try {
+        $client = new \GuzzleHttp\Client();
+        $url = env('URL_API') . '/api/logout';
+
+        $client->post($url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . session('auth_token'),
+                'Accept' => 'application/json',
+            ],
+        ]);
+    } catch (\Exception $e) {
+        // si falla, igual continuamos con el logout local
+    }
+}
+
+    // 2. Eliminar datos de sesión
+    session()->forget(['auth_token', 'auth_expires_at']);
+    session()->invalidate();
+    session()->regenerateToken();
+
+    // 3. Redirigir al login
+    return redirect()->route('login');
+
+})->name('logout');
+
 Route::get('/planes', function(){
     return view('auth.planes');
 })->name('planes');
@@ -52,7 +79,9 @@ Route::post('/guardar-token', function (Request $request) {
     }
 
     // Guardar el token en la sesión de Laravel
-    session(['auth_token' => $request->token]);
+    session(['auth_token' => $request->token,
+    'auth_expires_at' => now()->addSeconds($request->expires_in ?? 3600)]);
+
 
     return response()->json(['message' => 'Token guardado en sesión']);
 })->name('guardar.token');

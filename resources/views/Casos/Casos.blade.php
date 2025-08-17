@@ -10,6 +10,7 @@
 
 
 <div class="container-fluid bg-white my-5 py-5">
+    {{-- {{ Auth::user() }} --}}
     <div id="listaCasos">
         <div class="row justify-content-center">
             <div class="col-12 col-md-6">
@@ -187,7 +188,7 @@
                                         </div>
                                         <div class="custom-control custom-switch ml-1">
                                             <input type="checkbox" class="custom-control-input"  id="notify-client">
-                                            <label class="custom-control-label" for="notify-client"></label>
+                                            <label class="custom-control-label" for="config_notify_client"></label>
                                         </div>
                                     </div>
 
@@ -202,7 +203,7 @@
                                             </div>
                                         </div>
                                         <div class="custom-control custom-switch ml-1">
-                                            <input type="checkbox" class="custom-control-input"  id="notify-lawyers">
+                                            <input type="checkbox" class="custom-control-input"  id="config_notify_attorneys">
                                             <label class="custom-control-label" for="notify-lawyers"></label>
                                         </div>
                                     </div>
@@ -300,6 +301,9 @@
 
 
 {{--  --}}
+@include('Mensajes.carga')
+@include('Mensajes.success')
+@include('Mensajes.error')
 
 </div>
 

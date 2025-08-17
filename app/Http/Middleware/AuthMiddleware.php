@@ -28,7 +28,7 @@ class AuthMiddleware
 
     //     try {
     //         $client = new Client();
-    //         $url = 'https://api.lexialegal.site' . '/api/me';
+            // $url = 'https://api.lexialegal.site' . '/api/me';
 
     //         $response = $client->get($url, [
     //             'headers' => [
@@ -53,6 +53,7 @@ class AuthMiddleware
 
 
         $authToken = session('auth_token');
+        $expiresAt   = session('auth_expires_at');
         if (!$authToken) {
             return redirect()->route('login');
 
@@ -63,6 +64,32 @@ class AuthMiddleware
         }
 
         try {
+            // Revisar si el token está vencido o a punto de expirar
+            if ($expiresAt && now()->greaterThanOrEqualTo($expiresAt)) {
+
+                $client = new Client();
+                $urlRefresh = env('URL_API', 'https://api.lexialegal.site') . '/api/refresh';
+                $refreshResponse = $client->post($urlRefresh, [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $authToken,
+                        'Accept' => 'application/json',
+                    ],
+                ]);
+                if ($refreshResponse->getStatusCode() === 200) {
+                    $data = json_decode($refreshResponse->getBody(), true);
+
+                    // Guardar el nuevo token y expiración
+                    session([
+                        'auth_token'      => $data['access_token'],
+                        'auth_expires_at' => now()->addSeconds($data['expires_in']), // ajusta según tu API
+                    ]);
+
+                    $authToken = $data['access_token']; // actualizamos variable
+                } else {
+                    return redirect()->route('login');
+                }
+            }
+
             $client = new Client();
             $url = env('URL_API', 'https://api.lexialegal.site') . '/api/me';
 
@@ -85,23 +112,11 @@ class AuthMiddleware
                 $user = new User();
                 $user->forceFill($userData);
                 Auth::setUser($user);
-
-            // $payload = json_decode((string) $response->getBody(), true);
-            // $apiUser = $payload['data']['user'] ?? $payload['data'] ?? $payload['user'] ?? $payload;
-            // if (!$apiUser || empty($apiUser['email'])) {
-            //     return response()->json([
-            //         'status_code' => 401,
-            //         'message' => 'Respuesta inválida del servidor de autenticación'
-            //     ], 401);
-            // }
-
-            // Auth::setUser($apiUser);
-            // $request->setUserResolver(fn () => $apiUser);
-            /* Si utilizas el guard web */
-            /* Auth::login($apiUser); */
-
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             Log::error('Error en AuthMiddleware: ' . $e->getMessage());
+            // return redirect()->route('login');
+
             return response()->json([
                 'status_code' => 401,
                 'message' => 'Token inválido o sesión expirada',
