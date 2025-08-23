@@ -9,6 +9,8 @@
             </div>
             <div class="modal-body mb-0 pb-0 mt-0 pt-0">
                 <h3 class="text-white d-flex justify-content-center">Ha ocurrido un error</h3>
+                <h5 class="text-white d-flex justify-content-center" id="mensajeExito"></h5>
+
                 <div class="d-flex justify-content-center">
                     <canvas class="animError" style="width: 400px; height:300px"></canvas>
                 </div>

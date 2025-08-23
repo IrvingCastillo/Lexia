@@ -21,6 +21,13 @@ Route::get('/login', function(){
     return view('auth.login');
 })->name('login');
 
+Route::get('/get-token', function () {
+    return response()->json([
+        'token' => session('auth_token')
+    ]);
+});
+
+
 Route::post('logout', function(Request $request){
 if (session('auth_token')) {
     try {

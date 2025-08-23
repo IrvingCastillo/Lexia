@@ -1,0 +1,18 @@
+<div class="modal fade" id="modalMostrarArchivo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content" style="border-radius: 25px 25px 25px 25px !important;">
+            <div class="modal-header pb-0">
+                <h1 class="modal-title" id="exampleModalLabel">Alegato Inicial</h1>
+                <span type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </span>
+            </div>
+            <div class="modal-body pl-3 pr-3">
+                <div class="modal-body pl-3 pr-3">
+                    <div class="card-body" id="visualizarArchivos"></div>
+                    {{-- <embed src="guest_pdf.pdf" type="application/pdf" width="100%" height="600px"> --}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

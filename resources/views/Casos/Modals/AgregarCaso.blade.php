@@ -15,7 +15,7 @@
                                 <label>Nombre del caso</label>
                                 <div class="form-group col-md-12 pl-0">
                                     <div class="input-group">
-                                        <input type="text" class="form-control campoRounded" name="caso_nombre">
+                                        <input type="text" class="form-control campoRounded" name="caso_nombre" required>
                                     </div>
                                 </div>
                             </div>
@@ -25,7 +25,7 @@
                                 <label>Nombre del cliente</label>
                                 <div class="form-group col-md-12 pl-0">
                                     <div class="input-group">
-                                        <input type="text" class="form-control campoRounded" name="client_name">
+                                        <input type="text" class="form-control campoRounded" name="client_name" required>
                                     </div>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                                 <label>Tipo del caso</label>
                                 <div class="form-group col-md-12 pl-0">
                                     <div class="input-group">
-                                        <input type="text" class="form-control campoRounded" name="case_type">
+                                        <input type="text" class="form-control campoRounded" name="case_type" required>
                                     </div>
                                 </div>
                             </div>
@@ -64,8 +64,17 @@
                                 <p class="textAzul" style="margin-bottom: 0 !important;"><b>Seleccione el abogado asignado</b></p>
                                 <div class="form-group col-md-12 pl-0">
                                     <div class="input-group">
-                                        <select class="form-control campoRounded" name="attorneys[]" id="">
-                                            <option value="">Ulises</option>
+                                        <select class="form-control campoRounded" name="attorneys[]" id="attorneys" multiple>
+                                            <option value=1>Ulises</option>
+                                            <option value=2>Juan</option>
+                                            <option value=3>Roberto</option>
+                                            <option value=4>Miguel</option>
+                                            <option value=5>Julio</option>
+                                            <option value=6>Rubén</option>
+                                            <option value=7>Ana</option>
+                                            <option value=8>Pilar</option>
+                                            <option value=9>Carmen</option>
+                                            <option value=10>Luisa</option>
                                         </select>
                                     </div>
                                 </div>
@@ -76,6 +85,9 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="text" name="config_notify_client" value="false" hidden>
+                        <input type="text" name="config_notify_attorneys" value="false" hidden>
+                        <input type="text" name="config_notify_email" value="false" hidden>
                     </form>
                 </div>
             </div>

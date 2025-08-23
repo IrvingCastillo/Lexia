@@ -31,7 +31,7 @@ $routeName2 = (!isset($routeName[1])) ? '0' : $routeName[1];
             <a class="nav-main-link {{ (\Request::route()->getName() == 'calendario') ? 'active' : '' }}" href="{{ asset('calendario') }}">
                 <i class="nav-main-link-icon far fa-calendar-check fa-1x" style="font-size:20px;"></i>
                 <span class="nav-main-link-name">Calendario</span>
-                <span class=" rounded-circle-notify ml-4 text-center" id="">9</span>
+                {{-- <span class=" rounded-circle-notify ml-4 text-center" id="">9</span> --}}
             </a>
         </li>
 

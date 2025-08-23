@@ -1,4 +1,3 @@
-console.log("hola")
 
 CalendarioEventos();
 
@@ -28,7 +27,14 @@ function CalendarioEventos() {
                 alert("calendario_evento", calEvent)
             },
             dayClick: function(date, jsEvent, view) {
-                alert("calendario_dia", view)
+                // alert("calendario_dia", view)
+                document.querySelector("#texto_evento").innerHTML = ''
+                console.log("Se hizo clic en el día:", date.format());
+
+                setTimeout(() => {
+                    $('#modalAgregarEvento').modal('show');
+                }, 200);
+                document.querySelector("#texto_evento").innerHTML = date.format()
             }
     });
 }

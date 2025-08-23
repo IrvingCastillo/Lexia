@@ -28,6 +28,10 @@
     }
 </style>
 @vite(['resources/css/app.css', 'resources/js/finanzas/finanzas.js'])
+@push('styles')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+@endpush
 
 
 <div class="container-fluid bg-white my-5 py-5">
@@ -157,10 +161,36 @@
 
         </div>
 
-        <div class="col-sm-8" style="margin-top: -15vh">
+        <div class="col-md-8" style="margin-top: -15vh">
             <div class="">
                 <div class="d-flex justify-content-md-start">
                     <div style="color: gray; font-size: 2.5rem;">Estadísticas</div>
+                </div>
+                <div class=" my-1">
+                    <div class="card">
+                        <div class="card-body">
+                            <canvas id="grafica"></canvas>
+
+                            <hr>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-muted">Balance</span>
+                                    <h5 class="mb-0 text-success font-weight-bold">$700.00</h5>
+                                </div>
+                                <div>
+                                    <span class="mr-3">
+                                    <span style="display:inline-block;width:12px;height:12px;background:#0c2d48;border-radius:3px;margin-right:5px;"></span>
+                                    Pagado
+                                    </span>
+                                    <span>
+                                    <span style="display:inline-block;width:12px;height:12px;background:#6c757d;border-radius:3px;margin-right:5px;"></span>
+                                    Por pagar
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -172,4 +202,3 @@
 </div>
 
 @stop
-
