@@ -21,11 +21,11 @@
 
 
 <div class="container-fluid bg-white my-5 py-5">
-    <input type="text"  id="id_case" >
+    <input type="text"  id="id_case" hidden>
     <div id="listaCasos">
         <div class="row justify-content-center">
             <div class="col-12 col-md-6">
-                <div class="input-group mb-3" id="barraBusqueda">
+                <div class="input-group mb-3" id="barraBusqueda" style="display: none">
                     <div class="input-group-prepend">
                         <span class="input-group-text icon leftRounded" > <i class="fas fa-search"></i> </span>
                     </div>
@@ -35,7 +35,7 @@
             <div class="col-12 col-md-12 px-4 casoDatos DatosHoras">
                 <div class="d-flex justify-content-between d-flex align-items-end">
                     <div>
-                        <div style="font-size: 2rem">CASO <span id="span-titulo">A</span></div>
+                        <div style="font-size: 2rem">CASO <span id="span-titulo"></span></div>
                     </div>
                     <div hidden>
                         <i class="fa fa-regular fa-clock font-size15"></i> <span id="reloj" class="font-weight-bold font-size15"></span> <small class="font-size1">Horas trabajadas</small>
@@ -61,7 +61,7 @@
             </div>
             <span class="col-md-1 d-flex justify-content-end pr-0 ArchivosCasos" >
                 <span class="fa-stack fa-lg">
-                    <i class="btn btn-sm " data-toggle="modal" data-target="#modalArchivoCaso"><img src="{{ asset('dist/fontawesome-6/svgs/brands/add.svg') }}" style="width: 1.5rem"></i>
+                    <i class="btn btn-sm " data-toggle="modal" data-target="#modalArchivoCaso" style="display: none" id="btnArchivos"><img src="{{ asset('dist/fontawesome-6/svgs/brands/add.svg') }}" style="width: 1.5rem"></i>
                 </span>
             </span>
             <span class="col-md-3 d-flex justify-content-end mr-1" >
@@ -77,10 +77,9 @@
                 <template id="card-template">
                     <div class="card mb-3 shadow-sm">
                         <div class="card-body">
-                        <a href="#" class="text-muted position-absolute" style="top: 1rem; right: 1rem;">
-                            <i class="fas fa-trash"></i>
-                        </a>
-
+                        <button type="button" class="btn btn-sm text-muted position-absolute eliminarCaso" style="top: 1rem; right: 1rem;">
+                            <i class="fas fa-trash" data-toggle="modal" data-target="#modalEliminar"></i>
+                        </button>
                         <div>
                             <h6 class="font-weight-bold mb-1 titulo-caso"></h6>
                             <p class="mb-1">Caso: <span class="text-dark descripcion-caso"></span></p>
@@ -89,7 +88,7 @@
                         <div class="d-flex justify-content-between">
                             <small class="text-muted mt-5">Estado Actual: <strong class="text-dark estado-caso"></strong></small>
                             <div class="text-right mt-4">
-                            <button type="button" class="bg-blue px-4 py-2 gestionarCaso">Gestionar Caso</button>
+                                <button type="button" class="bg-blue px-4 py-2 gestionarCaso">Gestionar Caso</button>
                             </div>
                         </div>
                         </div>
@@ -215,58 +214,6 @@
                                 <!-- Contenedor donde se insertará -->
                                 <div id="contenedor-toggles"></div>
 
-
-
-
-                                {{-- <div class="card p-2 m-2">
-                                    <div class="d-flex justify-content-between">
-                                        <div class="file-item">
-                                            <div class="icon d-flex justify-content-center align-items-center rounded-circle">
-                                                <i class="far fa-envelope file-icon"></i>
-                                            </div>
-                                            <div class="file-info">
-                                                <div class="file-title">Notificar por correo electrónico</div>
-                                                <div class="file-time"><small>Enviar un correo electrónico con el estado actual del caso</small></div>
-                                            </div>
-                                        </div>
-                                        <div class="custom-control custom-switch ml-1">
-                                            <input type="checkbox" class="custom-control-input"  id="notify-email">
-                                            <label class="custom-control-label" for="notify-email"></label>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex justify-content-between mt-2">
-                                        <div class="file-item">
-                                            <div class="icon d-flex justify-content-center align-items-center rounded-circle">
-                                                <i class="fa fa-bars file-icon"></i>
-                                            </div>
-                                            <div class="file-info">
-                                                <div class="file-title">Notificar al cliente</div>
-                                                <div class="file-time"><span>Se actualizaran los documentos y estado para el cliente</span></div>
-                                            </div>
-                                        </div>
-                                        <div class="custom-control custom-switch ml-1">
-                                            <input type="checkbox" class="custom-control-input"  id="config_notify_client">
-                                            <label class="custom-control-label" for="config_notify_client"></label>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex justify-content-between pt-2">
-                                        <div class="file-item">
-                                            <div class="icon d-flex justify-content-center align-items-center rounded-circle">
-                                                <i class="far fa-user file-icon"></i>
-                                            </div>
-                                            <div class="file-info">
-                                                <div class="file-title">Notificar a los otros abogados</div>
-                                                <div class="file-time"><span>Actualizar el estado directamente en el portal de los otros abogados</span></div>
-                                            </div>
-                                        </div>
-                                        <div class="custom-control custom-switch ml-1">
-                                            <input type="checkbox" class="custom-control-input"  id="config_notify_attorneys">
-                                            <label class="custom-control-label" for="config_notify_attorneys"></label>
-                                        </div>
-                                    </div>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -358,6 +305,7 @@
 </div>
 
 @include('Casos.Modals.AgregarCaso')
+@include('Casos.Modals.Eliminar')
 @include('Casos.Modals.AgregarArchivo')
 @include('Casos.Modals.MostrarArchivo')
 @stop

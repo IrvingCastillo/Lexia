@@ -15,7 +15,12 @@ contenedor = document.querySelector("#contenedor-casos"),
 idCase = document.querySelector("#id_case"),
 VisualizarArchivos = document.querySelector("#visualizarArchivos"),
 TituloCasoSpan = document.querySelector("#span-titulo"),
-BtnEditStatus = document.querySelector("#edit-status")
+BtnArchivos = document.querySelector('#btnArchivos'),
+BtnEditStatus = document.querySelector("#edit-status"),
+BtnEliminar = document.querySelector("#btnEliminar"),
+BarraBusqueda = document.querySelector("#barraBusqueda"),
+tipo =  document.querySelector("#tipoEliminar"),
+titulo = document.querySelector("#tituloEliminar")
 
 const modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'), { backdrop: 'static', keyboard: false }),
 modalError  = new bootstrap.Modal(document.getElementById('modalError')),
@@ -44,6 +49,8 @@ async function ObtenerListaCasos(){
 
         contenedor.innerHTML = "";
         idCase.value = ""
+        BtnArchivos.style.display = "none"
+        BarraBusqueda.style.display = "none"
         list_res.data.forEach(el => {
             const clone = template.content.cloneNode(true);
 
@@ -64,6 +71,8 @@ console.log(el)
                             // }, 300)
                         InfoHoras.classList.add('show')
                         ArchivosCasos.classList.add('show')
+                        BtnArchivos.style.display = "block"
+                        BarraBusqueda.style.display = "flex"
                         TimeLine.classList.add('show')
                         // renderTimeline("inicio_caso", {
                         //     inicio_caso: "12 de marzo",
@@ -83,6 +92,14 @@ console.log(el)
                         }
                     }, 500)
             });
+
+            clone.querySelector(".eliminarCaso").addEventListener("click", () => {
+                 idCase.value = el.id
+                 tipo.innerHTML = "caso?"
+                 titulo.innerHTML = el.caso_nombre
+console.log(idCase.value)
+
+            })
 
             contenedor.appendChild(clone);
         });
@@ -179,6 +196,12 @@ function RenderizarArchivos(list_documents){
     // Limpiar contenedor antes de renderizar
     contenedor.innerHTML = "";
 
+    if (!list_documents || list_documents.length === 0) {
+        emptyMsj.style.display = "block";
+        return;
+    }
+    emptyMsj.style.display = "none";
+
     list_documents.forEach(doc => {
         const clone = template.content.cloneNode(true);
         let visualizador;
@@ -230,18 +253,32 @@ function RenderizarArchivos(list_documents){
     });
 }
 
-// GestionarCaso.addEventListener('click', function(){
-//     setTimeout(()=> {
-//         InfoSuperior.classList.add('cardHide')
-//         TimeLine.classList.add('show')
-//         //  setTimeout(()=> {
-//             InfoInferior.classList.remove('cardHide')
-//         // }, 300)
-//         InfoHoras.classList.add('show')
-//         ArchivosCasos.classList.add('show')
-//         ActualizarContador()
-//     }, 500)
-// })
+BarraBusqueda.addEventListener("input", async(e) => {
+    const query = e.target.value.toLowerCase()
+
+    const personal_t = await fetch('/get-token')
+    const res_personal_t = await personal_t.json()
+
+    let body_case = {
+        "legal_case_id" : idCase.value
+    }
+    const queryParams = new URLSearchParams(body_case).toString();
+
+    const case_info = await fetch(`https://api.lexialegal.site/api/legal-cases/show/cases?${queryParams}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            'Authorization': `Bearer ${res_personal_t.token}`,
+        }
+    })
+    const res_case_info = await case_info.json()
+
+    const filtrados = res_case_info.data.documents.filter(item =>
+        item.name.toLowerCase().includes(query)
+    );
+    RenderizarArchivos(filtrados);
+})
 
 $('.dropdown-menu').on('click', function(e) {
   e.stopPropagation();
@@ -311,7 +348,6 @@ $("#attorneys").multiselect({
 })
 
 BtnEditStatus.addEventListener('click', async(e) => {
-    console.log(idCase.value)
     showModal(modalCarga)
     await new Promise(r => setTimeout(r, 2000))
     hideModal(modalCarga)
@@ -336,8 +372,6 @@ BtnEditStatus.addEventListener('click', async(e) => {
         })
         const res_case_info = await case_info.json()
 
-        console.log(res_case_info.data)
-
         let actual_status = ""
 
         if (res_case_info.data.status == "inicio_caso") {
@@ -349,13 +383,11 @@ BtnEditStatus.addEventListener('click', async(e) => {
         else if (res_case_info.data.status == "proceso") {
             actual_status = "sentencia"
         }
-    console.log(actual_status)
         const legal_case_id = idCase.value,
         status = actual_status,
         notify_email = document.querySelector("#config_notify_email"),
         notify_client = document.querySelector("#config_notify_client"),
         notify_attorneys = document.querySelector("#config_notify_attorneys")
-console.log(legal_case_id)
         let body_change = {
             "legal_case_id": legal_case_id,
             "status": actual_status,
@@ -363,7 +395,6 @@ console.log(legal_case_id)
             "config_notify_attorneys": (notify_attorneys.checked) ? true : false,
             "config_notify_email": (notify_email.checked) ? true : false
         };
-console.log(body_change)
         const change_status = await fetch('https://api.lexialegal.site/api/legal-cases/change/status/cases', {
             method: "POST",
             headers: {
@@ -375,7 +406,6 @@ console.log(body_change)
         })
 
         const res_change_status = await change_status.json()
-console.log(res_change_status)
         if (change_status.ok) {
             successMsj.textContent = res_change_status.message
             showModal(modalSuccess)
@@ -415,7 +445,14 @@ AgregarArchivo.addEventListener('click', async(e) => {
 
     const data = await res_file.json()
     if (res_file.ok) {
-        console.log(data)
+    console.log(data)
+        successMsj.textContent = res_change_status.message
+        showModal(modalSuccess)
+        hideModal(modalSuccess, 2000, () => {
+            $("#modalArchivoCaso").modal({
+                hide:true
+            })
+        });
     }
 })
 
@@ -425,36 +462,9 @@ AgregarCaso.addEventListener('click', async(e) => {
     const form = document.querySelector("#AltaCaso"),
     datos = new FormData(form)
 
-    // let datosCompletos = Object.fromEntries(datos.entries())
-    // const attorneysRaw = datos.getAll("attorneys[]");
-    // datosCompletos["attorneys"] = attorneysRaw.map(valor => parseInt(valor, 10));
-
-    // // (opcional) Eliminamos el campo original con [] si ya no lo queremos
-    // delete datosCompletos["attorneys[]"];
-
-    // if (datosCompletos["notify_client"] === "false") {
-    //     datosCompletos["notify_client"] = false;
-    // }
-    // if (datosCompletos["notify_attorneys"] === "false") {
-    //     datosCompletos["notify_attorneys"] = false;
-    // }
-    // if (datosCompletos["notify_email"] === "false") {
-    //     datosCompletos["notify_email"] = false;
-    // }
-
-    // const datosJson = JSON.stringify(datosCompletos)
-
-
     showModal(modalCarga)
     await new Promise(r => setTimeout(r, 2000))
     hideModal(modalCarga)
-
-    // showModal(modalSuccess)
-    // hideModal(modalSuccess, 2000, () => {
-    //     $("#modalNuevoCaso").modal({
-    //         hide:true
-    //     })
-    // });
 
     try {
         const me = await fetch('/get-token')
@@ -493,4 +503,56 @@ AgregarCaso.addEventListener('click', async(e) => {
         showModal(modalError)
         hideModal(modalError, 2000)
     }
+})
+
+
+BtnEliminar.addEventListener("click", async(e) => {
+    showModal(modalCarga)
+    await new Promise(r => setTimeout(r, 2000))
+    hideModal(modalCarga)
+
+    try {
+        const me = await fetch('/get-token')
+        const res_me = await me.json()
+
+        let body_elim = {
+            "legal_case_id": idCase.value
+        }
+
+        const res = await fetch('https://api.lexialegal.site/api/legal-cases/delete/case', {
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${res_me.token}`,
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(body_elim),
+        })
+
+        const res_delete_register = await res.json()
+
+         if (res.ok) {
+            successMsj.textContent = res_delete_register.message
+            showModal(modalSuccess)
+            hideModal(modalSuccess, 2000, () => {
+            $("#modalEliminar").modal({
+                hide:true
+            })
+            ObtenerListaCasos()
+            });
+        } else {
+            showModal(modalError);
+            hideModal(modalError, 2000, () => {
+            // showModal(modalCaso)
+            });
+        }
+
+    } catch (error) {
+        showModal(modalError);
+        hideModal(modalError, 2000, () => {
+        // showModal(modalCaso)
+        });
+    }
+
+
 })
