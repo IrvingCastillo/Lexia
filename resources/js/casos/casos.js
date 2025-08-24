@@ -13,7 +13,9 @@ AgregarArchivo = document.querySelector("#agregarArchivo"),
 template = document.querySelector("#card-template"),
 contenedor = document.querySelector("#contenedor-casos"),
 idCase = document.querySelector("#id_case"),
-VisualizarArchivos = document.querySelector("#visualizarArchivos")
+VisualizarArchivos = document.querySelector("#visualizarArchivos"),
+TituloCasoSpan = document.querySelector("#span-titulo"),
+BtnEditStatus = document.querySelector("#edit-status")
 
 const modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'), { backdrop: 'static', keyboard: false }),
 modalError  = new bootstrap.Modal(document.getElementById('modalError')),
@@ -54,17 +56,26 @@ async function ObtenerListaCasos(){
             clone.querySelector(".gestionarCaso").addEventListener("click", () => {
                  idCase.value = el.id
                     setTimeout(()=> {
+console.log(el)
+                        TituloCasoSpan.innerHTML = el.caso_nombre
                         InfoSuperior.classList.add('cardHide')
-                        TimeLine.classList.add('show')
                         //  setTimeout(()=> {
                             InfoInferior.classList.remove('cardHide')
-                        // }, 300)
+                            // }, 300)
                         InfoHoras.classList.add('show')
                         ArchivosCasos.classList.add('show')
+                        TimeLine.classList.add('show')
+                        // renderTimeline("inicio_caso", {
+                        //     inicio_caso: "12 de marzo",
+                        //     revision_documentos: "25 de marzo"
+                        // });  forma de envio para renderizar el time line
+                        RenderizarTimeLine(el.status)
+                        RenderizarNotificaciones(el)
                         // ActualizarContador()
                         if(el.documents.length > 0){
                             console.log(el)
                             emptyMsj.style.display = "none";
+
                             RenderizarArchivos(el.documents)
                         }
                         else{
@@ -83,6 +94,84 @@ async function ObtenerListaCasos(){
     }
 }
 
+
+function RenderizarNotificaciones(element_case){
+    console.log(element_case)
+    const contenedor = document.getElementById("contenedor-toggles");
+    contenedor.innerHTML = ""; // 🔹 Limpia valores previos
+
+    const template = document.getElementById("toggles-template");
+    const clone = template.content.cloneNode(true);
+
+    // Setear los valores según la respuesta del back
+    clone.querySelector("#config_notify_email").checked = !!element_case.notify_email;
+    clone.querySelector("#config_notify_client").checked = !!element_case.notify_client;
+    clone.querySelector("#config_notify_attorneys").checked = !!element_case.notify_attorneys;
+
+    contenedor.appendChild(clone);
+}
+
+function RenderizarTimeLine(status) //status, fechas = {}  parametros
+    {
+    const contenedor = document.getElementById("timeline-container");
+    contenedor.innerHTML = ""; // Limpia el timeline anterior
+
+    // Clonamos el template
+    const template = document.getElementById("timeline-template");
+    const clone = template.content.cloneNode(true);
+
+    // Obtenemos todos los <li>
+    const steps = clone.querySelectorAll("li.time-line-item");
+
+    let activeFound = false;
+    steps.forEach(step => {
+        const stepStatus = step.dataset.status;
+        const content = step.querySelector(".content-time-line");
+        const icon = step.querySelector(".icon, .icon-pending");
+        const fecha = step.querySelector(".fecha");
+
+        //  Resetear clases por si acaso (por limpieza extra)
+        step.classList.remove("status-completed", "status-pending");
+        content.classList.remove("active");
+        if (icon) {
+            icon.classList.remove("icon", "icon-pending");
+            icon.classList.add("icon"); // default
+        }
+
+        //  Lógica para asignar clases dinámicamente
+        if (!activeFound) {
+            step.classList.add("status-completed");
+            content.classList.add("active");
+
+            if (stepStatus === status) {
+                activeFound = true;
+            }
+        } else {
+            step.classList.add("status-pending");
+            if (icon) {
+                icon.classList.remove("icon");
+                icon.classList.add("icon-pending");
+            }
+        }
+
+        //  Setear fecha si existe en la data
+        // if (fecha && fechas[stepStatus]) {
+        //     fecha.textContent = fechas[stepStatus];
+        // } else if (fecha) {
+        //     fecha.textContent = "";
+        // }
+    });
+    if (status === "sentencia") {
+        BtnEditStatus.disabled = true
+    }
+    else{
+        BtnEditStatus.disabled = false
+    }
+
+    // Insertamos el nuevo timeline ya limpio
+    contenedor.appendChild(clone);
+}
+
 function RenderizarArchivos(list_documents){
     const template = document.querySelector("#file-template");
     const contenedor = document.querySelector("#contenedor-archivos");
@@ -91,7 +180,6 @@ function RenderizarArchivos(list_documents){
     contenedor.innerHTML = "";
 
     list_documents.forEach(doc => {
-console.log(doc)
         const clone = template.content.cloneNode(true);
         let visualizador;
 
@@ -119,7 +207,9 @@ console.log(doc)
         // Rellenar valores dinámicos
         clone.querySelector(".nombre-archivo").textContent = doc.name;
         // clone.querySelector(".tipo-archivo").textContent = doc.tipo;
-        clone.querySelector(".fecha-archivo").textContent = doc.uploaded_at;
+        const fechaFormateada = formatearFecha(doc.uploaded_at);
+
+        clone.querySelector(".fecha-archivo").textContent = fechaFormateada;
 
         // Event listener para borrar archivo
         clone.querySelector(".borrar-archivo").addEventListener("click", e => {
@@ -156,6 +246,23 @@ console.log(doc)
 $('.dropdown-menu').on('click', function(e) {
   e.stopPropagation();
 });
+
+
+function formatearFecha(fechaStr) {
+  const meses = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
+
+  // Convertir string a objeto Date
+  const fecha = new Date(fechaStr);
+
+  // Obtener partes de la fecha
+  const dia = fecha.getDate().toString().padStart(2, '0');
+  const mes = meses[fecha.getMonth()];
+  const año = fecha.getFullYear();
+
+  // Formato final
+  return `${dia} ${mes} ${año}`;
+}
+
 
 function ActualizarContador() {
   const ahora = new Date();
@@ -201,6 +308,90 @@ $("#attorneys").multiselect({
     nonSelectedText: 'No hay abogados seleccionados',
     allSelectedText: 'Todos los abogados seleccionados',
     filterPlaceholder: 'Buscar'
+})
+
+BtnEditStatus.addEventListener('click', async(e) => {
+    console.log(idCase.value)
+    showModal(modalCarga)
+    await new Promise(r => setTimeout(r, 2000))
+    hideModal(modalCarga)
+
+
+    try {
+        const personal_t = await fetch('/get-token')
+        const res_personal_t = await personal_t.json()
+
+        let body_case = {
+            "legal_case_id" : idCase.value
+        }
+        const queryParams = new URLSearchParams(body_case).toString();
+
+        const case_info = await fetch(`https://api.lexialegal.site/api/legal-cases/show/cases?${queryParams}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                'Authorization': `Bearer ${res_personal_t.token}`,
+            }
+        })
+        const res_case_info = await case_info.json()
+
+        console.log(res_case_info.data)
+
+        let actual_status = ""
+
+        if (res_case_info.data.status == "inicio_caso") {
+            actual_status = "revision_documentos"
+        }
+        else if (res_case_info.data.status == "revision_documentos"){
+            actual_status = "proceso"
+        }
+        else if (res_case_info.data.status == "proceso") {
+            actual_status = "sentencia"
+        }
+    console.log(actual_status)
+        const legal_case_id = idCase.value,
+        status = actual_status,
+        notify_email = document.querySelector("#config_notify_email"),
+        notify_client = document.querySelector("#config_notify_client"),
+        notify_attorneys = document.querySelector("#config_notify_attorneys")
+console.log(legal_case_id)
+        let body_change = {
+            "legal_case_id": legal_case_id,
+            "status": actual_status,
+            "config_notify_client": (notify_client.checked) ? true : false,
+            "config_notify_attorneys": (notify_attorneys.checked) ? true : false,
+            "config_notify_email": (notify_email.checked) ? true : false
+        };
+console.log(body_change)
+        const change_status = await fetch('https://api.lexialegal.site/api/legal-cases/change/status/cases', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                'Authorization': `Bearer ${res_personal_t.token}`,
+            },
+            body:  JSON.stringify(body_change)
+        })
+
+        const res_change_status = await change_status.json()
+console.log(res_change_status)
+        if (change_status.ok) {
+            successMsj.textContent = res_change_status.message
+            showModal(modalSuccess)
+            hideModal(modalSuccess, 2000, () => {
+                $("#modalNuevoCaso").modal({
+                    hide:true
+                })
+                console.log(res_change_status.data)
+                RenderizarTimeLine(res_change_status.data.status)
+            });
+        }
+
+    } catch (error) {
+        showModal(modalError)
+        hideModal(modalError, 2000)
+    }
 })
 
 AgregarArchivo.addEventListener('click', async(e) => {
