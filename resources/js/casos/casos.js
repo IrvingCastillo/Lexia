@@ -17,7 +17,10 @@ VisualizarArchivos = document.querySelector("#visualizarArchivos"),
 TituloCasoSpan = document.querySelector("#span-titulo"),
 BtnArchivos = document.querySelector('#btnArchivos'),
 BtnEditStatus = document.querySelector("#edit-status"),
-BtnEliminar = document.querySelector("#btnEliminar"),
+BtnEliminarCaso = document.querySelector("#btnEliminar"),
+BtnModalEditCaso = document.querySelector("#btnEditCaso"),
+BtnShowListaCasos = document.querySelector("#showListaCasos"),
+BtnAltaCAso = document.querySelector("#btnAltaCaso"),
 BarraBusqueda = document.querySelector("#barraBusqueda"),
 tipo =  document.querySelector("#tipoEliminar"),
 titulo = document.querySelector("#tituloEliminar")
@@ -63,33 +66,7 @@ async function ObtenerListaCasos(){
             clone.querySelector(".gestionarCaso").addEventListener("click", () => {
                  idCase.value = el.id
                     setTimeout(()=> {
-console.log(el)
-                        TituloCasoSpan.innerHTML = el.caso_nombre
-                        InfoSuperior.classList.add('cardHide')
-                        //  setTimeout(()=> {
-                            InfoInferior.classList.remove('cardHide')
-                            // }, 300)
-                        InfoHoras.classList.add('show')
-                        ArchivosCasos.classList.add('show')
-                        BtnArchivos.style.display = "block"
-                        BarraBusqueda.style.display = "flex"
-                        TimeLine.classList.add('show')
-                        // renderTimeline("inicio_caso", {
-                        //     inicio_caso: "12 de marzo",
-                        //     revision_documentos: "25 de marzo"
-                        // });  forma de envio para renderizar el time line
-                        RenderizarTimeLine(el.status)
-                        RenderizarNotificaciones(el)
-                        // ActualizarContador()
-                        if(el.documents.length > 0){
-                            console.log(el)
-                            emptyMsj.style.display = "none";
-
-                            RenderizarArchivos(el.documents)
-                        }
-                        else{
-                            emptyMsj.style.display = "block";
-                        }
+                        showGestionarCaso(el)
                     }, 500)
             });
 
@@ -97,7 +74,6 @@ console.log(el)
                  idCase.value = el.id
                  tipo.innerHTML = "caso?"
                  titulo.innerHTML = el.caso_nombre
-console.log(idCase.value)
 
             })
 
@@ -111,6 +87,37 @@ console.log(idCase.value)
     }
 }
 
+function showGestionarCaso(el){
+    BtnShowListaCasos.style.display = "inline"
+    BtnAltaCAso.style.display = "none"
+    BtnModalEditCaso.style.display = "block"
+    TituloCasoSpan.innerHTML = el.caso_nombre
+    InfoSuperior.classList.add('cardHide')
+    //  setTimeout(()=> {
+        InfoInferior.classList.remove('cardHide')
+        // }, 300)
+    InfoHoras.classList.add('show')
+    ArchivosCasos.classList.add('show')
+    BtnArchivos.style.display = "block"
+    BarraBusqueda.style.display = "flex"
+    TimeLine.classList.add('show')
+    // renderTimeline("inicio_caso", {
+    //     inicio_caso: "12 de marzo",
+    //     revision_documentos: "25 de marzo"
+    // });  forma de envio para renderizar el time line
+    RenderizarTimeLine(el.status)
+    RenderizarNotificaciones(el)
+    // ActualizarContador()
+    if(el.documents.length > 0){
+        console.log(el)
+        emptyMsj.style.display = "none";
+
+        RenderizarArchivos(el.documents)
+    }
+    else{
+        emptyMsj.style.display = "block";
+    }
+}
 
 function RenderizarNotificaciones(element_case){
     console.log(element_case)
@@ -238,7 +245,7 @@ function RenderizarArchivos(list_documents){
         clone.querySelector(".borrar-archivo").addEventListener("click", e => {
             e.preventDefault();
             console.log("Borrar archivo ID:", doc.id);
-            // aquí podrías llamar a la API para eliminar
+            EliminarArchivo(doc.id)
         });
 
         // Event listener para abrir modal si quieres
@@ -284,6 +291,67 @@ $('.dropdown-menu').on('click', function(e) {
   e.stopPropagation();
 });
 
+async function EliminarArchivo(idArchivo){
+    showModal(modalCarga)
+    await new Promise(r => setTimeout(r, 2000))
+    hideModal(modalCarga)
+    try {
+        const personal_t = await fetch('/get-token')
+        const res_personal_t = await personal_t.json()
+
+        let body_file = {
+            "document_id" : idArchivo
+        }
+
+        const eliminar = await fetch('https://api.lexialegal.site/api/legal-cases/delete/file', {
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${res_personal_t.token}`,
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: JSON.stringify(body_file)
+        })
+
+        const res_eliminar = await eliminar.json()
+
+        console.log(res_eliminar)
+
+        if (eliminar.ok) {
+            let body_case = {
+                "legal_case_id" : idCase.value
+            }
+            const queryParams = new URLSearchParams(body_case).toString();
+
+            const case_info = await fetch(`https://api.lexialegal.site/api/legal-cases/show/cases?${queryParams}`, {
+                method: "GET",
+                headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                'Authorization': `Bearer ${res_personal_t.token}`,
+                }
+            })
+
+            const res_case_info = await case_info.json()
+
+            if (case_info.ok) {
+                successMsj.textContent = res_eliminar.message
+                showModal(modalSuccess)
+                hideModal(modalSuccess, 2000, () => {
+                    $("#modalNuevoCaso").modal({
+                        hide:true
+                    })
+                    console.log(res_eliminar.data)
+                    RenderizarArchivos(res_case_info.data.documents)
+                });
+            }
+        }
+
+    } catch (error) {
+        showModal(modalError)
+        hideModal(modalError, 2000)
+    }
+}
 
 function formatearFecha(fechaStr) {
   const meses = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
@@ -346,6 +414,37 @@ $("#attorneys").multiselect({
     allSelectedText: 'Todos los abogados seleccionados',
     filterPlaceholder: 'Buscar'
 })
+
+$("#attorneys_edit").multiselect({
+    templates: {
+            li: '<li class="color-multiselect"><a href="javascript:void(0);"><label></label></a></li>'
+        },
+    // numberDisplayed: 7,
+    maxHeight: 150,
+    enableCaseInsensitiveFiltering: true,
+    nSelectedText: ' - Abogados seleccionados',
+    buttonWidth: '100%',
+    nonSelectedText: 'No hay abogados seleccionados',
+    allSelectedText: 'Todos los abogados seleccionados',
+    filterPlaceholder: 'Buscar'
+})
+
+BtnShowListaCasos.addEventListener("click", ()=> {
+    BarraBusqueda.style.display = "none"
+    BtnAltaCAso.style.display = "block"
+    BtnModalEditCaso.style.display = "none"
+    BtnArchivos.style.display = "none"
+    InfoInferior.classList.add('cardHide')
+    TimeLine.classList.remove('show')
+    ArchivosCasos.classList.remove('show')
+    InfoHoras.classList.remove('show')
+    BtnShowListaCasos.style.display = "none"
+    setTimeout(() => {
+        InfoSuperior.classList.remove('cardHide')
+    }, 2000);
+
+})
+
 
 BtnEditStatus.addEventListener('click', async(e) => {
     showModal(modalCarga)
@@ -425,34 +524,64 @@ BtnEditStatus.addEventListener('click', async(e) => {
 })
 
 AgregarArchivo.addEventListener('click', async(e) => {
-    let file = document.querySelector('input[name="documents[]"]').files[0]
-    const me = await fetch('/get-token')
-    const res_me = await me.json()
 
-    const bodyForm = new FormData()
+    showModal(modalCarga)
+    await new Promise(r => setTimeout(r, 2000))
+    hideModal(modalCarga)
 
-    bodyForm.append('legal_case_id', idCase.value)
-    bodyForm.append('documents[]', file)
+    try {
+        let file_field = document.querySelector('input[name="documents[]"]').files[0]
+        const me = await fetch('/get-token')
+        const res_me = await me.json()
 
-    const res_file = await fetch('https://api.lexialegal.site/api/legal-cases/upload/files', {
-        method: "POST",
-        headers: {
-            'Authorization': `Bearer ${res_me.token}`,
-            Accept: 'application/json'
-        },
-        body: bodyForm
-    })
+        let body_case = {
+            "legal_case_id" : idCase.value
+        }
+        const queryParams = new URLSearchParams(body_case).toString();
 
-    const data = await res_file.json()
-    if (res_file.ok) {
-    console.log(data)
-        successMsj.textContent = res_change_status.message
-        showModal(modalSuccess)
-        hideModal(modalSuccess, 2000, () => {
-            $("#modalArchivoCaso").modal({
-                hide:true
-            })
-        });
+        const bodyForm = new FormData()
+
+        bodyForm.append('legal_case_id', idCase.value)
+        bodyForm.append('documents[]', file_field)
+
+        const file = await fetch('https://api.lexialegal.site/api/legal-cases/upload/files', {
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${res_me.token}`,
+                Accept: 'application/json'
+            },
+            body: bodyForm
+        })
+
+        const res_file = await file.json()
+
+        if (file.ok) {
+            const case_info = await fetch(`https://api.lexialegal.site/api/legal-cases/show/cases?${queryParams}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                'Authorization': `Bearer ${res_me.token}`,
+            }
+        })
+        const res_case_info = await case_info.json()
+
+        if (case_info.ok) {
+            successMsj.textContent = res_file.message
+            showModal(modalSuccess)
+            hideModal(modalSuccess, 2000, () => {
+                $("#modalArchivoCaso").modal({
+                    hide:true
+                })
+                RenderizarArchivos(res_case_info.data.documents)
+            });
+        }
+    }
+
+
+    } catch (error) {
+        showModal(modalError)
+        hideModal(modalError, 2000)
     }
 })
 
@@ -506,7 +635,7 @@ AgregarCaso.addEventListener('click', async(e) => {
 })
 
 
-BtnEliminar.addEventListener("click", async(e) => {
+BtnEliminarCaso.addEventListener("click", async(e) => {
     showModal(modalCarga)
     await new Promise(r => setTimeout(r, 2000))
     hideModal(modalCarga)
@@ -554,5 +683,42 @@ BtnEliminar.addEventListener("click", async(e) => {
         });
     }
 
+
+})
+
+BtnModalEditCaso.addEventListener("click", async(e) => {
+
+    try {
+        const personal_t = await fetch('/get-token')
+        const res_personal_t = await personal_t.json()
+
+        let body_case = {
+            "legal_case_id" : idCase.value
+        }
+        const queryParams = new URLSearchParams(body_case).toString();
+
+        const case_info = await fetch(`https://api.lexialegal.site/api/legal-cases/show/cases?${queryParams}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                'Authorization': `Bearer ${res_personal_t.token}`,
+            }
+        })
+        const res_case_info = await case_info.json()
+
+        let caso_data = res_case_info.data
+        console.log(res_case_info.data)
+
+        document.getElementById("caso_nombre_edit").value = caso_data.caso_nombre
+        document.getElementById("client_name_edit").value = ""
+        document.getElementById("description_edit").value = caso_data.description
+        // document.getElementById("case_date_edit").value = "vacio"
+        document.getElementById("case_type_edit").value = caso_data.case_type
+
+    } catch (error) {
+        showModal(modalError);
+        hideModal(modalError);
+    }
 
 })

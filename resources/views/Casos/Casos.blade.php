@@ -22,6 +22,9 @@
 
 <div class="container-fluid bg-white my-5 py-5">
     <input type="text"  id="id_case" hidden>
+
+    <span id="showListaCasos" type="button" class="btn btn-sm py-1 px-3" style="background: #f5f5f5; border-radius: 5px; display:none;"><i class="fa fa-arrow-left"> Regresar</i></span>
+
     <div id="listaCasos">
         <div class="row justify-content-center">
             <div class="col-12 col-md-6">
@@ -64,8 +67,11 @@
                     <i class="btn btn-sm " data-toggle="modal" data-target="#modalArchivoCaso" style="display: none" id="btnArchivos"><img src="{{ asset('dist/fontawesome-6/svgs/brands/add.svg') }}" style="width: 1.5rem"></i>
                 </span>
             </span>
-            <span class="col-md-3 d-flex justify-content-end mr-1" >
-                <span class="fa-stack fa-lg">
+            <span class="col-md-3 d-flex justify-content-end mr-1">
+                <span class="fa-stack fa-lg" id="btnEditCaso" style="display: none">
+                    <i class="btn btn-sm " data-toggle="modal" data-target="#modalEditarCaso"><img src="{{ asset('dist/fontawesome-6/svgs/solid/user-gear.svg') }}" style="width: 1.5rem"></i>
+                </span>
+                <span class="fa-stack fa-lg" id="btnAltaCaso">
                     <i class="btn btn-sm " data-toggle="modal" data-target="#modalNuevoCaso"><img src="{{ asset('dist/fontawesome-6/svgs/brands/add.svg') }}" style="width: 1.5rem"></i>
                 </span>
             </span>
@@ -100,7 +106,7 @@
 
         </div>
 
-        <div class="my-4 mx-2 col-md-9 DatosInf cardHide shadow-sm " id="DatosInf" style="overflow-y: scroll;  scrollbar-color: #132c47 transparent; scrollbar-width: thin;">
+        <div class="my-4 mx-2 col-md-9 DatosInf cardHide shadow-sm " id="DatosInf" style="height: 46vh; overflow-y: scroll;  scrollbar-color: #132c47 transparent; scrollbar-width: thin;">
             <div id="listadoArchivos">
                 <template id="file-template">
                     <div class="card mb-3 border-0">
@@ -137,7 +143,7 @@
 
 
 
-    <div class="chatbox-fixed" style="font-family: 'Montserrat'" id="time-line" >
+    <div class="chatbox-fixed" id="time-line" >
         <div class="card cardChat" style="border-radius: 25px;">
             <div class="d-flex justify-content-between align-items-center p-3">
                 <strong>Timeline</strong>
@@ -305,6 +311,7 @@
 </div>
 
 @include('Casos.Modals.AgregarCaso')
+@include('Casos.Modals.EditarCaso')
 @include('Casos.Modals.Eliminar')
 @include('Casos.Modals.AgregarArchivo')
 @include('Casos.Modals.MostrarArchivo')
