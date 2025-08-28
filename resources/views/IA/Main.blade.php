@@ -23,6 +23,27 @@
     @keyframes blink {
       to { visibility: hidden; }
     }
+
+
+    /*  */
+
+    #dropZone {
+  cursor: pointer;
+  transition: background-color 0.3s;
+  height: 8rem;
+}
+#dropZone.dragover {
+  background-color: transparent;
+  border-color: #132c47;
+}
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.file-item span {
+  font-size: 0.9rem;
+}
 </style>
 
 @section('Contenido')
@@ -58,9 +79,14 @@
             <div class="card-body">
                 <div>
                     <h3>¿Qué puedes hacer con LEX-IA?</h3>
-                    <form class="dropzone" id="my-dropzone" enctype="multipart/form-data" method="POST">
-                        <input type="hidden" name="question" id="question-hidden">
-                    </form>
+
+                    <div id="dropZone" class="border border-primary rounded p-4 text-center bg-light">
+                        <p class="mb-0">Arrastra aquí tus archivos PDF/DOCX<br>o haz clic para seleccionarlos</p>
+                        <input type="file" id="fileInput" class="d-none" multiple accept=".pdf,.docx">
+                    </div>
+
+                    <!-- Vista previa -->
+                    <ul id="fileList" class="list-group mt-3"></ul>
 
                     {{-- <div class="card" style="border-style: dashed; height: 5rem">
 
@@ -92,7 +118,7 @@
                     </div>
                     <div class="d-flex justify-content-end">
                         <div class="text-left mt-4">
-                            <button id="startIA" type="button" class="bg-blue px-4 py-1" style="border-radius: 5px; 5px; width: 10rem">Empezar</button>
+                            <button id="startIA" type="button" class="bg-blue px-4 py-1" style="border-radius: 5px; 5px; width: 10rem; display:none" >Empezar</button>
                         </div>
                     </div>
                 </div>

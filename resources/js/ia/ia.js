@@ -1,9 +1,14 @@
 
 const ExtraerCheck = document.querySelector("#resumen"),
 ResumirCheck = document.querySelector("#resumir"),
-PreguntaText = document.querySelector("#pregunta")
+PreguntaText = document.querySelector("#pregunta"),
+dropZone = document.getElementById('dropZone'),
+fileInput = document.getElementById('fileInput'),
+fileList = document.getElementById('fileList'),
+Respuesta = document.querySelector("#editor"),
+BtnStart = document.getElementById("startIA")
 
-const Respuesta = document.querySelector("#editor")
+let selectedFiles = [];
 
 ExtraerCheck.addEventListener('change', function(){
     if(this.checked == true){
@@ -44,48 +49,8 @@ PreguntaText.addEventListener('input', function(){
     }
 })
 
-Dropzone.options.myDropzone = {
-  url: "/",
-  dictDefaultMessage: "Arrastra aquí los archivos o haz clic para seleccionar",
-  autoProcessQueue: false,
-  acceptedFiles: "application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.txt",
-  uploadMultiple: true,
-  parallelUploads: 2,
-  addRemoveLinks: true,
-  dictRemoveFile: "✖️ Eliminar",
-  maxFiles: 2,
-  maxFilesize: 50, //MB
-  init: function() {
-    this.on("addedfile", function(file) {
-      // Acciones al agregar un archivo
-      console.log(file)
-    });
-    this.on("maxfilesexceeded", function (file) {
-      this.removeFile(file);
-      alert("Máximo de archivos excedido");
-    });
-    this.on("removedfile", function(file) {
-      // file.name o un identificador personalizado desde response
-      console.log("Se eliminó del front:", file.name);
-    });
-    //  this.on("removedfile", file => {  //eliminar del servidor
-    //   const name = file.serverFilename || file.name;
-    //   $.ajax({
-    //     type: "POST",
-    //     url: "/delete",
-    //     data: { filename: name }
-    //   })
-    //   .done(() => console.log(`Eliminado: ${name}`))
-    //   .fail(() => console.error(`Error eliminando ${name}`));
-    // });
 
-    document.getElementById("uploadBtn").addEventListener("click", () => { //boton de "Empezar"
-      this.processQueue();
-    });
-  }
-};
-
-document.getElementById("startIA").addEventListener('click', async(e) => {
+BtnStart.addEventListener('click', async(e) => {
     document.getElementById("listadoDocumento").classList.add('cardHide')
     setTimeout(()=> {
         document.getElementById("divEditor").classList.remove('cardHide')
@@ -131,7 +96,7 @@ function EscribirTexto(texto, velocidad = 50) {
         if (i < texto.length) {
             quill.insertText(i, texto[i]); // insertar letra en la posición correspondiente
             i++;
-            setTimeout(EscribirLetra, velocidad + Math.random() * 60);
+            setTimeout(EscribirLetra, velocidad + Math.random() * 20);
         }
         else{
             quill.setSelection(quill.getLength(), 0);
@@ -143,24 +108,99 @@ function EscribirTexto(texto, velocidad = 50) {
     }, 1000);
 }
 
+dropZone.addEventListener('click', () => fileInput.click());
+
+dropZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropZone.classList.add('dragover');
+});
+
+dropZone.addEventListener('dragleave', () => {
+  dropZone.classList.remove('dragover');
+});
+
+dropZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+  handleFiles(e.dataTransfer.files);
+});
+
+// Input manual
+fileInput.addEventListener('change', (e) => {
+  handleFiles(e.target.files);
+});
+
+
+function handleFiles(files) {
+  for (let file of files) {
+    if (selectedFiles.length >= 2) {
+      alert("Solo puedes subir máximo 2 archivos");
+      break;
+    }
+    if (file.type === "application/pdf" || file.name.endsWith(".docx")) {
+      selectedFiles.push(file);
+    } else {
+      alert("Solo se permiten archivos PDF o DOCX");
+    }
+  }
+  renderFileList();
+}
+
+function renderFileList() {
+    if (selectedFiles.length !== 0) {
+        BtnStart.style.display = "block"
+    }
+    else{
+        BtnStart.style.display = "none"
+    }
+
+  fileList.innerHTML = "";
+  selectedFiles.forEach((file, index) => {
+    const li = document.createElement("li");
+    li.className = "list-group-item file-item";
+    li.innerHTML = `
+      <span>${file.name} (${(file.size/1024).toFixed(1)} KB)</span>
+      <button class="btn btn-sm btn-danger">❌</button>
+    `;
+    li.querySelector("button").addEventListener("click", () => {
+      selectedFiles.splice(index, 1);
+      renderFileList();
+    });
+    fileList.appendChild(li);
+  });
+}
+
+
 async function ObtenerRespuesta(){
     try {
-        const personal_t = await fetch('/get-token')
-        const res_personal_t = await personal_t.json()
 
-        console.log(PreguntaText.value)
+        let formData = new FormData(),
+        pregunta
+        selectedFiles.forEach(file => formData.append("files", file))
 
-        let body_ask = {
-            "question" : PreguntaText.value
+        if (PreguntaText.value.trim() === "") {
+            if (ResumirCheck.checked) {
+                pregunta = "Resume este archivos o archivos "
+            }
+            else if (ExtraerCheck.checked) {
+                pregunta = "Extrae la información de este archivo o archivos "
+            }
         }
+        else{
+            pregunta = PreguntaText.value.trim()
+        }
+
+        formData.append("question", pregunta)
+
+        console.log(formData)
 
         const askIA = await fetch('http://chat.lexialegal.site/analizar', {
             method: "POST",
             // headers:{
-                'Authorization': `Bearer ${res_personal_t.token}`,
+                // 'Authorization': `Bearer ${res_personal_t.token}`,
                 // "Content-Type": "multipart/form-data"
             // },
-            body: JSON.stringify(body_ask)
+            body: formData
         })
 
         const res_askIA = await askIA.json()
@@ -168,7 +208,7 @@ async function ObtenerRespuesta(){
         console.log(res_askIA)
 
         if(askIA.ok){
-            EscribirTexto(res_askIA.answer, 60)
+            EscribirTexto(res_askIA.answer, 10)
         }
 
     } catch (error) {
