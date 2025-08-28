@@ -20,47 +20,10 @@ class AuthMiddleware
     public function handle(Request $request, Closure $next): Response
     {
 
-    //     $authToken = session('auth_token');
-
-    //     if (!$authToken) {
-    //         return redirect()->route('login'); // o página pública
-    //     }
-
-    //     try {
-    //         $client = new Client();
-            // $url = 'https://api.lexialegal.site' . '/api/me';
-
-    //         $response = $client->get($url, [
-    //             'headers' => [
-    //                 'Authorization' => 'Bearer ' . $authToken,
-    //                 'Accept' => 'application/json',
-    //             ],
-    //         ]);
-
-    //         if ($response->getStatusCode() === 200) {
-    //             $userData = json_decode($response->getBody(), true);
-    //             $user = new User();
-    //             $user->forceFill($userData);
-    //             Auth::setUser($user);
-    //         }
-
-    //     } catch (\Exception $e) {
-    //         return redirect()->route('login');
-    //     }
-
-    //     return $next($request);
-    // }
-
-
         $authToken = session('auth_token');
         $expiresAt   = session('auth_expires_at');
         if (!$authToken) {
             return redirect()->route('login');
-
-            // return response()->json([
-            //     'status_code' => 401,
-            //     'message' => 'Token de autorización no proporcionado',
-            // ], 401);
         }
 
         try {

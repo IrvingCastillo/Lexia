@@ -3,6 +3,8 @@ const ExtraerCheck = document.querySelector("#resumen"),
 ResumirCheck = document.querySelector("#resumir"),
 PreguntaText = document.querySelector("#pregunta")
 
+const Respuesta = document.querySelector("#editor")
+
 ExtraerCheck.addEventListener('change', function(){
     if(this.checked == true){
         ResumirCheck.checked = false
@@ -83,11 +85,13 @@ Dropzone.options.myDropzone = {
   }
 };
 
-document.getElementById("startIA").addEventListener('click', function(){
+document.getElementById("startIA").addEventListener('click', async(e) => {
     document.getElementById("listadoDocumento").classList.add('cardHide')
     setTimeout(()=> {
         document.getElementById("divEditor").classList.remove('cardHide')
-    }, 1500)
+        // EscribirTexto(respuestaBack, 50)
+    }, 2500)
+    await ObtenerRespuesta()
 })
 
  const quill = new Quill('#editor', {
@@ -112,3 +116,66 @@ document.getElementById("startIA").addEventListener('click', function(){
 //     listado.removeEventListener('transitionend', handler);
 //   });
 // });
+
+
+  // Función que escribe letra por letra
+function EscribirTexto(texto, velocidad = 50) {
+    quill.setText(""); // limpiar contenido usando la API de Quill
+
+    const cursor = document.createElement("span");
+    cursor.classList.add("cursor");
+    Respuesta.appendChild(cursor);
+
+    let i = 0;
+    function EscribirLetra() {
+        if (i < texto.length) {
+            quill.insertText(i, texto[i]); // insertar letra en la posición correspondiente
+            i++;
+            setTimeout(EscribirLetra, velocidad + Math.random() * 60);
+        }
+        else{
+            quill.setSelection(quill.getLength(), 0);
+        }
+    }
+
+    setTimeout(() => {
+        EscribirLetra();
+    }, 1000);
+}
+
+async function ObtenerRespuesta(){
+    try {
+        const personal_t = await fetch('/get-token')
+        const res_personal_t = await personal_t.json()
+
+        console.log(PreguntaText.value)
+
+        let body_ask = {
+            "question" : PreguntaText.value
+        }
+
+        const askIA = await fetch('http://chat.lexialegal.site/analizar', {
+            method: "POST",
+            // headers:{
+                'Authorization': `Bearer ${res_personal_t.token}`,
+                // "Content-Type": "multipart/form-data"
+            // },
+            body: JSON.stringify(body_ask)
+        })
+
+        const res_askIA = await askIA.json()
+
+        console.log(res_askIA)
+
+        if(askIA.ok){
+            EscribirTexto(res_askIA.answer, 60)
+        }
+
+    } catch (error) {
+        // showModal(modalError)
+        // hideModal(modalError, 2000)
+    }
+}
+const respuestaBack = "Esta es la respuesta del back!!!"
+
+
