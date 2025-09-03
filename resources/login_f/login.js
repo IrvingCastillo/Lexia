@@ -1,7 +1,3 @@
-//   "email":"fernando@gmail.com",
-//   "password":"password"
-//   https://api.lexialegal.site/api/login
-
 import { showModal, hideModal, sleep } from '@/modales/modalHelper';
 import * as bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
@@ -69,7 +65,7 @@ btnLogin.addEventListener('click', async (e) => {
         if (respuesta) {
             showModal(modalSuccess)
             successMsj.textContent = '¡Bienvenido!'
-            hideModal(modalSuccess, 2000, () => {
+            hideModal(modalSuccess, 3000, () => {
                 window.location.href = 'http://localhost:8000/casos'
             });
         } else {

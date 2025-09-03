@@ -8,68 +8,79 @@
                 </span>
             </div>
             <div class="modal-body pl-3 pr-3">
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>Nombre</label>
-                        <div class="form-group col-md-12 pl-0">
-                            <div class="input-group">
-                                <input type="text" class="form-control campoRounded">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Apellido</label>
-                        <div class="form-group col-md-12 pl-0">
-                            <div class="input-group">
-                                <input type="text" class="form-control campoRounded">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>Teléfono</label>
-                        <div class="form-group col-md-12 pl-0 d-flex">
-                            <select class="form-control campoRounded col-3" name="" id="">
-                                <option value="">+ 1</option>
-                                <option value="">+ 52</option>
-                            </select>
-                            <div class="input-group offset-1">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text group-text-transparent"><i class="fa fa-phone" style="transform: scaleX(-1)"></i></span>
+                <form id="AltaUsuarios">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label>Nombre</label>
+                            <div class="form-group col-md-12 pl-0">
+                                <div class="input-group">
+                                    <input type="text" class="form-control campoRounded" id="nombre_cliente" name="nombre_cliente">
                                 </div>
-                                <input type="text" class="form-control rounded-right-input">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Apellido Paterno</label>
+                            <div class="form-group col-md-12 pl-0">
+                                <div class="input-group">
+                                    <input type="text" class="form-control campoRounded" id="apellido_paterno" name="apellido_paterno">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Apellido Materno</label>
+                            <div class="form-group col-md-12 pl-0">
+                                <div class="input-group">
+                                    <input type="text" class="form-control campoRounded" id="apellido_materno" name="apellido_materno">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label>Correo electrónico</label>
-                        <div class="form-group col-md-12 pl-0">
-                            <div class="input-group">
-                                <input type="text" class="form-control campoRounded">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <p class="textAzul" style="font-size:1.2rem; margin-bottom: 0 !important;"><b>Permisos</b></p>
-                        <small class="text-muted">Selecciona el tipo de permisos que tendrá tu usuario</small>
-                        <div class="form-group col-md-12 pl-0">
-                            <div class="input-group">
-                                <select class="form-control campoRounded" name="" id="">
-                                    <option value="">Usuario</option>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Teléfono</label>
+                            <div class="form-group col-md-12 pl-0 d-flex">
+                                <select class="form-control campoRounded col-3"  id="area_code">
+                                    <option value="+52">+ 52</option>
+                                    <option value="+1">+ 1</option>
                                 </select>
+                                <div class="input-group offset-1">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text group-text-transparent"><i class="fa fa-phone" style="transform: scaleX(-1)"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control rounded-right-input" id="telefono">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Correo electrónico</label>
+                            <div class="form-group col-md-12 pl-0">
+                                <div class="input-group">
+                                    <input type="text" class="form-control campoRounded" id="email" name="email">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group offset-3 d-flex justify-content-between align-items-end">
-                        <div class="mb-3">
-                            <button type="button" class="bg-blue px-4 py-2 campoRoundedX" data-dismiss="modal" style="width: 15rem">Agregar Usuario</button>
+
+                    <div class="form-row">
+                        {{-- <div class="form-group col-md-5">
+                            <p class="textAzul" style="font-size:1.2rem; margin-bottom: 0 !important;"><b>Permisos</b></p>
+                            <small class="text-muted">Selecciona el tipo de permisos que tendrá tu usuario</small>
+                            <div class="form-group col-md-12 pl-0">
+                                <div class="input-group">
+                                    <select class="form-control campoRounded" name="tipo_de_permiso" id="tipo_de_permiso">
+                                        <option value="usuario" selected>Usuario</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div> --}}
+                        <div class="form-group offset-3 d-flex justify-content-between align-items-end">
+                            <div class="mb-3">
+                                <button type="button" class="bg-blue px-4 py-2 campoRoundedX" data-dismiss="modal" style="width: 15rem" id="addUser">Agregar Usuario</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

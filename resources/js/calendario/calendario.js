@@ -1,3 +1,10 @@
+import { showModal, hideModal, sleep } from '@/modales/modalHelper';
+import * as bootstrap from 'bootstrap';
+window.bootstrap = bootstrap;
+
+
+const modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'), { backdrop: 'static', keyboard: false }),
+modalError  = new bootstrap.Modal(document.getElementById('modalError'))
 
 CalendarioEventos();
 

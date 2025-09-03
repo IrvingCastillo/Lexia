@@ -8,7 +8,7 @@
                 </button> --}}
             </div>
             <div class="modal-body mb-0 pb-0 mt-0 pt-0">
-                <h3 class="text-white d-flex justify-content-center" id="mensajeExito"></h3>
+                <h2 class="text-white d-flex justify-content-center" id="mensajeExito"></h2>
                 <div class="d-flex justify-content-center">
                     <canvas class="animSuccess"  style="width: 350px; height:250px"></canvas>
                 </div>

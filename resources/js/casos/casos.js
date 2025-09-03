@@ -33,6 +33,7 @@ successMsj = document.getElementById('mensajeExito'),
 emptyMsj = document.getElementById('mensaje-vacio')
 
 ObtenerListaCasos()
+ObtenerListaAbogados()
 
 async function ObtenerListaCasos(){
     try {
@@ -57,10 +58,20 @@ async function ObtenerListaCasos(){
         list_res.data.forEach(el => {
             const clone = template.content.cloneNode(true);
 
+            const estadosRaw = ["inicio_caso", "revision_documentos", "proceso", "sentencia"]
+
+            const estadosCustom = {
+                inicio_caso: "Inicio de caso",
+                revision_documentos: "En Revisión de documentos",
+                proceso: "En Proceso",
+                sentencia: "Caso sentenciado"
+
+            }
+
             // Llenamos los valores dinámicos
             clone.querySelector(".titulo-caso").textContent = el.caso_nombre;
             clone.querySelector(".descripcion-caso").textContent = el.description;
-            clone.querySelector(".estado-caso").textContent = el.status;
+            clone.querySelector(".estado-caso").textContent = estadosCustom[el.status];
 
             // Ejemplo: agregar event listener al botón
             clone.querySelector(".gestionarCaso").addEventListener("click", () => {
@@ -87,10 +98,55 @@ async function ObtenerListaCasos(){
     }
 }
 
+async function ObtenerListaAbogados(){
+    try {
+        const me = await fetch('/get-token')
+        const res_me = await me.json()
+
+        const get_attorneys = await fetch('https://api.lexialegal.site/api/users/attorneys', {
+            method:"GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                'Authorization': `Bearer ${res_me.token}`,
+            }
+        })
+
+        const res_get_attorneys = await get_attorneys.json()
+
+        console.log(res_get_attorneys)
+
+        if (get_attorneys.ok) {
+            res_get_attorneys.data.forEach(attorney => {
+                $("#attorneys").append(`<option value="${attorney.id}">${attorney.nombre_cliente}</option>`)
+            })
+            $("#attorneys").multiselect({
+                templates: {
+                        li: '<li class="color-multiselect"><a href="javascript:void(0);"><label></label></a></li>'
+                    },
+                // numberDisplayed: 7,
+                maxHeight: 150,
+                enableCaseInsensitiveFiltering: true,
+                nSelectedText: ' - Abogados seleccionados',
+                buttonWidth: '100%',
+                nonSelectedText: 'No hay abogados seleccionados',
+                allSelectedText: 'Todos los abogados seleccionados',
+                filterPlaceholder: 'Buscar'
+            })
+        }
+
+
+
+    } catch (error) {
+        showModal(modalError)
+        hideModal(modalError, 2000)
+    }
+}
+
 function showGestionarCaso(el){
     BtnShowListaCasos.style.display = "inline"
     BtnAltaCAso.style.display = "none"
-    BtnModalEditCaso.style.display = "block"
+    // BtnModalEditCaso.style.display = "block"
     TituloCasoSpan.innerHTML = el.caso_nombre
     InfoSuperior.classList.add('cardHide')
     //  setTimeout(()=> {
@@ -401,33 +457,8 @@ $(".archivo").on('change', function() {
 //     // $("#attorneys").multiselect()
 // })
 
-$("#attorneys").multiselect({
-    templates: {
-            li: '<li class="color-multiselect"><a href="javascript:void(0);"><label></label></a></li>'
-        },
-    // numberDisplayed: 7,
-    maxHeight: 150,
-    enableCaseInsensitiveFiltering: true,
-    nSelectedText: ' - Abogados seleccionados',
-    buttonWidth: '100%',
-    nonSelectedText: 'No hay abogados seleccionados',
-    allSelectedText: 'Todos los abogados seleccionados',
-    filterPlaceholder: 'Buscar'
-})
 
-$("#attorneys_edit").multiselect({
-    templates: {
-            li: '<li class="color-multiselect"><a href="javascript:void(0);"><label></label></a></li>'
-        },
-    // numberDisplayed: 7,
-    maxHeight: 150,
-    enableCaseInsensitiveFiltering: true,
-    nSelectedText: ' - Abogados seleccionados',
-    buttonWidth: '100%',
-    nonSelectedText: 'No hay abogados seleccionados',
-    allSelectedText: 'Todos los abogados seleccionados',
-    filterPlaceholder: 'Buscar'
-})
+
 
 BtnShowListaCasos.addEventListener("click", ()=> {
     BarraBusqueda.style.display = "none"

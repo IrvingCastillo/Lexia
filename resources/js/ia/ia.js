@@ -1,3 +1,11 @@
+import { showModal, hideModal, sleep } from '@/modales/modalHelper';
+import * as bootstrap from 'bootstrap';
+window.bootstrap = bootstrap;
+
+const modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'), { backdrop: 'static', keyboard: false }),
+modalError  = new bootstrap.Modal(document.getElementById('modalError')),
+modalSuccess = new bootstrap.Modal(document.getElementById('modalSuccess'))
+
 
 const ExtraerCheck = document.querySelector("#resumen"),
 ResumirCheck = document.querySelector("#resumir"),
@@ -6,7 +14,14 @@ dropZone = document.getElementById('dropZone'),
 fileInput = document.getElementById('fileInput'),
 fileList = document.getElementById('fileList'),
 Respuesta = document.querySelector("#editor"),
-BtnStart = document.getElementById("startIA")
+BtnStart = document.getElementById("startIA"),
+BtnDownloadPdf = document.querySelector("#downloadPdf"),
+BtnShowDropFiles = document.querySelector("#showDropFiles")
+
+const cargaMsj = document.getElementById('mensajeCarga'),
+successMsj = document.getElementById('mensajeExito')
+
+
 
 let selectedFiles = [];
 
@@ -16,8 +31,15 @@ ExtraerCheck.addEventListener('change', function(){
         ResumirCheck.disabled = true
         PreguntaText.disabled = true
         PreguntaText.value = ""
+        if (selectedFiles.length !== 0) {
+            BtnStart.style.display = "block"
+        }
+        else{
+            BtnStart.style.display = "none"
+        }
     }
     else{
+        BtnStart.style.display = "none"
         ResumirCheck.disabled = false
         PreguntaText.disabled = false
     }
@@ -29,8 +51,15 @@ ResumirCheck.addEventListener('change', function(){
         ExtraerCheck.disabled = true
         PreguntaText.disabled = true
         PreguntaText.value = ""
+        if (selectedFiles.length !== 0) {
+            BtnStart.style.display = "block"
+        }
+        else{
+            BtnStart.style.display = "none"
+        }
     }
     else{
+        BtnStart.style.display = "none"
         ExtraerCheck.disabled = false
         PreguntaText.disabled = false
     }
@@ -40,12 +69,20 @@ PreguntaText.addEventListener('input', function(){
     if (this.value.length < 5) {
         ExtraerCheck.disabled = false
         ResumirCheck.disabled = false
+        BtnStart.style.display = "none"
     }
     else{
         ExtraerCheck.checked = false
         ExtraerCheck.disabled = true
         ResumirCheck.checked = false
         ResumirCheck.disabled = true
+        if (selectedFiles.length !== 0) {
+            BtnStart.style.display = "block"
+        }
+        else{
+            BtnStart.style.display = "none"
+        }
+        // BtnStart.style.display = "block"
     }
 })
 
@@ -54,38 +91,80 @@ BtnStart.addEventListener('click', async(e) => {
     document.getElementById("listadoDocumento").classList.add('cardHide')
     setTimeout(()=> {
         document.getElementById("divEditor").classList.remove('cardHide')
+        BtnShowDropFiles.style.display = "inline"
         // EscribirTexto(respuestaBack, 50)
     }, 2500)
     await ObtenerRespuesta()
+})
+
+BtnShowDropFiles.addEventListener("click", () => {
+    document.getElementById("divEditor").classList.add('cardHide')
+    setTimeout(()=> {
+        document.getElementById("listadoDocumento").classList.remove('cardHide')
+        BtnShowDropFiles.style.display = "none"
+        // EscribirTexto(respuestaBack, 50)
+    }, 1500)
 })
 
  const quill = new Quill('#editor', {
     theme: 'snow'
   });
 
-//   document.getElementById('startIA').addEventListener('click', () => {
-//     console.log("editar")
-//   const listado = document.getElementById('listadoDocumento');
-//   const editor = document.getElementById('divEditor');
+BtnDownloadPdf.addEventListener("click", async () => {
+    successMsj.innerText = "En un momento se descarga el archivo"
+    showModal(modalSuccess)
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-//   // Fade out listadoDocumento
-//   listado.classList.remove('show');
-//   listado.addEventListener('transitionend', function handler() {
-//     listado.classList.add('d-none');
+    // Obtener texto plano del editor Quill
+    const text = quill.getText();
 
-//     // Mostrar editor
-//     editor.classList.remove('d-none');
-//     void editor.offsetWidth; // forzar reflow
-//     editor.classList.add('show');
+    // === CONFIGURACIÓN DE ESTILO ===
+    const marginLeft = 25;   // margen izquierdo
+    const marginRight = 20;  // margen derecho
+    const marginTop = 20;    // margen superior
+    const marginBottom = 20; // margen inferior
 
-//     listado.removeEventListener('transitionend', handler);
-//   });
-// });
+    doc.setFont("times", "normal"); // fuente tipo Times
+    doc.setFontSize(12);
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const usableWidth = pageWidth - marginLeft - marginRight;
+
+    const lineHeight = 6;  // altura entre líneas
+    const paragraphSpacing = 4; // espacio extra entre párrafos
+
+    // Dividir texto en párrafos
+    const paragraphs = text.split(/\n+/);
+
+    let y = marginTop;
+
+    paragraphs.forEach(paragraph => {
+        const lines = doc.splitTextToSize(paragraph, usableWidth);
+
+        lines.forEach(line => {
+            if (y + lineHeight > pageHeight - marginBottom) {
+                doc.addPage();
+                y = marginTop;
+            }
+            doc.text(line, marginLeft, y);
+            y += lineHeight;
+        });
+
+        // espacio extra después de cada párrafo
+        y += paragraphSpacing;
+    });
+
+    setTimeout(() => {
+        hideModal(modalSuccess)
+        doc.save("contenido.pdf");
+    }, 1000);
+});
 
 
-  // Función que escribe letra por letra
 function EscribirTexto(texto, velocidad = 50) {
-    quill.setText(""); // limpiar contenido usando la API de Quill
+    quill.setText("");
 
     const cursor = document.createElement("span");
     cursor.classList.add("cursor");
@@ -96,7 +175,7 @@ function EscribirTexto(texto, velocidad = 50) {
         if (i < texto.length) {
             quill.insertText(i, texto[i]); // insertar letra en la posición correspondiente
             i++;
-            setTimeout(EscribirLetra, velocidad + Math.random() * 20);
+            setTimeout(EscribirLetra, velocidad + Math.random() * 10);
         }
         else{
             quill.setSelection(quill.getLength(), 0);
@@ -132,37 +211,50 @@ fileInput.addEventListener('change', (e) => {
 
 
 function handleFiles(files) {
-  for (let file of files) {
-    if (selectedFiles.length >= 2) {
-      alert("Solo puedes subir máximo 2 archivos");
-      break;
+    for (let file of files) {
+        if (selectedFiles.length >= 2) {
+            $("#modalMensajeArchivo").modal("show").on("shown.bs.modal", function () {
+                document.getElementById("mensajeArchivo").innerHTML = "Solo puedes subir máximo 2 archivos"
+                setTimeout(() => {
+                    $("#modalMensajeArchivo").modal("hide");
+                }, 2000);
+            });
+            break;
+        }
+        if (file.type === "application/pdf" || file.name.endsWith(".docx")) {
+            selectedFiles.push(file);
+        }
+        else {
+            $("#modalMensajeArchivo").modal("show").on("shown.bs.modal", function () {
+                document.getElementById("mensajeArchivo").innerHTML = "Solo se permiten archivos PDF o DOCX"
+                setTimeout(() => {
+                    $("#modalMensajeArchivo").modal("hide");
+                }, 2000);
+            });
+
+        }
     }
-    if (file.type === "application/pdf" || file.name.endsWith(".docx")) {
-      selectedFiles.push(file);
-    } else {
-      alert("Solo se permiten archivos PDF o DOCX");
-    }
-  }
-  renderFileList();
+    renderFileList();
 }
 
 function renderFileList() {
-    if (selectedFiles.length !== 0) {
-        BtnStart.style.display = "block"
-    }
-    else{
-        BtnStart.style.display = "none"
-    }
-
   fileList.innerHTML = "";
   selectedFiles.forEach((file, index) => {
     const li = document.createElement("li");
-    li.className = "list-group-item file-item";
+    li.className = "list-group-item file-item mt-1";
+    li.style.borderColor = "#132c47"
+    li.style.background = "#132c47"
+    li.style.color = "#fff"
+    li.style.fontWeight = "bold"
     li.innerHTML = `
       <span>${file.name} (${(file.size/1024).toFixed(1)} KB)</span>
-      <button class="btn btn-sm btn-danger">❌</button>
+      <button class="btn btn-sm text-white"> <i class="fas fa-trash"></i> </button>
     `;
     li.querySelector("button").addEventListener("click", () => {
+        if (selectedFiles.length === 1) {
+            console.log(selectedFiles.length)
+            BtnStart.style.display = "none"
+        }
       selectedFiles.splice(index, 1);
       renderFileList();
     });
@@ -172,6 +264,13 @@ function renderFileList() {
 
 
 async function ObtenerRespuesta(){
+    quill.setText("");
+    successMsj.innerText = "Espere un momento por favor"
+    showModal(modalSuccess)
+    setTimeout(() => {
+        successMsj.innerText = "Estamos trabajando en ello..."
+    }, 1500);
+
     try {
 
         let formData = new FormData(),
@@ -180,7 +279,7 @@ async function ObtenerRespuesta(){
 
         if (PreguntaText.value.trim() === "") {
             if (ResumirCheck.checked) {
-                pregunta = "Resume este archivos o archivos "
+                pregunta = "Resume este archivo o archivos "
             }
             else if (ExtraerCheck.checked) {
                 pregunta = "Extrae la información de este archivo o archivos "
@@ -189,10 +288,7 @@ async function ObtenerRespuesta(){
         else{
             pregunta = PreguntaText.value.trim()
         }
-
         formData.append("question", pregunta)
-
-        console.log(formData)
 
         const askIA = await fetch('http://chat.lexialegal.site/analizar', {
             method: "POST",
@@ -205,17 +301,19 @@ async function ObtenerRespuesta(){
 
         const res_askIA = await askIA.json()
 
-        console.log(res_askIA)
-
         if(askIA.ok){
-            EscribirTexto(res_askIA.answer, 10)
+            successMsj.innerText = ""
+            successMsj.innerText = "¡Ya casi está listo!"
+            setTimeout(() => {
+                hideModal(modalSuccess)
+                EscribirTexto(res_askIA.answer, 3)
+            }, 1000);
         }
 
     } catch (error) {
-        // showModal(modalError)
-        // hideModal(modalError, 2000)
+        showModal(modalError)
+        hideModal(modalError, 2000)
     }
 }
-const respuestaBack = "Esta es la respuesta del back!!!"
 
 

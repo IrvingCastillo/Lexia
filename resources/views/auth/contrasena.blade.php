@@ -22,12 +22,12 @@
                             <div class="mt-4">
                                 <div class="input-group campoCorreoRecuperar campoRounded">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"> <i class="fas fa-envelope"></i> </span>
+                                        <span class="input-group-text"> <i class="far fa-envelope"></i> </span>
                                     </div>
-                                    <input type="email" class="form-control inputLogin rounded-left" id="email_recuperacion" name="email" placeholder="Email" minlength="8" required>
+                                    <input type="email" class="form-control inputLogin rounded-right" id="email_recuperacion" name="email" placeholder="Email" minlength="8" required>
                                 </div>
                                 <span class="text-left text-danger text-sm text-bold" id="errorEmailRecuperacion"></span>
-                                <button type="submit" id="btnEnviarCorreoRecuperar" class="btnStep campoRounded" disabled>Recuperar contraseña</button>
+                                <button type="button" id="btnEnviarCorreoRecuperar" class="btnBackPass mt-2" disabled>Recuperar contraseña</button>
                             </div>
                         </form>
                         <div class="d-flex justify-content-center col-md-12">

@@ -5,14 +5,6 @@
         display: none;
     }
 
-     /* #respuestaIA { */
-      /* font-family: monospace; */
-      /* white-space: pre-wrap; */
-      /* border: 1px solid #ccc; */
-      /* padding: 10px; */
-      /* width: 400px;
-      min-height: 100px; */
-    /* } */
     .cursor {
       display: inline-block;
       width: 2px;
@@ -31,6 +23,7 @@
   cursor: pointer;
   transition: background-color 0.3s;
   height: 8rem;
+  border: 1px dashed #132c47
 }
 #dropZone.dragover {
   background-color: transparent;
@@ -48,12 +41,12 @@
 
 @section('Contenido')
 @push('styles')
-    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 @endpush
 @vite(['resources/css/app.css', 'resources/js/ia/ia.js'])
 
 <div class="container-fluid bg-white my-5 py-5">
+    <span id="showDropFiles" type="button" class="btn btn-sm py-1 px-3" style="background: #f5f5f5; border-radius: 5px; display:none;"><i class="fa fa-arrow-left"> Regresar</i></span>
     <div class="" id="listadoDocumento">
         {{-- <div class="card w-100 " style="height: 65vh" >
             <div class="d-flex justify-content-end px-3 py-2" style="font-size: 1.2rem">
@@ -80,7 +73,7 @@
                 <div>
                     <h3>¿Qué puedes hacer con LEX-IA?</h3>
 
-                    <div id="dropZone" class="border border-primary rounded p-4 text-center bg-light">
+                    <div id="dropZone" class="rounded p-4 text-center d-flex justify-content-center text-align-center">
                         <p class="mb-0">Arrastra aquí tus archivos PDF/DOCX<br>o haz clic para seleccionarlos</p>
                         <input type="file" id="fileInput" class="d-none" multiple accept=".pdf,.docx">
                     </div>
@@ -126,22 +119,17 @@
         </div>
     </div>
 
-    <div class="cardHide" id="divEditor">
+    <div class="cardHide mt-4" id="divEditor">
         <div class="">
             <h2 class="textAzul font-size15 mb-0" style="font-family: 'Times New Roman'">Editor de documento</h2>
-            <div class="card w-full" style="height: 45vh">
+            <div class="card w-full" style="height: 55vh; overflow-y: scroll;  scrollbar-color: #132c47 transparent; scrollbar-width: thin;">
                 <div id="editor" class="p-3">
-                    {{-- Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt, earum doloremque libero reiciendis voluptas asperiores cumque repellendus, quos ex, illo maiores eaque officia sequi est dicta fugit molestiae! Qui, aperiam!
-                    <p>Propuesta de Proyecto Digital</p><br>
-                    <p>Fecha: 24 de Octubre, 2023</p>
-                    <p>Para: Cliente Potencial</p>
-                    <p>De: Soluciones Creativas S.A.</p> --}}
                 </div>
             </div>
         </div>
         <div class="d-flex justify-content-end">
             <div class="text-left mt-4">
-                <button id="startIA" type="button" class="bg-blue px-4 py-1" style="border-radius: 5px; 5px; width: 10rem">Descargar</button>
+                <button id="downloadPdf" type="button" class="bg-blue px-4 py-1" style="border-radius: 5px; 5px; width: 10rem">Descargar</button>
             </div>
         </div>
     </div>
@@ -149,13 +137,14 @@
 
 </div>
 
-@php
-    $d = new DateTime();
-    $s = $d->format("v");
-@endphp
+@include('Mensajes.Success')
+@include('Mensajes.Carga')
+@include('Mensajes.Error')
+@include('Mensajes.Archivos')
 
 @push('scripts')
-<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.2/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 @endpush
 @stop

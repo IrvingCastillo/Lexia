@@ -42,7 +42,7 @@
                                 </div>
                                 <input type="password" class="form-control inputLogin" id="password" name="password" placeholder="Ingresa tu contraseña" required>
                                     <div class="input-group-append">
-                                    <span class="input-group-text verContraseña"><i class="fas fa-eye"></i></span>
+                                    <span type="button" class="input-group-text verContraseña"  onclick="const p = document.getElementById('password'); p.type = (p.type === 'password' ? 'text' : 'password');"><i class="fas fa-eye"></i></span>
                                 </div>
                             </div>
                         </div>

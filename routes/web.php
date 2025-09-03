@@ -75,9 +75,13 @@ Route::get('/nueva_contrasena', function(){
     return view('auth.nueva_contrasena');
 })->name('nuevaContrasena');
 
-Route::get('/pago_confirmado', function(){
-    return view('auth.pago');
+Route::get('/pago_aprobado', function(){
+    return view('auth.pagoAprobado');
 })->name('pago_confirmado');
+
+Route::get('/pago_declinado', function(){
+    return view('auth.pagoDeclinado');
+})->name('pago_declinado');
 
 
 Route::post('/guardar-token', function (Request $request) {

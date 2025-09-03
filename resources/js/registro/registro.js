@@ -15,7 +15,8 @@
     Estado = document.querySelector('#estado'),
     Ciudad = document.querySelector('#ciudad'),
     PlanSeleccionado = document.querySelector('#plan_seleccionado'),
-    Terminos = document.querySelector('#aceptar_terminos')
+    Terminos = document.querySelector('#aceptar_terminos'),
+    TituloNavegacion = document.querySelector("#tituloNavegacion")
 
     const Paginacion = document.querySelector("#paginacion"),
     Pill1 = document.querySelector("#pill-reg1-tab"),
@@ -43,21 +44,26 @@ const modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'), { 
 modalError  = new bootstrap.Modal(document.getElementById('modalError')),
 modalSuccess = new bootstrap.Modal(document.getElementById('modalSuccess'));
 
+TituloNavegacion.innerHTML = "Registro"
+
 Pill1.addEventListener("click", function() {
     Paginacion.innerHTML = ''
     Paginacion.innerHTML = '1'
     BtnStep2.classList.remove('active')
     BtnStep3.classList.remove('active')
+    TituloNavegacion.innerHTML = "Registro"
 })
 Pill2.addEventListener("click", function() {
     Paginacion.innerHTML = ''
     Paginacion.innerHTML = '2'
     BtnStep3.classList.remove('active')
+    TituloNavegacion.innerHTML = "Registro"
 })
 Pill3.addEventListener("click", function() {
     Paginacion.innerHTML = ''
     Paginacion.innerHTML = '3'
     BtnStep2.classList.remove('active')
+    TituloNavegacion.innerHTML = "Elige tu plan"
 })
 
 
@@ -68,6 +74,7 @@ BtnStep2.addEventListener("click", function() {
     Pill2.classList.add('active')
     Pill1.classList.remove('active')
     Pill3.classList.remove('active')
+    TituloNavegacion.innerHTML = "Registro"
 })
 BtnStep3.addEventListener("click", function() {
     Paginacion.innerHTML = ''
@@ -76,6 +83,7 @@ BtnStep3.addEventListener("click", function() {
     Pill3.classList.add('active')
     Pill1.classList.remove('active')
     Pill2.classList.remove('active')
+    TituloNavegacion.innerHTML = "Elige tu plan"
 })
 
 NombreCliente.addEventListener('focusout', function(){
@@ -357,63 +365,4 @@ BtnSuscribirse.addEventListener('click', async (e) => {
         hideModal(modalError, 2000);
     }
 
-
-
-
-
-
-
-
-
-    // try{
-    //     const res = await fetch('https://api.lexialegal.site/api/register/user', {
-    //         method: "POST",
-    //         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    //         body: datosJson
-    //     })
-    // .then(response => response.json())
-    // .then(data => {
-    //     console.log(data)
-    //     const tokenRecibido = data.access_token;
-    //     // Verifica si el registro fue exitoso
-    //     if (tokenRecibido) {
-    //         // Guardar token en Laravel Web
-    //         return fetch('/guardar-token', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-    //             },
-    //             body: JSON.stringify({ token: tokenRecibido })
-    //         });
-    //     } else {
-    //         throw new Error('Registro fallido');
-    //     }
-    // })
-    // .then(response => response.json())
-    // .then(respuesta => {
-    //     if (respuesta) {
-    //         console.log(respuesta)
-    //         console.log(respuesta.data)
-
-    //         StriepWindow(respuesta.data.stripe_session.url, "Transaccion de pago", "", 1000, 800, 'true');
-
-    //         showModal(modalSuccess)
-    //         document.getElementById('mensajeExito').value = respuesta.message
-    //         hideModal(modalSuccess, 2000, () => {
-    //             // window.location.href = 'http://localhost:8000/casos'
-    //         });
-    //     }
-    //     else {
-    //         throw new Error('El usuario no pudo ser creado')
-    //     }
-    // })
-    // .then(() =>{
-    //     window.location.href = 'http://localhost:8000/casos'
-    // })
-    // } catch (err) {
-    //     console.error(err)
-    //     showModal(modalError)
-    //     hideModal(modalError, 2000)
-    // }
 })

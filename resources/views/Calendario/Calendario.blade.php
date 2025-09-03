@@ -34,5 +34,7 @@
 
 </div>
 @include('Calendario.Modals.AgregarEvento')
+@include('Mensajes.Carga')
+@include('Mensajes.Error')
 
 @stop

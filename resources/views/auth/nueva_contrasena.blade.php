@@ -21,10 +21,10 @@
                         <form id="RecuperarContrasenaForm" method="POST"  accept-charset="utf-8">
                             {{ csrf_field() }}
                             <div class="mt-4">
-                                <input type="password" class="form-control campoRounded" id="password_new" name="password" placeholder="Ingresa tu nueva contraseña">
-                                <input type="password" class="form-control campoRounded mt-2" id="confirm_password" name="confirm_password" placeholder="Confirma tu nueva contraseña">
+                                <input type="password" class="form-control inputLogin campoRoundedX" id="password_new" name="password" placeholder="Ingresa tu nueva contraseña">
+                                <input type="password" class="form-control inputLogin campoRoundedX mt-2" id="confirm_password" name="confirm_password" placeholder="Confirma tu nueva contraseña">
                                 <span class="d-flex justify-content-center col-md-12 text-danger text-sm text-bold pb-3" id="errorRestaurarContra"></span>
-                                <button id="btnNuevaContrasena" class="btnStep mt-5 campoRounded" disabled>Guardar nueva contraseña</button>
+                                <button id="btnNuevaContrasena" class="btnStep mt-5 btnBackPass" disabled>Guardar nueva contraseña</button>
                             </div>
                         </form>
                     </div>
@@ -36,6 +36,4 @@
 @include('Mensajes.success')
 @include('Mensajes.error')
 @stop
-<script src="{{ asset('dist/jquery/dist/jquery.min.js') }}"></script>
-<script src="{{ asset('dist/bootstrap/js/bootstrap.min.js') }}"></script>
-{{-- <script src="{{ asset('js/NuevaContrasena/nuevaContrasena.js') }}"></script> --}}
+

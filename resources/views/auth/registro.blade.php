@@ -14,7 +14,7 @@
         <div class="card cardRegistro">
             <div class="card-body">
                 <div class="ml-4">
-                    <h1>Registro</h1>
+                    <h1 id="tituloNavegacion"></h1>
 
                     <span><span id="paginacion">1</span> de 3</span>
                 </div>
@@ -38,37 +38,37 @@
                         <div class="tab-content" id="pill-tabContent">
                             <div class="tab-pane fade show active" id="reg1" role="tabpanel" aria-labelledby="pill-reg1-tab">
                                 <div class="d-flex justify-content-between">
-                                    <div class="form-group col-5 p-0">
+                                    <div class="form-group col-5 p-0 mr-1">
                                         <label for="nombre_cliente">Nombre</label>
                                         <input type="text" class="form-control" id="nombre_cliente" name="nombre_cliente" maxlength="50" placeholder="Ingresa tu(s) nombre(s)" oninput="this.value = this.value.replace(/[^a-zA-z]+$/g, '');" required>
-                                        <span class="text-left text-danger text-sm text-bold" id="errorNombre"></span>
+                                        <span class="text-left text-danger text-sm fw-bold" id="errorNombre"></span>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group mr-1">
                                         <label for="apellido_paterno">Apellido Paterno</label>
                                         <input type="text" class="form-control" id="apellido_paterno" name="apellido_paterno" maxlength="50" placeholder="Apellido Paterno" oninput="this.value = this.value.replace(/[^a-zA-z]+$/g, '');" required>
-                                        <span class="text-left text-danger text-sm text-bold" id="errorApellidoPaterno"></span>
+                                        <span class="text-left text-danger text-sm fw-bold" id="errorApellidoPaterno"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="apellido_materno">Apellido Materno</label>
                                         <input type="text" class="form-control" id="apellido_materno" name="apellido_materno" maxlength="50" placeholder="Apellido Materno" oninput="this.value = this.value.replace(/[^a-zA-z]+$/g, '');" required>
-                                        <span class="text-left text-danger text-sm text-bold" id="errorApellidoMaterno"></span>
+                                        <span class="text-left text-danger text-sm fw-bold" id="errorApellidoMaterno"></span>
                                     </div>
 
                                 </div>
                                 <div class="form-group">
                                     <label for="despacho">Nombre del despacho</label>
                                     <input type="text" class="form-control" id="nombre_despacho" name="nombre_despacho" maxlength="50" placeholder="Nombre comercial del despacho" oninput="this.value = this.value.replace(/[^a-zA-z0-9]+$/g, '');" required>
-                                    <span class="text-left text-danger text-sm text-bold" id="errorNombreDespacho"></span>
+                                    <span class="text-left text-danger text-sm fw-bold" id="errorNombreDespacho"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="razon">Razón Social</label>
                                     <input type="text" class="form-control" id="razon_social" name="razon_social" placeholder="Nombre legal o razón social" oninput="this.value = this.value.replace(/[^a-zA-z0-9]+$/g, ' ');">
-                                    <span class="text-left text-danger text-sm text-bold" id="errorRazon"></span>
+                                    <span class="text-left text-danger text-sm fw-bold" id="errorRazon"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="rfc">RFC</label>
                                     <input type="text" class="form-control" id="rfc" name="rfc" placeholder="(opcional)" maxlength="50">
-                                    <span class="text-left text-danger text-sm text-bold" id="errorRFC"></span>
+                                    <span class="text-left text-danger text-sm fw-bold" id="errorRFC"></span>
                                 </div>
                                 <button type="button" id="pag_2" class="btnStep mt-3" data-toggle="pill" href="#reg2">Siguiente</button>
                             </div>
@@ -77,17 +77,17 @@
                                 <div class="form-group">
                                     <label for="correo">Correo Electrónico</label>
                                     <input type="text" class="form-control" id="email" name="email" required>
-                                    <span class="text-left text-danger text-sm text-bold" id="errorEmail"></span>
+                                    <span class="text-left text-danger text-sm fw-bold" id="errorEmail"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="correo">Contraseña</label>
                                     <input type="password" class="form-control" id="password" name="password" placeholder="La contraseña debe contener al menos 8 caracteres, incluir una letra mayúscula y un número." required>
-                                    <span class="text-left text-danger text-sm text-bold" id="errorPassword"></span>
+                                    <span class="text-left text-danger text-sm fw-bold" id="errorPassword"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="telefono">Teléfono</label>
                                     <input type="text" class="form-control" id="telefono" name="telefono" pattern="[0-9]+" maxlength="10" minlength="10" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
-                                    <span class="text-left text-danger text-sm text-bold" id="errorTelefono"></span>
+                                    <span class="text-left text-danger text-sm fw-bold" id="errorTelefono"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="direccion">Dirección</label>
@@ -143,14 +143,14 @@
                                                     <option value="Zacatecas">Zacatecas</option>
                                                 </select>
                                             </div>
-                                            <span class="text-left text-danger text-sm text-bold" id="errorEstado"></span>
+                                            <span class="text-left text-danger text-sm fw-bold" id="errorEstado"></span>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4 offset-1">
                                         <div class="form-group">
                                             <label for="correo">Ciudad</label>
                                             <input type="text" class="form-control" id="ciudad" name="ciudad" maxlength="20"  oninput="this.value = this.value.replace(/[^a-zA-z]+$/g, ' ');">
-                                            <span class="text-left text-danger text-sm text-bold" id="errorCiudad"></span>
+                                            <span class="text-left text-danger text-sm fw-bold" id="errorCiudad"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -166,7 +166,7 @@
                                             <option value="2">Profesional</option>
                                             <option value="3">Corporativo</option>
                                         </select>
-                                        <span class="text-left text-danger text-sm text-bold" id="errorPlan"></span>
+                                        <span class="text-left text-danger text-sm fw-bold" id="errorPlan"></span>
                                     </div>
                                     <div class="mt-3">
                                         <span>¿No estás seguro de qué plan elegir? Echa un vistazo</span> <span><a id="verPlanes" href="" data-toggle="modal" data-target="#modalPlanes">Ver planes</a></span>
@@ -176,7 +176,7 @@
                                         <div class="col-12 mb-3 d-flex justify-content-center">
                                             <div class="input-group-prepend mr-2">
                                                 <input type="checkbox" id="aceptar_terminos" name="aceptar_terminos">
-                                                <span class="text-left text-danger text-sm text-bold" id="errorTerminos"></span>
+                                                <span class="text-left text-danger text-sm fw-bold" id="errorTerminos"></span>
                                             </div>
                                             <div>
                                                 <span>Al continuar, aceptas los términos y condiciones de uso de esta aplicación, así como nuestras políticas de privacidad. Tu información será tratada conforme a la normativa legal vigente.</span>

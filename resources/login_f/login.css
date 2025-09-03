@@ -2,10 +2,10 @@
     --azul: #132c47;
     --gris: #f5f3ed;
     --inputFondo: #f5f5f5;
-    --letraTimes: 'Times New Roman';
+    --letraTimes: 'Inter';
     --letraGothic: 'Montserrat';
     --boderAngosto: 25px 25px;
-    --borderAmplio: 15px 15px;
+    --borderAmplio: 5px 5px;
 }
 
 html{
@@ -91,7 +91,7 @@ html{
 
 .texto-politica{
     font-family: 'Montserrat' !important;
-    font-size: .75rem !important;
+    font-size: .85rem !important;
 
 }
 
@@ -149,7 +149,7 @@ html{
 }
 
 .btnPlanInactivo:hover{
-    background-color: #132c47 !important;
+    background-color: #132c47 ;
     color: white;
 }
 
@@ -199,6 +199,22 @@ html{
 } */
 
 
+.custom-tooltip {
+    position: absolute;
+    top: -3.5rem;
+    left: 7rem;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    border-radius: .5rem;
+    font-size: 0.85rem;
+    width: 210px;
+    display: none; /* oculto por defecto */
+    z-index: 1000;
+    font-style: italic;
+    text-align: center;
+}
+
 
 .nav-pills .nav-link {
     width: 55px;
@@ -238,7 +254,7 @@ html{
 }
 
 .btnPlan:hover{
-    background-color: var(--azul) !important;
+    background-color: var(--azul) ;
     color: white;
 }
 
@@ -255,8 +271,17 @@ html{
     color: var(--gris);
     border-radius: var(--borderAmplio);
     margin-top: 3.5rem !important;
+    font-weight: bold;
 }
 
+.btnBackPass{
+    width: 100%;
+    height: 2.3rem;
+    background: var(--azul);
+    color: var(--gris);
+    border-radius: var(--boderAngosto);
+    font-weight: bold;
+}
 #btnSuscribirse:disabled, #btnEnviarCorreoRecuperar:disabled, #btnNuevaContrasena:disabled{
     opacity: .2;
 }
@@ -282,14 +307,18 @@ input[type="checkbox"] {
     border-radius: var(--borderAmplio);
 }
 
+.campoRoundedX{
+    border-radius: var(--boderAngosto) !important;
+}
+
 .rounded-left {
     border-top-left-radius: 0.25rem !important;
     border-bottom-left-radius: 0.25rem !important;
 }
 
 .rounded-right {
-    border-top-right-radius: 0.25rem !important;
-    border-bottom-right-radius: 0.25rem !important;
+    border-top-right-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
 }
 
 .modal-content {
@@ -300,12 +329,30 @@ input[type="checkbox"] {
 
 #nombre_cliente.NoValidado,#apellido_paterno.NoValidado, #apellido_materno.NoValidado, #nombre_despacho.NoValidado, #razon_social.NoValidado, #rfc.NoValidado, #email.NoValidado,
 #password.NoValidado, #telefono.NoValidado, #estado.NoValidado, #ciudad.NoValidado,
-#plan_seleccionado.NoValidado, #password_new.NoValidado, #confirm_password.NoValidado, .campoCorreoRecuperar.NoValidado{
-    border: 3px solid #f34925;
+#plan_seleccionado.NoValidado, #password_new.NoValidado, #confirm_password.NoValidado{
+    /* border: 3px solid #f34925; */
+    border: 2px solid #dc3545 ;
+  box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+  border-radius: .375rem;
+}
+
+.campoCorreoRecuperar.NoValidado{
+    border: 2px solid #dc3545 ;
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+    border-radius: 14px 14px !important;
 }
 
 #nombre_cliente.Validado,#apellido_paterno.Validado, #apellido_materno.Validado, #nombre_despacho.Validado, #razon_social.Validado, #rfc.Validado , #email.Validado,
 #password.Validado, #telefono.Validado, #estado.Validado, #ciudad.Validado,
-#plan_seleccionado.Validado, #password_new.Validado, #confirm_password.Validado, .campoCorreoRecuperar.Validado{
-    border: 3px solid #79de44;
+#plan_seleccionado.Validado, #password_new.Validado, #confirm_password.Validado{
+    /* border: 3px solid #79de44; */
+    border: 2px solid #28a745 ;
+    box-shadow: 0 0 3px rgba(40, 167, 69, 0.5);
+    border-radius: .375rem;
+}
+
+.campoCorreoRecuperar.Validado{
+    border: 2px solid #28a745 ;
+    box-shadow: 0 0 3px rgba(40, 167, 69, 0.5);
+    border-radius: 15px 15px !important;
 }

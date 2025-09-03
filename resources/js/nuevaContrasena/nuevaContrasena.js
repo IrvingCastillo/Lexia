@@ -12,7 +12,7 @@ const modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'), { 
 modalError  = new bootstrap.Modal(document.getElementById('modalError')),
 modalSuccess = new bootstrap.Modal(document.getElementById('modalSuccess'))
 
-const errorMsj = document.getElementById('errorLogin'),
+const errorMsj = document.getElementById('mensajeError'),
 successMsj = document.getElementById('mensajeExito')
 
 function ValidarContraseña(contraseña) {
@@ -21,16 +21,22 @@ function ValidarContraseña(contraseña) {
 }
 
 Pass.addEventListener('input', function(){
-    if (PassC.value != "") {
+    if (PassC.value !== "" || Pass.value === "") {
         Verificar()
     }
 })
 
 PassC.addEventListener('input', function(){
-    Verificar()
+    if (PassC.value.length > 7 || PassC.value === "") {
+        Verificar()
+    }
 })
 
+Pass.addEventListener('focusout', ()=> {
+    // if (condition) {
 
+    // }
+})
 
 function Verificar(){
     let validatePass = ValidarContraseña(Pass.value),
@@ -38,7 +44,6 @@ function Verificar(){
 
     if (validatePass && validatePassC) {
         if (Pass.value !== PassC.value) {
-            console.log("la contraseña no coincide")
             Pass.classList.remove('Validado')
             PassC.classList.remove('Validado')
             Pass.classList.add('NoValidado')
@@ -46,14 +51,6 @@ function Verificar(){
             BtnGuardar.disabled = true
             ErrorRestaurar.innerHTML = "Las contraseñas no coinciden"
 
-        }
-        else if(Pass.value == "" && PassC == ""){
-            Pass.classList.remove('Validado')
-            PassC.classList.remove('Validado')
-            Pass.classList.add('NoValidado')
-            PassC.classList.add('NoValidado')
-            BtnGuardar.disabled = true
-            ErrorRestaurar.innerHTML = "Por favor llene los campos"
         }
         else{
             Pass.classList.remove('NoValidado')
@@ -63,6 +60,14 @@ function Verificar(){
             BtnGuardar.disabled = false
             ErrorRestaurar.innerHTML = ""
         }
+    }
+    else if(Pass.value === "" && PassC.value === ""){
+        Pass.classList.remove('Validado')
+        PassC.classList.remove('Validado')
+        Pass.classList.add('NoValidado')
+        PassC.classList.add('NoValidado')
+        BtnGuardar.disabled = true
+        ErrorRestaurar.innerHTML = "Por favor llene los campos"
     }
     else{
         Pass.classList.remove('Validado')
@@ -78,9 +83,7 @@ BtnGuardar.addEventListener('click', async (e) => {
     e.preventDefault();
 
     let formulario = document.querySelector("#RecuperarContrasenaForm"),
-    datos = new FormData(formulario),
-    pwd = Pass.value.trim(),
-    pwdC = PassC.value.trim()
+    datos = new FormData(formulario)
 
     let datosCompletos = Object.fromEntries(datos.entries())
     let datosJson = JSON.stringify(datosCompletos)
@@ -89,26 +92,31 @@ BtnGuardar.addEventListener('click', async (e) => {
     await new Promise(r => setTimeout(r, 2000))
     hideModal(modalCarga)
 
-    if (!pwd || !pwdC) {
-        showModal(modalError)
-        errorMsj.textContent = 'Confirma la nueva contraseña'
-        hideModal(modalError, 2000)
-        return;
-    }
     try {
-        const res = await fetch('https://f2cfbd702bbb.ngrok-free.app/api/login', {
+        const me = await fetch('/get-token')
+        const res_me = await me.json()
+        const reset_pass = await fetch('https://api.lexialegal.site/api/reset-password', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${res_me.token}`,
+            },
         body: datosJson
     })
-    if(res.ok){
+
+    const res_reset_pass = reset_pass.json()
+
+    if(reset_pass.ok){
         showModal(modalSuccess)
         successMsj.textContent = '¡Contraseña reestablecida!'
-        hideModal(modalSuccess, 2000, () => {
+        hideModal(modalSuccess, 4000, () => {
             window.location.href = 'http://localhost:8000/login'
         });
     } else {
-        throw new Error('Credenciales inválidas')
+        showModal(modalError)
+        errorMsj.textContent = res_reset_pass.message
+        hideModal(modalError, 2000)
     }
     } catch (err) {
         console.error(err)
