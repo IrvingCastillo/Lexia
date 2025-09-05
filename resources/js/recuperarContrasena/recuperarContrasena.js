@@ -80,7 +80,7 @@ BtnRecuperar.addEventListener('click', async function (event) {
             showModal(modalSuccess);
             successMsj.textContent = 'Un enlace de recuperación se ha enviado al correo electrónico proporcionado';
             hideModal(modalSuccess, 5000, () => {
-                window.location.href = 'http://localhost:8000/login';
+                window.location.href = 'https://web.lexialegal.site/login';
             });
         }
         else{

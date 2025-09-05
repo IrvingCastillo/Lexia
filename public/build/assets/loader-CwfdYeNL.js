@@ -1,0 +1,1 @@
+import"./index-Cg2d-qVn.js";const e=document.getElementById("page-loader");document.querySelector("#pageLoad");document.addEventListener("DOMContentLoaded",()=>{window.addEventListener("load",()=>{setTimeout(()=>{e.style.opacity="0",setTimeout(()=>e.style.display="none",500)},400)})});

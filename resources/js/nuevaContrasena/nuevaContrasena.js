@@ -111,7 +111,7 @@ BtnGuardar.addEventListener('click', async (e) => {
         showModal(modalSuccess)
         successMsj.textContent = '¡Contraseña reestablecida!'
         hideModal(modalSuccess, 4000, () => {
-            window.location.href = 'http://localhost:8000/login'
+            window.location.href = 'https://web.lexialegal.site/login'
         });
     } else {
         showModal(modalError)

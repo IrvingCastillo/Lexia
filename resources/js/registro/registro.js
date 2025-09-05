@@ -353,7 +353,7 @@ BtnSuscribirse.addEventListener('click', async (e) => {
         document.getElementById('mensajeExito').value = data.message;
 
         hideModal(modalSuccess, 2000, () => {
-            window.location.href = 'http://localhost:8000/casos';
+            window.location.href = 'https://web.lexialegal.site/casos';
         });
 
     } else {
