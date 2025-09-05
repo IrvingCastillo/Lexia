@@ -1,0 +1,83 @@
+
+/* ===== VARIABLES Y CONFIGURACIÓN BASE ===== */
+:root {
+    --primary-blue: #132c47;
+    --primary-purple: #8B5CF6;
+    --text-dark: #1F2937;
+    --text-gray: #6B7280;
+    --bg-light: #e5e5e5;
+    --bg-dark: #111827;
+}
+
+/* ===== RESET Y TIPOGRAFÍA ===== */
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+/* ===== FONDO DEL LANDING PAGE ===== */
+html {
+    min-height: 100vh;
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .btn-demo {
+        padding: 15px 30px;
+        font-size: 1rem;
+    }
+    
+    .hero-header-image {
+        max-width: 90%;
+    }
+    
+    .cta-title {
+        font-size: 2rem;
+    }
+    
+    .navbar-logo {
+        height: 80px;
+    }
+    
+    .btn-signin {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+        margin: 5px 2px;
+    }
+    
+    .navbar {
+        padding: 10px 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .btn-demo {
+        padding: 12px 25px;
+        font-size: 0.9rem;
+    }
+}

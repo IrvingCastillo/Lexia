@@ -4,19 +4,19 @@
     switch ($color) {
         case 'oscuro':
                 $bg = 'bg-oscuro';
-                $img = 'images/lexia_transparent.png';
+                $img = 'images/landing/lexia-logo-white.png';
             break;
         case 'blue':
                 $bg = 'bg-blue';
-                $img = 'images/lexia_transparent.png';
+                $img = 'images/landing/lexia-logo-white.png';
             break;
         case 'claro':
                 $bg = 'bg-claro';
-                $img = 'images/lexia_white.png';
+                $img = 'images/landing/lexia-logo2.png';
             break;
         default:
                 $bg = 'bg-oscuro';
-                $img = 'images/lexia_transparent.png';
+                $img = 'images/landing/lexia-logo-white.png';
             break;
     }
 @endphp

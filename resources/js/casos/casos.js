@@ -28,6 +28,7 @@ titulo = document.querySelector("#tituloEliminar")
 const modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'), { backdrop: 'static', keyboard: false }),
 modalError  = new bootstrap.Modal(document.getElementById('modalError')),
 modalSuccess = new bootstrap.Modal(document.getElementById('modalSuccess')),
+modalPago = new bootstrap.Modal(document.getElementById('modalMensajePago')),
 modalCaso = new bootstrap.Modal(document.getElementById('modalNuevoCaso')),
 successMsj = document.getElementById('mensajeExito'),
 emptyMsj = document.getElementById('mensaje-vacio')
@@ -36,6 +37,7 @@ ObtenerListaCasos()
 ObtenerListaAbogados()
 
 async function ObtenerListaCasos(){
+
     try {
         const me = await fetch('/get-token')
         const res_me = await me.json()
@@ -89,6 +91,7 @@ async function ObtenerListaCasos(){
             })
 
             contenedor.appendChild(clone);
+            // showModal(modalPago)
         });
 
     } catch (error) {

@@ -6,7 +6,7 @@
         <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed">
             <nav id="sidebar" aria-label="Main Navigation">
                 <div class="content-side content-side-full">
-                    <img id="Logo1" src="{{ asset('images/lexia_white.png') }}" class="img-fluid my-5" alt="LEXIA">
+                    <img id="Logo1" src="{{ asset('images/landing/lexia-logo2.png') }}" class="img-fluid my-5" alt="LEXIA">
                     <div class="mt-3">
                         @include('Includes.Menu.Vertical')
                     </div>
@@ -36,4 +36,5 @@
         @include('Includes.Footer')
     </body>
 </div>
+@include('Mensajes.Pago')
 @endsection

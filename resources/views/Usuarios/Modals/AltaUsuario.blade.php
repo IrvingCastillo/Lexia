@@ -74,7 +74,8 @@
                                 </div>
                             </div>
                         </div> --}}
-                        <div class="form-group offset-3 d-flex justify-content-between align-items-end">
+                        <input type="text" value="usuario" name="tipo_de_permiso" hidden>
+                        <div class="form-group d-flex justify-content-between align-items-end">
                             <div class="mb-3">
                                 <button type="button" class="bg-blue px-4 py-2 campoRoundedX" data-dismiss="modal" style="width: 15rem" id="addUser">Agregar Usuario</button>
                             </div>

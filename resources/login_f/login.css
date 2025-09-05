@@ -34,7 +34,7 @@ html{
 }
 
 #logoLogin{
-    width: 100px;
+    height: 100px;
 }
 
 /* .input-group-prepend{
@@ -103,7 +103,7 @@ html{
     color:var(--gris) ;
     padding: 10px ;
     font-family: 'Montserrat' ;
-    font-size: 1rem;
+    font-size: 1.1rem;
     border-bottom: 5.5px solid transparent;
 }
 

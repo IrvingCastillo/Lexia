@@ -8,6 +8,26 @@
 @endpush
 
 <style>
+        @keyframes shake {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(-10deg); }
+      50% { transform: rotate(10deg); }
+      75% { transform: rotate(-10deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .btn-delete {
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-delete:hover {
+        transform: scale(1.05);
+    }
+
+    .btn-delete:hover .trash-icon {
+      animation: shake 0.5s ease infinite;
+    }
+
      .boton_pdf{
         background-color: #132c47;
         color: #c1bdbf;
@@ -17,6 +37,23 @@
         color: white;
     }
 
+    .card-caso{
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-caso:hover{
+        transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  background-color: #f5f3ed; /* gris claro Bootstrap */
+    }
+    .gestionarCaso{
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .gestionarCaso:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        font-weight: 500;
+    }
 </style>
 
 
@@ -78,13 +115,14 @@
         </div>
         <div class="my-4 DatosSup" id="DatosSup">
 
+            {{-- <div id="listadoCasos" class="py-4" style="height: 47vh; overflow-y: scroll;  scrollbar-color: #132c47 transparent; scrollbar-width: thin;"> --}}
             <div id="listadoCasos">
 
                 <template id="card-template">
-                    <div class="card mb-3 shadow-sm">
+                    <div class="card mb-3 shadow-sm card-caso">
                         <div class="card-body">
-                        <button type="button" class="btn btn-sm text-muted position-absolute eliminarCaso" style="top: 1rem; right: 1rem;">
-                            <i class="fas fa-trash" data-toggle="modal" data-target="#modalEliminar"></i>
+                        <button type="button" class="btn btn-sm text-muted position-absolute eliminarCaso btn-delete" style="top: 1rem; right: 1rem;">
+                            <i class="fas fa-trash trash-icon" data-toggle="modal" data-target="#modalEliminar"></i>
                         </button>
                         <div>
                             <h6 class="font-weight-bold mb-1 titulo-caso"></h6>

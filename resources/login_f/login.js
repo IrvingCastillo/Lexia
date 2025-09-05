@@ -41,11 +41,9 @@ btnLogin.addEventListener('click', async (e) => {
         })
 
         const data = await res.json();
-
         const tokenRecibido = data.access_token;
-
         if (!tokenRecibido) {
-            throw new Error('Registro fallido');
+            throw new Error('Inicio de sesión fallido');
         }
 
         const guardarTokenRes = await fetch('/guardar-token', {

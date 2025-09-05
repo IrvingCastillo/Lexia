@@ -7,6 +7,10 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
+                'resources/landing/main.css',
+                'resources/landing/animations.css',
+                'resources/landing/components.css',
+                'resources/landing/main.js',
                 'resources/login_f/login.css',
                 'resources/login_f/login.js',
                 'resources/js/nuevaContrasena/nuevaContrasena.js',
