@@ -106,8 +106,8 @@
 
 @include('Usuarios.Modals.AltaUsuario')
 
-@include('Mensajes.Success')
-@include('Mensajes.Carga')
-@include('Mensajes.Error')
+@include('Mensajes.success')
+@include('Mensajes.carga')
+@include('Mensajes.error')
 
 @stop

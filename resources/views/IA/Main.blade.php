@@ -137,9 +137,9 @@
 
 </div>
 
-@include('Mensajes.Success')
-@include('Mensajes.Carga')
-@include('Mensajes.Error')
+@include('Mensajes.success')
+@include('Mensajes.carga')
+@include('Mensajes.error')
 @include('Mensajes.Archivos')
 
 @push('scripts')

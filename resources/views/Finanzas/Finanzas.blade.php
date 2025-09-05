@@ -201,7 +201,7 @@
     </div>
 </div>
 
-@include('Mensajes.Carga')
-@include('Mensajes.Error')
+@include('Mensajes.carga')
+@include('Mensajes.error')
 
 @stop
