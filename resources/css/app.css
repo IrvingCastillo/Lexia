@@ -24477,29 +24477,10 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 
 
 /* IA modulo inicio*/
-.file-item {
-    display: flex;
-    align-items: center;
-}
-.file-icon {
-    font-size: 20px;
-    color: #3f3f3f;
-}
-.file-info {
-    margin-left: 10px;
-    line-height: 1.2;
-}
-.file-title {
-    font-weight: 500;
-}
-.file-time {
-    font-size: 0.85rem;
-    color: #6c757d;
-}
 
 .dropzone .dz-preview .dz-remove {
-    color: #132c47 !important;         /* color rojo saturado */
-    opacity: 1 !important;              /* opacidad completa */
+    color: #132c47 !important;
+    opacity: 1 !important;
     font-weight: bold;
     font-size: 16px;
     text-shadow: 0 0 1px rgba(0,0,0,0.5);
@@ -24581,7 +24562,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
   background-color: transparent;
   border-color: #132c47;
 }
-.file-item {
+.file-item-ia {
   display: flex;
   justify-content: space-between;
   align-items: center;

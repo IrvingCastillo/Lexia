@@ -242,7 +242,7 @@ function renderFileList() {
   fileList.innerHTML = "";
   selectedFiles.forEach((file, index) => {
     const li = document.createElement("li");
-    li.className = "list-group-item file-item mt-1 normal-texto";
+    li.className = "list-group-item file-item-ia mt-1 normal-texto";
     li.style.borderColor = "#132c47"
     li.style.background = "#132c47"
     li.style.color = "#fff"
