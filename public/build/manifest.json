@@ -12,7 +12,7 @@
     "name": "modalHelper"
   },
   "resources/css/app.css": {
-    "file": "assets/app-rIdtHdqG.css",
+    "file": "assets/app-2Xz1qmeg.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -57,7 +57,7 @@
     ]
   },
   "resources/js/ia/ia.js": {
-    "file": "assets/ia-C9bBzvt8.js",
+    "file": "assets/ia-wkZM-4TY.js",
     "name": "ia",
     "src": "resources/js/ia/ia.js",
     "isEntry": true,
@@ -82,7 +82,7 @@
     "isEntry": true
   },
   "resources/js/nuevaContrasena/nuevaContrasena.js": {
-    "file": "assets/nuevaContrasena-wkxHd9J6.js",
+    "file": "assets/nuevaContrasena-DG2E6l96.js",
     "name": "nuevaContrasena",
     "src": "resources/js/nuevaContrasena/nuevaContrasena.js",
     "isEntry": true,
@@ -92,7 +92,7 @@
     ]
   },
   "resources/js/recuperarContrasena/recuperarContrasena.js": {
-    "file": "assets/recuperarContrasena-g9HugDal.js",
+    "file": "assets/recuperarContrasena-D8CwPPcy.js",
     "name": "recuperarContrasena",
     "src": "resources/js/recuperarContrasena/recuperarContrasena.js",
     "isEntry": true,
@@ -102,7 +102,7 @@
     ]
   },
   "resources/js/registro/registro.js": {
-    "file": "assets/registro-CKrvlS8j.js",
+    "file": "assets/registro-DbP36PAJ.js",
     "name": "registro",
     "src": "resources/js/registro/registro.js",
     "isEntry": true,
@@ -143,12 +143,12 @@
     "isEntry": true
   },
   "resources/login_f/login.css": {
-    "file": "assets/login-kpkB43VR.css",
+    "file": "assets/login-_Yf1coQK.css",
     "src": "resources/login_f/login.css",
     "isEntry": true
   },
   "resources/login_f/login.js": {
-    "file": "assets/login-I7HpHUCv.js",
+    "file": "assets/login-d7YaUOu8.js",
     "name": "login",
     "src": "resources/login_f/login.js",
     "isEntry": true,
