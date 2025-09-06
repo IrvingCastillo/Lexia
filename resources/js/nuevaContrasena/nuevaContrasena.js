@@ -2,6 +2,8 @@ import { showModal, hideModal, sleep } from '@/modales/modalHelper';
 import * as bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
 
+var GLOBAL_URL = 'https://web.lexialegal.site/'
+var TEST_URL = 'http://localhost:8000/'
 
 const Pass = document.querySelector("#password_new"),
 PassC = document.querySelector("#confirm_password"),
@@ -111,7 +113,7 @@ BtnGuardar.addEventListener('click', async (e) => {
         showModal(modalSuccess)
         successMsj.textContent = '¡Contraseña reestablecida!'
         hideModal(modalSuccess, 4000, () => {
-            window.location.href = 'https://web.lexialegal.site/login'
+            window.location.href =  GLOBAL_URL + 'login'
         });
     } else {
         showModal(modalError)

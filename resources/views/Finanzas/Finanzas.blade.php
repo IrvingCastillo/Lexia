@@ -1,32 +1,7 @@
 @extends('dashboard')
-{{-- @section('Contenedor','main-container') --}}
+
 @section('Contenido')
 
-<style>
-        .btn-toggle-group {
-        border-radius: 0.75rem;
-        overflow: hidden;
-        background-color: #f8f9fa;
-        padding: 3px;
-        display: inline-flex;
-    }
-    .btn-toggle-group input[type="radio"] {
-        display: none;
-    }
-    .btn-toggle {
-        border: none;
-        padding: 0.5rem 1.5rem;
-        border-radius: 0.65rem;
-        font-weight: 600;
-        color: gray;
-        background: transparent;
-        transition: 0.3s;
-    }
-    .btn-toggle.active {
-        background-color: #112b44;
-        color: white;
-    }
-</style>
 @vite(['resources/css/app.css', 'resources/js/finanzas/finanzas.js'])
 @push('styles')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -36,7 +11,7 @@
 
 <div class="container-fluid bg-white my-5 py-5">
     <div class="d-flex justify-content-md-start">
-        <div style="color: gray; font-size: 2.5rem;">Pagos</div>
+        <div class="titulo-texto textAzul">Pagos</div>
     </div>
     <hr>
 
@@ -58,8 +33,8 @@
                                     <div class="file-item">
                                         <i class="far fa-file-alt file-icon"></i>
                                         <div class="file-info">
-                                            <div class="file-title">Primer Pago mes</div>
-                                            <div class="file-time"><span>Caso Ulises</span></div>
+                                            <div class="file-title normal-texto textAzul">Primer Pago mes</div>
+                                            <div class="file-time normal-texto-light"><span>Caso Ulises</span></div>
                                         </div>
                                     </div>
                                     <span>15/05/2025</span>
@@ -72,8 +47,8 @@
                                     <div class="file-item">
                                         <i class="far fa-file-alt file-icon"></i>
                                         <div class="file-info">
-                                            <div class="file-title">Primer Pago mes</div>
-                                            <div class="file-time"><span>Caso Ulises</span></div>
+                                            <div class="file-title normal-texto textAzul">Segundo Pago mes</div>
+                                            <div class="file-time normal-texto-light"><span>Caso Ulises</span></div>
                                         </div>
                                     </div>
                                     <span>15/05/2025</span>
@@ -86,8 +61,8 @@
                                     <div class="file-item">
                                         <i class="far fa-file-alt file-icon"></i>
                                         <div class="file-info">
-                                            <div class="file-title">Primer Pago mes</div>
-                                            <div class="file-time"><span>Caso Ulises</span></div>
+                                            <div class="file-title normal-texto">Tercer Pago mes</div>
+                                            <div class="file-time normal-texto-light"><span>Caso Ulises</span></div>
                                         </div>
                                     </div>
                                     <span>15/05/2025</span>
@@ -119,13 +94,13 @@
                     <div>
                         <div class="d-flex">
                             <i class="fa fa-plus d-flex align-items-center textAzul" style="font-size: .8rem"></i>
-                            <div class="textAzul ml-1" style="font-size: 1.5rem;">Pago</div>
+                            <div class="textAzul ml-1 normal-texto-bold">Pago</div>
                         </div>
-                        <div class="text-muted" style="font-size: .8rem; margin-top: -.2rem">Agrega el pago correspondiente</div>
+                        <div class="text-muted normal-texto-light" style=" margin-top: -.2rem">Agrega el pago correspondiente</div>
                     </div>
                     <div class="mt-3">
                         <div class="d-flex">
-                            <span class="textAzul mr-3">Monto</span>
+                            <span class="textAzul mr-3 normal-texto">Monto</span>
                             <i class="fa fa-arrow-left d-flex align-items-center" style="font-size: .8rem"></i>
                         </div>
                         <div class="input-group">
@@ -136,7 +111,7 @@
                         </div>
                     </div>
                     <div class="mt-3">
-                        <span class="textAzul mr-3">Estado</span>
+                        <span class="textAzul mr-3 normal-texto">Estado</span>
                         <div class="btn-toggle-group">
                             <input type="radio" id="porPagar" name="estado" value="notpayed">
                             <label for="porPagar" class="btn-toggle">Por Pagar</label>
@@ -146,20 +121,20 @@
                         </div>
                     </div>
                     <div class="mt-3">
-                        <span class="textAzul mr-3">Fecha</span>
+                        <span class="textAzul mr-3 normal-texto">Fecha</span>
                         <input type="date" class="form-control" id="payment_date" name="payment_date">
                     </div>
                     <div class="mt-3">
-                        <span class="textAzul mr-3">Caso</span>
+                        <span class="textAzul mr-3 normal-texto">Caso</span>
                         <select name="case" id="case" class="form-control">
                             {{-- <option value="" selected>Nombre del caso <i class="fa fa-arrow-down" style="font-size: .8rem"></i></option> --}}
                         </select>
                     </div>
                     <div class="mt-3 py-3">
-                        <span class="textAzul mr-3">Descripción</span>
+                        <span class="textAzul mr-3 normal-texto">Descripción</span>
                         <textarea name="payment_description" id="payment_description" rows="3" class="form-control" placeholder="Opcional" style="min-height: 35px"></textarea>
                     </div>
-                    <button type="button" class="bg-blue text-center px-4 py-1" style="border-radius: 5px 5px; opacity: .3" id="addPayment" disabled>Agregar</button>
+                    <button type="button" class="bg-blue text-center px-4 py-1 texto-boton campoRoundedX" style="opacity: .3" id="addPayment" disabled>Agregar</button>
                 </div>
             </form>
 
@@ -168,7 +143,7 @@
         <div class="col-md-8" style="margin-top: -15vh">
             <div class="">
                 <div class="d-flex justify-content-md-start">
-                    <div style="color: gray; font-size: 2.5rem;">Estadísticas</div>
+                    <div class="titulo-texto textAzul">Estadísticas</div>
                 </div>
                 <div class=" my-1">
                     <div class="card">

@@ -179,6 +179,7 @@ function EscribirTexto(texto, velocidad = 50) {
         }
         else{
             quill.setSelection(quill.getLength(), 0);
+            BtnDownloadPdf.style.display = "block"
         }
     }
 
@@ -241,11 +242,11 @@ function renderFileList() {
   fileList.innerHTML = "";
   selectedFiles.forEach((file, index) => {
     const li = document.createElement("li");
-    li.className = "list-group-item file-item mt-1";
+    li.className = "list-group-item file-item mt-1 normal-texto";
     li.style.borderColor = "#132c47"
     li.style.background = "#132c47"
     li.style.color = "#fff"
-    li.style.fontWeight = "bold"
+    // li.style.fontWeight = "bold"
     li.innerHTML = `
       <span>${file.name} (${(file.size/1024).toFixed(1)} KB)</span>
       <button class="btn btn-sm text-white"> <i class="fas fa-trash"></i> </button>
@@ -254,6 +255,7 @@ function renderFileList() {
         if (selectedFiles.length === 1) {
             console.log(selectedFiles.length)
             BtnStart.style.display = "none"
+            fileInput.value = ""
         }
       selectedFiles.splice(index, 1);
       renderFileList();
@@ -265,6 +267,7 @@ function renderFileList() {
 
 async function ObtenerRespuesta(){
     quill.setText("");
+    BtnDownloadPdf.style.display = "none"
     successMsj.innerText = "Espere un momento por favor"
     showModal(modalSuccess)
     setTimeout(() => {
@@ -307,7 +310,7 @@ async function ObtenerRespuesta(){
             setTimeout(() => {
                 hideModal(modalSuccess)
                 EscribirTexto(res_askIA.answer, 3)
-            }, 1000);
+            }, 1500);
         }
 
     } catch (error) {

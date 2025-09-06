@@ -2,6 +2,9 @@
  import * as bootstrap from 'bootstrap';
  window.bootstrap = bootstrap;
 
+var GLOBAL_URL = 'https://web.lexialegal.site/'
+var TEST_URL = 'http://localhost:8000/'
+
  const NombreCliente = document.querySelector('#nombre_cliente'),
     ApellidoPaterno = document.querySelector('#apellido_paterno'),
     ApellidoMaterno = document.querySelector('#apellido_materno'),
@@ -42,7 +45,8 @@
 
 const modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'), { backdrop: 'static', keyboard: false }),
 modalError  = new bootstrap.Modal(document.getElementById('modalError')),
-modalSuccess = new bootstrap.Modal(document.getElementById('modalSuccess'));
+modalSuccess = new bootstrap.Modal(document.getElementById('modalSuccess')),
+modalRegistroError = new bootstrap.Modal(document.getElementById('modalErrorRegistro'))
 
 TituloNavegacion.innerHTML = "Registro"
 
@@ -222,9 +226,21 @@ PlanSeleccionado.addEventListener('focusout', function(){
 
 Terminos.addEventListener('click', function(){
     if (Terminos.checked == true) {
-        BtnSuscribirse.disabled = false
-        BtnSuscribirse.title = ""
-        Terminos.value = true
+    let formulario = document.querySelector("#AltaUsuarioForm")
+        if (!formulario.checkValidity()) {
+            showModal(modalRegistroError)
+            setTimeout(() => {
+                hideModal(modalRegistroError)
+                Terminos.checked = false
+            }, 2000);
+            return;
+        }
+        else{
+            BtnSuscribirse.disabled = false
+            BtnSuscribirse.title = ""
+            Terminos.value = true
+        }
+
     }
     else{
         BtnSuscribirse.disabled = true
@@ -353,7 +369,7 @@ BtnSuscribirse.addEventListener('click', async (e) => {
         document.getElementById('mensajeExito').value = data.message;
 
         hideModal(modalSuccess, 2000, () => {
-            window.location.href = 'https://web.lexialegal.site/casos';
+            window.location.href = GLOBAL_URL +'casos';
         });
 
     } else {

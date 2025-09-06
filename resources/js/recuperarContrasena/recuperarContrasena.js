@@ -2,6 +2,9 @@ import { showModal, hideModal, sleep } from '@/modales/modalHelper';
 import * as bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
 
+var GLOBAL_URL = 'https://web.lexialegal.site/'
+var TEST_URL = 'http://localhost:8000/'
+
 const BtnRecuperar = document.querySelector("#btnEnviarCorreoRecuperar"),
 Correo = document.querySelector("#email_recuperacion"),
 ErrorCorreo = document.querySelector("#errorEmailRecuperacion")
@@ -80,7 +83,7 @@ BtnRecuperar.addEventListener('click', async function (event) {
             showModal(modalSuccess);
             successMsj.textContent = 'Un enlace de recuperación se ha enviado al correo electrónico proporcionado';
             hideModal(modalSuccess, 5000, () => {
-                window.location.href = 'https://web.lexialegal.site/login';
+                window.location.href = GLOBAL_URL + 'login';
             });
         }
         else{

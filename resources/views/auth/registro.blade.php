@@ -1,17 +1,16 @@
 @extends('layouts.app')
 
 @section('contenido')
-@vite(['resources/login_f/login.css', 'resources/js/registro/registro.js'])
+@vite(['resources/login_f/login.css', 'resources/js/registro/registro.js', 'resources/landing/main.css', 'resources/landing/animations.css', 'resources/landing/components.css', 'resources/landing/main.js'])
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <div>
     <div class="navLogin">
         <x-nav-guess color="claro"></x-nav-guess>
     </div>
 
-    <x-contactos-login></x-contactos-login>
-
-
-    <div class="container-fluid bg-white d-flex justify-content-center">
-        <div class="card cardRegistro">
+    <div class="container-fluid bg-white d-flex justify-content-center my-5 py-5">
+        <div class="card cardRegistro my-5">
             <div class="card-body">
                 <div class="ml-4">
                     <h1 id="tituloNavegacion"></h1>
@@ -194,6 +193,7 @@
     </div>
 </div>
 @include('auth.modals.planes')
+@include('Mensajes.errorRegistro')
 @include('Mensajes.carga')
 @include('Mensajes.success')
 @include('Mensajes.error')
@@ -202,7 +202,6 @@
 
 <script src="{{ asset('dist/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('dist/bootstrap/js/bootstrap.min.js') }}"></script>
-
- <script defer src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<script defer src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.13.0/lottie.min.js" type="text/javascript"></script>
 

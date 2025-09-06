@@ -8,59 +8,22 @@
 @endpush
 
 <style>
-        @keyframes shake {
-      0% { transform: rotate(0deg); }
-      25% { transform: rotate(-10deg); }
-      50% { transform: rotate(10deg); }
-      75% { transform: rotate(-10deg); }
-      100% { transform: rotate(0deg); }
-    }
+/* .sticky-right {
+  position: sticky;
+  top: 5rem;
+  align-self: flex-start;
+  z-index: 1020;
+  border-bottom: 3rem solid transparent;
+} */
 
-    .btn-delete {
-      transition: background-color 0.3s ease;
-    }
-
-    .btn-delete:hover {
-        transform: scale(1.05);
-    }
-
-    .btn-delete:hover .trash-icon {
-      animation: shake 0.5s ease infinite;
-    }
-
-     .boton_pdf{
-        background-color: #132c47;
-        color: #c1bdbf;
-    }
-    .boton_pdf:hover{
-        background-color: #132c47;
-        color: white;
-    }
-
-    .card-caso{
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .card-caso:hover{
-        transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  background-color: #f5f3ed; /* gris claro Bootstrap */
-    }
-    .gestionarCaso{
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .gestionarCaso:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        font-weight: 500;
-    }
 </style>
 
 
 <div class="container-fluid bg-white my-5 py-5">
     <input type="text"  id="id_case" hidden>
+    <input type="text"  id="id_file" hidden>
 
-    <span id="showListaCasos" type="button" class="btn btn-sm py-1 px-3" style="background: #f5f5f5; border-radius: 5px; display:none;"><i class="fa fa-arrow-left"> Regresar</i></span>
+    <span id="showListaCasos" type="button" class="btn btn-sm py-1 px-3 texto-boton" style="background: #f5f5f5; border-radius: 5px; display:none;"><i class="fa fa-arrow-left"> Regresar</i></span>
 
     <div id="listaCasos">
         <div class="row justify-content-center">
@@ -75,7 +38,7 @@
             <div class="col-12 col-md-12 px-4 casoDatos DatosHoras">
                 <div class="d-flex justify-content-between d-flex align-items-end">
                     <div>
-                        <div style="font-size: 2rem">CASO <span id="span-titulo"></span></div>
+                        <div class="titulo-texto">CASO <span id="span-titulo"></span></div>
                     </div>
                     <div hidden>
                         <i class="fa fa-regular fa-clock font-size15"></i> <span id="reloj" class="font-weight-bold font-size15"></span> <small class="font-size1">Horas trabajadas</small>
@@ -83,25 +46,34 @@
                 </div>
             </div>
         </div><hr id="separadorHr" style="">
-        <div class="d-flex col-md-12 px-0">
+        <div class="d-flex col-md-12 px-0 sticky-right">
             <div class="col-md-8">
                 <div class="btn-group">
-                    <button type="button" class="btn pl-4 pr-4 dropdown-toggle campoRounded bg-claro" data-toggle="dropdown" aria-expanded="false">
-                        Recorded by me
+                    <button type="button" class="btn pl-4 pr-4 dropdown-toggle campoRounded bg-claro" id="filtradoCasos" data-toggle="dropdown" aria-expanded="false">
+                        <span id="filterLabel" class="normal-texto">Todos los casos</span>
                     </button>
-                    {{-- <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Separated link</a>
-                    </div> --}}
-                </div>
 
+                    <div class="dropdown-menu dropdown-filtro">
+                        <a class="dropdown-item normal-texto mt-2" href="#" data-filter="todos" data-label="Todos los casos">
+                            <i class="fas fa-list mx-1"></i>Ver Todos</a>
+                        <a class="dropdown-item normal-texto" href="#" data-filter="inicio_caso" data-label="Inicio de Caso">
+                        <i class="fa fa-gavel mx-1" style="transform: scaleX(-1);"></i> Inicio de Caso
+                        </a>
+                        <a class="dropdown-item normal-texto" href="#" data-filter="revision_documentos" data-label="Revisión de documentos">
+                        <i class="fas fa-file-alt mx-1"></i> Revisión de documentos
+                        </a>
+                        <a class="dropdown-item normal-texto" href="#" data-filter="proceso" data-label="Proceso">
+                        <i class="fas fa-circle-notch mx-1"></i> Proceso
+                        </a>
+                        <a class="dropdown-item normal-texto" href="#" data-filter="sentencia" data-label="Sentencia">
+                        <i class="fas fa-check-double mx-1"></i> Sentencia
+                        </a>
+                    </div>
+                </div>
             </div>
             <span class="col-md-1 d-flex justify-content-end pr-0 ArchivosCasos" >
                 <span class="fa-stack fa-lg">
-                    <i class="btn btn-sm " data-toggle="modal" data-target="#modalArchivoCaso" style="display: none" id="btnArchivos"><img src="{{ asset('dist/fontawesome-6/svgs/brands/add.svg') }}" style="width: 1.5rem"></i>
+                    <i class="btn btn-sm "  style="display: none" id="btnArchivos"><img src="{{ asset('dist/fontawesome-6/svgs/brands/add.svg') }}" style="width: 1.5rem"></i>
                 </span>
             </span>
             <span class="col-md-3 d-flex justify-content-end mr-1">
@@ -109,7 +81,7 @@
                     <i class="btn btn-sm " data-toggle="modal" data-target="#modalEditarCaso"><img src="{{ asset('dist/fontawesome-6/svgs/solid/user-gear.svg') }}" style="width: 1.5rem"></i>
                 </span>
                 <span class="fa-stack fa-lg" id="btnAltaCaso">
-                    <i class="btn btn-sm " data-toggle="modal" data-target="#modalNuevoCaso"><img src="{{ asset('dist/fontawesome-6/svgs/brands/add.svg') }}" style="width: 1.5rem"></i>
+                    <i class="btn btn-sm " ><img src="{{ asset('dist/fontawesome-6/svgs/brands/add.svg') }}" style="width: 1.5rem"></i>
                 </span>
             </span>
         </div>
@@ -125,14 +97,14 @@
                             <i class="fas fa-trash trash-icon" data-toggle="modal" data-target="#modalEliminar"></i>
                         </button>
                         <div>
-                            <h6 class="font-weight-bold mb-1 titulo-caso"></h6>
-                            <p class="mb-1">Caso: <span class="text-dark descripcion-caso"></span></p>
+                            <h6 class="font-weight-bold mb-1 titulo-caso texto-card-head"></h6>
+                            <p class="mb-1 normal-texto">Caso: <span class="text-dark descripcion-caso normal-texto"></span></p>
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <small class="text-muted mt-5">Estado Actual: <strong class="text-dark estado-caso"></strong></small>
+                            <small class="text-muted mt-5 normal-texto-light">Estado Actual: <strong class="text-dark estado-caso normal-texto-light"></strong></small>
                             <div class="text-right mt-4">
-                                <button type="button" class="bg-blue px-4 py-2 gestionarCaso">Gestionar Caso</button>
+                                <button type="button" class="bg-blue px-4 py-2 gestionarCaso texto-boton">Gestionar Caso</button>
                             </div>
                         </div>
                         </div>
@@ -149,17 +121,17 @@
                 <template id="file-template">
                     <div class="card mb-3 border-0">
                         <div class="card-body border-bottom">
-                            <a href="#" class="text-muted position-absolute borrar-archivo">
-                                <i class="fa fa-trash"></i>
+                            <a href="#" class="text-muted position-absolute borrar-archivo btn-delete">
+                                <i class="fa fa-trash trash-icon" data-toggle="modal" data-target="#modalEliminar"></i>
                             </a>
                             <div class="file-item">
                                 <i class="far fa-file-alt file-icon"></i>
                                 <div class="file-info">
-                                    <div class="file-title">
+                                    <div class="file-title normal-texto">
                                         <a href="#" class="nombre-archivo" data-toggle="modal" data-target="#modalMostrarArchivo" style="color: #132c47"></a>
                                     </div>
                                     <div class="file-time">
-                                        <span class="tipo-archivo"></span> <span class="fecha-archivo"></span>
+                                        <span class="tipo-archivo"></span> <span class="fecha-archivo normal-texto-light"></span>
                                     </div>
                                 </div>
                             </div>
@@ -169,7 +141,7 @@
 
                 <div id="contenedor-archivos"></div>
 
-                 <div id="mensaje-vacio" class="text-center text-muted py-4" style="display: none;">
+                 <div id="mensaje-vacio" class="text-center text-muted py-4 normal-texto" style="display: none;">
                     <i class="far fa-folder-open fa-2x d-block mb-2"></i>
                     No hay archivos para mostrar
                 </div>
@@ -184,7 +156,7 @@
     <div class="chatbox-fixed" id="time-line" >
         <div class="card cardChat" style="border-radius: 25px;">
             <div class="d-flex justify-content-between align-items-center p-3">
-                <strong>Timeline</strong>
+                <strong class="normal-texto-bold">Timeline</strong>
                 <div class="dropdown d-inline-block ml-2">
                     <button class="btn btn-sm btn-link text-secondary p-0" id="menu-options-notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="icon"><img src="{{ asset('dist/fontawesome-6/svgs/brands/cog.svg') }}" alt="" style="width: 1.3rem; font-weight: bold;"></i>
@@ -192,7 +164,7 @@
                     <div class="dropdown-menu dropdown-main dropdown-menu-right font-size-sm" aria-labelledby="menu-options-notifications" >
                         <div class="pt-0 pb-0">
                             <div class="pl-2" href="">
-                                <h5 class="textAzul mb-0 p-1">
+                                <h5 class="textAzul mb-0 p-1 normal-texto-bold">
                                     <i class="icon"><img src="{{ asset('dist/fontawesome-6/svgs/brands/cog.svg') }}" alt="" style="width: 1.3rem; font-weight: bold;"></i>
                                     Opciones de notificación
                                 </h5>
@@ -209,8 +181,8 @@
                                                     <i class="far fa-envelope file-icon"></i>
                                                 </div>
                                                 <div class="file-info">
-                                                    <div class="file-title">Notificar por correo electrónico</div>
-                                                    <div class="file-time"><small>Enviar un correo electrónico con el estado actual del caso</small></div>
+                                                    <div class="file-title normal-texto">Notificar por correo electrónico</div>
+                                                    <div class="file-time normal-texto-light"><small>Enviar un correo electrónico con el estado actual del caso</small></div>
                                                 </div>
                                             </div>
                                         <div class="custom-control custom-switch ml-1">
@@ -226,8 +198,8 @@
                                                     <i class="fa fa-bars file-icon"></i>
                                                 </div>
                                                 <div class="file-info">
-                                                    <div class="file-title">Notificar al cliente</div>
-                                                    <div class="file-time"><span>Se actualizarán los documentos y estado para el cliente</span></div>
+                                                    <div class="file-title normal-texto">Notificar al cliente</div>
+                                                    <div class="file-time normal-texto-light"><span>Se actualizarán los documentos y estado para el cliente</span></div>
                                                 </div>
                                             </div>
                                             <div class="custom-control custom-switch ml-1">
@@ -243,8 +215,8 @@
                                                     <i class="far fa-user file-icon"></i>
                                                 </div>
                                                 <div class="file-info">
-                                                    <div class="file-title">Notificar a los otros abogados</div>
-                                                    <div class="file-time"><span>Actualizar el estado directamente en el portal de los otros abogados</span></div>
+                                                    <div class="file-title normal-texto">Notificar a los otros abogados</div>
+                                                    <div class="file-time normal-texto-light"><span>Actualizar el estado directamente en el portal de los otros abogados</span></div>
                                                 </div>
                                             </div>
                                             <div class="custom-control custom-switch ml-1">
@@ -274,67 +246,36 @@
                                     <div class="icon d-flex justify-content-center align-items-center rounded-circle">
                                         <i class="fa fa-gavel text-white" style="transform: scaleX(-1);"></i>
                                     </div>
-                                    <div class="content-time-line">Inicio de caso</div>
+                                    <div class="content-time-line normal-texto">Inicio de caso</div>
                                     <small class="fecha"></small>
                                 </li>
                                 <li class="time-line-item" data-status="revision_documentos">
                                     <div class="icon d-flex justify-content-center align-items-center rounded-circle">
                                         <i class="fas fa-file-alt"></i>
                                     </div>
-                                    <div class="content-time-line">Revisión de documentos</div>
+                                    <div class="content-time-line normal-texto">Revisión de documentos</div>
                                     <small class="fecha"></small>
                                 </li>
                                     <li class="time-line-item" data-status="proceso">
                                     <div class="icon d-flex justify-content-center align-items-center rounded-circle">
                                         <i class="fas fa-circle-notch"></i>
                                     </div>
-                                    <div class="content-time-line">Proceso</div>
+                                    <div class="content-time-line normal-texto">Proceso</div>
                                     <small class="fecha"></small>
                                 </li>
                                 <li class="time-line-item" data-status="sentencia">
                                     <div class="icon d-flex justify-content-center align-items-center rounded-circle">
                                         <i class="fas fa-check-double"></i>
                                     </div>
-                                    <div class="content-time-line">Sentencia</div>
+                                    <div class="content-time-line normal-texto">Sentencia</div>
                                     <small class="fecha"></small>
                                 </li>
                             </ul>
                         </template>
-
-
-
-                        {{-- <ul class="time-line">
-                            <li class="time-line-item status-completed ">
-                                <div class="icon d-flex justify-content-center align-items-center rounded-circle">
-                                    <i class="fa fa-gavel text-white" style="transform: scaleX(-1);"></i>
-                                </div>
-                                <div class="content-time-line">Inicio de caso</div>
-                                <small>12 de marzo</small>
-                            </li>
-                            <li class="time-line-item status-pending">
-                                <div class="icon d-flex justify-content-center align-items-center rounded-circle">
-                                    <i class="fas fa-file-alt"></i>
-                                </div>
-                                <div class="content-time-line active">Revisión de documentos</div>
-                                <small>25 de marzo</small>
-                            </li>
-                            <li class="time-line-item status-pending">
-                                <div class="icon-pending d-flex justify-content-center align-items-center rounded-circle">
-                                    <i class="fas fa-circle-notch"></i>
-                                </div>
-                                <div class="content-time-line">Proceso</div>
-                            </li>
-                            <li class="time-line-item status-pending">
-                                <div class="icon-pending d-flex justify-content-center align-items-center rounded-circle">
-                                    <i class="fas fa-check-double"></i>
-                                </div>
-                                <div class="content-time-line">Sentencia</div>
-                            </li>
-                        </ul> --}}
                     </div>
                 </div>
-                <div class="text-center bg-white" style="padding: 0.5rem 1rem;">
-                    <button class="btn btn-sm px-5 py-2 campoRoundedX bg-blue" id="edit-status">Editar Status</button>
+                <div class="text-center bg-white" style="">
+                    <button class="btn btn-sm px-5 py-2 campoRoundedX bg-blue texto-boton" id="edit-status">Editar Status</button>
                 </div>
             </div>
         </div>
@@ -353,6 +294,7 @@
 @include('Casos.Modals.Eliminar')
 @include('Casos.Modals.AgregarArchivo')
 @include('Casos.Modals.MostrarArchivo')
+@include('Mensajes.Archivos')
 @stop
 
 @push('scripts')

@@ -10019,6 +10019,35 @@ body {
     font-family: var(--letraInter);
 }
 
+.titulo-texto{
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.normal-texto-bold{
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.normal-texto{
+    font-weight: 650 !important;
+    font-size: 1rem !important;
+}
+
+.normal-texto-light{
+    font-weight: 400;
+    font-size: .9rem;
+}
+
+.texto-card-head{
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.texto-boton{
+    font-weight: 650;
+    font-size: 1rem;
+}
 .body-titulo{
     font-family: var(--letraInter);
     font-weight: bold;
@@ -12259,6 +12288,7 @@ a.block.block-themed .btn-block-option:focus,
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
+    font-weight: 700;
 }
 
 .nav-main-link {
@@ -12291,7 +12321,7 @@ a.block.block-themed .btn-block-option:focus,
     flex: 1 1 auto;
     display: inline-block;
     max-width: 100%;
-    font-family: 'Montserrat';
+    font-family: 'Inter';
 }
 
 .nav-main-link .nav-main-link-badge {
@@ -12447,6 +12477,15 @@ a.block.block-themed .btn-block-option:focus,
     color: var(--azul) !important;
     border-color: var(--azul) !important; /* Azul lateral */
     font-weight: bold !important;
+      transform: scale(1.1);
+
+
+}
+
+.sidebar-dark #sidebar .nav-main-link:hover {
+      transform: scale(1.05);
+  transition: transform 0.2s ease;
+
 
 }
 
@@ -24514,6 +24553,43 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 }
 
 
+    .ql-toolbar.ql-snow{
+        display: none;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      background: black;
+      margin-left: 2px;
+      animation: blink 0.7s steps(2, start) infinite;
+    }
+    @keyframes blink {
+      to { visibility: hidden; }
+    }
+
+
+    /*  */
+
+    #dropZone {
+  cursor: pointer;
+  transition: background-color 0.3s;
+  height: 8rem;
+  border: 1px dashed #132c47
+}
+#dropZone.dragover {
+  background-color: transparent;
+  border-color: #132c47;
+}
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.file-item span {
+  font-size: 0.9rem;
+}
+
 /* IA modulo fin */
 
 
@@ -24540,6 +24616,15 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     transform: translate3d(-160px, 32px, 0px) !important;
 
     min-height: 18rem;
+}
+
+.dropdown-filtro{
+    position: absolute;
+    border-radius: 15px 15px;
+    will-change: transform;
+    top: -20px !important;
+    left: 17rem !important;
+    transform: translate3d(-100px, 32px, 0px) !important;
 }
 
 .dropMain{
@@ -24639,6 +24724,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 .chatbox-fixed.show{
     display: block;
     animation: slideLeftFadeIn 2.5s ease forwards;
+    height: 500px;
 }
 .DatosSup{
     display: block;
@@ -24828,4 +24914,94 @@ a.stretched-link:hover {
     border-left: 2px dashed grey;
 }
 
+        @keyframes shake {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(-10deg); }
+      50% { transform: rotate(10deg); }
+      75% { transform: rotate(-10deg); }
+      100% { transform: rotate(0deg); }
+    }
 
+    .btn-delete {
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-delete:hover {
+        transform: scale(1.05);
+    }
+
+    .btn-delete:hover .trash-icon {
+      animation: shake 0.5s ease infinite;
+    }
+
+     .boton_pdf{
+        background-color: #132c47;
+        color: #c1bdbf;
+    }
+    .boton_pdf:hover{
+        background-color: #132c47;
+        color: white;
+    }
+
+    .card-caso{
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-caso:hover{
+        transform: translateY(-6px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  /* background-color: #FCFCFC; */
+    background-color: #F7F7F7;
+    }
+    .gestionarCaso{
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .gestionarCaso:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        font-weight: 500;
+    }
+
+
+
+
+
+
+    /* inicio finanzas modulo */
+
+        .btn-toggle-group {
+        border-radius: 0.75rem;
+        overflow: hidden;
+        background-color: #f8f9fa;
+        padding: 3px;
+        display: inline-flex;
+    }
+    .btn-toggle-group input[type="radio"] {
+        display: none;
+    }
+    .btn-toggle {
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 0.65rem;
+        font-weight: 600;
+        color: gray;
+        background: transparent;
+        transition: 0.3s;
+    }
+    .btn-toggle.active {
+        background-color: #112b44;
+        color: white;
+    }
+
+
+    /* fin finanzas modulo */
+
+
+    /* inicio usuarios modulo */
+
+        #contenedor-usuarios .card {
+            flex: 1 1 300px; /* ancho mínimo 300px, crece según espacio */
+            max-width: 350px;
+        }
+
+    /* fin usuarios modulo */

@@ -12,6 +12,10 @@ html{
     font-family: 'Inter';
 }
 
+a {
+  text-decoration: none !important;
+}
+
 .split-left{
     /* background: url('../images/login.png') no-repeat center; */
     /* background-size: cover;
@@ -75,17 +79,22 @@ html{
 
 .body-titulo{
     font-family: var(--letraTimes) !important;
-    font-weight: bold !important;
-    font-size: 2rem !important;
+    /* font-weight: bold !important; */
+    font-size: 3.5rem !important;
 }
 
-.body-textoT{
+.titulo-card{
     font-family: var(--letraTimes) !important;
-    font-size: 1rem !important;
+    font-size: 2.6rem !important;
+    font-weight: 700;
+}
+.body-texto-t{
+    font-family: var(--letraTimes) !important;
+    font-size: 1.25rem !important;
 }
 
-.body-textoG{
-    font-family: var(--letraGothic) !important;
+.body-texto-p{
+    font-family: var(--letraTimes) !important;
     font-size: 1rem !important;
 }
 
@@ -99,30 +108,29 @@ html{
     color: var(--azul) !important;
 }
 
-.navLinks{
+/* .navLinks{
     color:var(--gris) ;
-    padding: 10px ;
-    font-family: 'Montserrat' ;
-    font-size: 1.1rem;
+    padding: 1.8px;
+    font-size: 1rem;
     border-bottom: 5.5px solid transparent;
-}
+} */
 
-.navLogin .navLinks .nav-login-link.active{
+/* .navLogin .navLinks .nav-login-link.active{
     padding-bottom: 10px;
     border-bottom-width: 4px;
     border-bottom-style: solid;
     border-bottom-color: #5e6674;
     font-weight: bold;
     color: #5e6674;
-}
+} */
 
-.navLogin .navLinks .nav-login-link:hover{
+/* .navLogin .navLinks .nav-login-link:hover{
     color: #5e6674;
-}
+} */
 
 .bg-blue{
-    background: var(--azul);
-    color: var(--gris);
+    background: var(--azul)  !important;
+    color: var(--gris) !important;
 }
 
 .bg-claro {
@@ -142,7 +150,7 @@ html{
     background: transparent;
     padding: 10px !important;
     transition: background-color 0.2s ease;
-    font-family: var(--letraTitulo);
+    font-family: var(--letraTimes);
     font-weight: bold;
     position: absolute;
     bottom: 3%;
@@ -156,8 +164,8 @@ html{
 
 .cardPlan{
     border: 3px solid #132c47 !important;
-    max-width: 300px !important;
-    height: 400px;
+    max-width: 320px !important;
+    height: 420px !important;
     border-radius: 25px 25px 25px 25px !important;
 }
 
@@ -172,37 +180,10 @@ html{
     border: 3px solid #f5f3ed !important;
 }
 
-.footer-banner {
-  background-size: cover;
-  background-position: center;
-  height: 300px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.footer-content {
-  height: 80%;
-  width: 45%;
-  /* margin-left: auto; */
-  display: flex;
-  flex-direction: column;
-}
-
-/* .footer-woman {
-  position: absolute;
-  bottom: 0;
-  right: 20px;
-  height: 100%;
-  object-fit: contain;
-} */
-
-
 .custom-tooltip {
     position: absolute;
     top: -3.5rem;
-    left: 7rem;
+    left: 4rem;
     background: #f8f9fa;
     border: 1px solid #ddd;
     padding: 8px 12px;
@@ -228,9 +209,9 @@ html{
 }
 
 .nav-pills .nav-link.active {
-    background-color: var(--azul);
-    color: white;
-    border: 0;
+    background-color: var(--azul) !important;
+    color: white !important;
+    border: 0 !important;
 }
 
 .nav-pills .nav-link:not(.active) {
@@ -245,12 +226,12 @@ html{
 
 .cardRegistro{
     width: 60vw;
-    border: 3px solid var(--azul);
-    height: fit-content;
-    padding-bottom: 5rem;
-    margin-bottom: 2rem;
-    border-radius: var(--boderAngosto);
-    margin-top: 1rem;
+    border: 3px solid var(--azul) !important;
+    height: fit-content !important;
+    padding-bottom: 5rem !important;
+    margin-bottom: 2rem !important;
+    border-radius: var(--boderAngosto) !important;
+    margin-top: 1rem !important;
 }
 
 .btnPlan:hover{

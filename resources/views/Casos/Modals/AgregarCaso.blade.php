@@ -3,7 +3,7 @@
         <div class="modal-content" style="border-radius: 25px 25px 25px 25px !important;">
             <div class="modal-header pb-0">
                 <h1 class="modal-title" id="exampleModalLabel">Agregar Caso</h1>
-                <span type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </span>
             </div>
@@ -69,19 +69,19 @@
                                             <option value=2>Juan</option>
                                             <option value=3>Roberto</option>
                                             <option value=4>Miguel</option>
-                                            <option value=5>Julio</option>
+                                            {{-- <option value=5>Julio</option>
                                             <option value=6>Rubén</option>
                                             <option value=7>Ana</option>
                                             <option value=8>Pilar</option>
                                             <option value=9>Carmen</option>
-                                            <option value=10>Luisa</option>
+                                            <option value=10>Luisa</option> --}}
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group offset-3 d-flex justify-content-between align-items-end">
                                 <div class="mb-3">
-                                    <button id="agregarCaso" type="button" class="bg-blue px-4 py-2 campoRoundedX" data-dismiss="modal" style="width: 15rem">Agregar</button>
+                                    <button id="agregarCaso" type="button" class="bg-blue px-4 py-2 campoRoundedX" style="width: 15rem">Agregar</button>
                                 </div>
                             </div>
                         </div>

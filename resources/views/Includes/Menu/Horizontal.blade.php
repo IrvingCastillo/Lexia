@@ -14,7 +14,7 @@
                         <div class="dropMain" style="min-height: 17rem;">
                             <div class="pt-0 pb-0">
                                 <div class="pl-2 d-flex align-items-center justify-content-between">
-                                    <h5 class="textAzul mb-0 p-1">{{ Auth::user()->nombre_cliente }}</h5>
+                                    <h5 class="textAzul mb-0 p-1 normal-texto-bold">{{ Auth::user()->nombre_cliente }}</h5>
 
                                 </div>
 
@@ -22,7 +22,7 @@
                                 <a class="dropdown-item d-flex align-items-center justify-content-between" href="{{ route('cuenta') }}">
                                     <span>
                                         <i class="far fa-address-card ml-1"></i>
-                                        <span>Información de la cuenta</span>
+                                        <span class="normal-texto">Información de la cuenta</span>
                                     </span>
                                     <span>
                                         <i class="fas fa-angle-right mr-2"></i>
@@ -31,7 +31,7 @@
                                 <a class="dropdown-item d-flex align-items-center justify-content-between showSus" href="#">
                                     <span>
                                         <i class="nav-main-link-icon"><img src="{{ asset('dist/fontawesome-6/svgs/brands/credit-card.svg') }}" alt="" style="width: 1.3rem;"></i>
-                                        <span>Suscripción</span>
+                                        <span class="normal-texto">Suscripción</span>
                                     </span>
                                     <span>
                                         <i class="fas fa-angle-right mr-2"></i>
@@ -41,7 +41,7 @@
                                 <a class="dropdown-item d-flex align-items-center justify-content-between showConf" href="#">
                                     <span>
                                         <i class="nav-main-link-icon"><img src="{{ asset('dist/fontawesome-6/svgs/brands/shield.svg') }}" alt="" style="width: 1.3rem;"></i>
-                                        <span>Configuración</span>
+                                        <span class="normal-texto">Configuración</span>
                                     </span>
                                     <span>
                                         <i class="fas fa-angle-right mr-2"></i>
@@ -51,7 +51,7 @@
                                 <a class="dropdown-item d-flex align-items-center justify-content-between" href="">
                                     <span>
                                         <i class="fa fa-headphones ml-1"></i>
-                                        <span>Ayuda</span>
+                                        <span class="normal-texto">Ayuda</span>
                                     </span>
                                     <span>
                                         <i class="fas fa-angle-right mr-2"></i>
@@ -65,7 +65,7 @@
                                 <div class="col-12 my-2">
                                     <form method="post" action="{{ route('logout') }}"> {{-- logout --}}
                                          @csrf
-                                        <button type="submit" class="btn bg-blue campoRounded" style="width: 100%">Cerrar Sesión</button>
+                                        <button type="submit" class="btn bg-blue campoRounded texto-boton" style="width: 100%">Cerrar Sesión</button>
                                     </form>
                                 </div>
                             </div>
@@ -74,25 +74,25 @@
                         <div class="dropSuscripcion dropHide" id="dropSuscripcion" style="min-height: 20rem;">
                             <div class="pl-2 d-flex align-items-center justify-content-start">
                                 <i type="button" class="fas fa-angle-left backSuscripcion"></i>
-                                <h5 class="textAzul mb-0 p-1">Suscripción</h5>
+                                <h5 class="textAzul mb-0 p-1 normal-texto-bold">Suscripción</h5>
                             </div><hr>
                             <div class="mx-2">
 
                                 <div class="card campoRounded shadow-sm">
                                     <div class="card-body">
-                                        <span class="p-2 campoRounded" style="background: aliceblue">Plan <b class="textAzul">{{ Auth::user()->lawfirm["plan"]["name"] }}</b></span>
+                                        <span class="p-2 campoRounded normal-texto" style="background: aliceblue">Plan <b class="textAzul normal-texto">{{ Auth::user()->lawfirm["plan"]["name"] }}</b></span>
                                         <div class="d-flex justify-content-between mt-2">
-                                            <span>Pago Mensual</span>
-                                            <span>$ {{ Auth::user()->lawfirm["plan"]["price"] }}</span>
+                                            <span class="normal-texto">Pago Mensual</span>
+                                            <span class="normal-texto">$ {{ Auth::user()->lawfirm["plan"]["price"] }}</span>
                                         </div>
                                         <div class="d-flex justify-content-between mt-2">
-                                            <span>Siguiente Pago</span>
-                                            <span>23 de Diciembre de 2025</span>
+                                            <span class="normal-texto">Siguiente Pago</span>
+                                            <span class="normal-texto-light">23 de Diciembre de 2025</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mt-3">
-                                    <span>Tarjeta Asociada</span>
+                                    <span class="normal-texto">Tarjeta Asociada</span>
                                     <div class="card campoRounded shadow-sm">
                                         <div class="card-body">
                                             <img src="{{ asset('dist/fontawesome-6/svgs/brands/credit-card-2.svg') }}" style="width: 2.5rem;"> <span>**** **** 3774</span>
@@ -103,7 +103,7 @@
 
                             <div class="d-flex justify-content-center mt-4">
                                 <a href="{{ route('modificarPlan') }}">
-                                    <button type="button" class="bg-blue px-4 py-2 campoRoundedX" style="width: 18rem"><b>Modificar plan</b></button>
+                                    <button type="button" class="bg-blue px-4 py-2 campoRoundedX texto-boton" style="width: 18rem"><b>Modificar plan</b></button>
                                 </a>
                             </div>
 
@@ -112,13 +112,13 @@
                         <div class="dropConfiguracion mb-3 dropHide " id="dropConfiguracion">
                             <div class="pl-2 d-flex align-items-center justify-content-start">
                                 <i type="button" class="fas fa-angle-left pr-2 backConfiguracion"></i>
-                                <h5 class="textAzul mb-0 p-1">Configuración</h5>
+                                <h5 class="textAzul mb-0 p-1 normal-texto-bold">Configuración</h5>
                             </div><hr>
                             <div class="mx-2">
-                                <div class="textAzul font-size1 pl-2">Seguridad y privacidad</div>
+                                <div class="textAzul font-size1 pl-2 normal-texto">Seguridad y privacidad</div>
                                 <a class="dropdown-item d-flex align-items-center justify-content-between" href="{{ route('modificarContrasena') }}">
                                     <span>
-                                        <span>Cambiar contraseña</span>
+                                        <span class="normal-texto">Cambiar contraseña</span>
                                     </span>
                                     <span>
                                         <i class="fas fa-angle-right mr-2"></i>
@@ -126,7 +126,7 @@
                                 </a><hr>
                                 <a class="dropdown-item d-flex align-items-center justify-content-between" href="{{ route('cuenta') }}">
                                     <span>
-                                        <span>Términos y condiciones</span>
+                                        <span class="normal-texto">Términos y condiciones</span>
                                     </span>
                                     <span>
                                         <i class="fas fa-angle-right mr-2"></i>

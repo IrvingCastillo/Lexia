@@ -33,31 +33,31 @@
         <!-- Plan Básico -->
         <div class="card mb-4 shadow-sm cardPlan {{ $bgCard }}">
             <div class="card-body">
-                <h1 class="text-left {{ $colorText }}">Personal</h1>
-                <h1 class="card-title pricing-card-title mb-0 {{ $colorText }}">$1499 MXN </h1>
-                <small class="text-muted offset-6 {{ $colorText }}" style="font-size: 20px">/ mes</small>
-                <div>Para abogados independientes</div>
+                <h1 class="text-left titulo-texto {{ $colorText }}">Personal</h1>
+                <h1 class="card-title pricing-card-title mb-0 {{ $colorText }} text-right">$1499 MXN </h1>
+                <small class="text-muted offset-9 normal-texto-light {{ $colorText }}" style="font-size: 20px">/ mes</small>
+                <div class="my-3 normal-texto">Para abogados independientes</div>
                 <ul class="list-unstyled mt-3 mb-4 text-left">
                     <li>
                         <i class="far fa-check-circle fa-1x"></i>
-                        <span>Carga de documentos</span>
+                        <span class="normal-texto">Carga de documentos</span>
                     </li>
                     <li>
                         <i class="far fa-check-circle fa-1x"></i>
-                        <span>Seguimiento de casos</span>
+                        <span class="normal-texto">Seguimiento de casos</span>
                     </li>
                     <li>
                         <i class="far fa-check-circle fa-1x"></i>
-                        <span>Panel Financiero</span>
+                        <span class="normal-texto">Panel Financiero</span>
                     </li>
                     <li>
                         <i class="far fa-check-circle fa-1x"></i>
-                        <span>1 usuario como máximo</span>
+                        <span class="normal-texto">1 usuario como máximo</span>
                     </li>
                 </ul>
 
                 <a href="{{ $redirectPage }}">
-                <button type="button" class="btnPlan {{ $classBtn }} campoRoundedX " {{ $dis }}>
+                <button type="button" class="btnPlan {{ $classBtn }} campoRoundedX texto-boton" {{ $dis }}>
                     {{ $btnTitleP }}
                 </button>
                 </a>
@@ -86,16 +86,15 @@
 
         <!-- Plan Estándar (popular) -->
         <div class="card mb-4 shadow-sm cardPlan {{ $bgCard }}">
-
             <div class="card-body">
-                <h1 class="text-left {{ $colorText }}">Profesional</h1>
-                <h1 class="card-title pricing-card-title mb-0 {{ $colorText }}">$3499 MXN </h1>
-                <small class="text-muted offset-6 {{ $colorText }}" style="font-size: 20px">/ mes</small>
-                <div>Para despachos en crecimiento</div>
+                <h1 class="text-left titulo-texto {{ $colorText }}">Profesional</h1>
+                <h1 class="card-title pricing-card-title mb-0 {{ $colorText }} text-right">$3499 MXN </h1>
+                <small class="text-muted offset-9 normal-texto-light {{ $colorText }}" style="font-size: 20px">/ mes</small>
+                <div class="my-3 normal-texto">Para despachos en crecimiento</div>
                 <ul class="list-unstyled mt-3 mb-4 text-left">
                     <li>
                         <i class="far fa-check-circle fa-1x"></i>
-                        <span class="position-relative">
+                        <span  class="position-relative normal-texto">
                             Inteligencia Artificial para casos jurídicos
                             <i id="infoBtn" type="button" class="fas fa-info-circle ms-2" style="color:#132c47; cursor:pointer;"></i>
 
@@ -106,15 +105,15 @@
                     </li>
                     <li>
                         <i class="far fa-check-circle fa-1x"></i>
-                        <span>Carga hasta 10 documentos por caso</span>
+                        <span class="normal-texto">Carga hasta 10 documentos por caso</span>
                     </li>
                     <li>
                         <i class="far fa-check-circle fa-1x"></i>
-                        <span>3 usuarios como máximo</span>
+                        <span class="normal-texto">3 usuarios como máximo</span>
                     </li><br>
                 </ul>
                 <a href="{{ $redirectPage }}">
-                    <button type="button" class="btnPlan {{ $classBtn }} campoRoundedX" {{ $dis }}>{{ $btnTitlePr }}</button>
+                    <button type="button" class="btnPlan {{ $classBtn }} campoRoundedX texto-boton" {{ $dis }}>{{ $btnTitlePr }}</button>
                 </a>
             </div>
         </div>
@@ -150,26 +149,26 @@
                 {{-- <h4 class="my-0 font-weight-normal">Básico</h4> --}
             </div> --}}
             <div class="card-body">
-                <h1 class="text-left {{ $colorText }}">Corporativo</h1>
-                <h1 class="{{ $colorText }} card-title pricing-card-title mb-0">$7999 MXN </h1>
-                <small class="text-muted {{ $colorText }} offset-6" style="font-size: 20px">/ mes</small>
-                <div>Firmas medianas y grandes</div>
+                <h1 class="text-left titulo-texto {{ $colorText }}">Corporativo</h1>
+                <h1 class="{{ $colorText }} card-title pricing-card-title mb-0 text-right">$7999 MXN </h1>
+                <small class="text-mute {{ $colorText }} offset-9 normal-texto-light" style="font-size: 20px">/ mes</small>
+                <div class="my-3 normal-texto">Firmas medianas y grandes</div>
                 <ul class="list-unstyled mt-3 mb-4 text-left">
                     <li>
                         <i class="far fa-check-circle fa-1x"></i>
-                        <span>Sin límites de documentos</span>
+                        <span class="normal-texto">Sin límites de documentos</span>
                     </li>
                     <li>
                         <i class="far fa-check-circle fa-1x"></i>
-                        <span>Soporte y asistencia personalizada</span>
+                        <span class="normal-texto">Soporte y asistencia personalizada</span>
                     </li>
                     <li>
                         <i class="far fa-check-circle fa-1x"></i>
-                        <span>Hasta 10 usuarios como máximo</span>
+                        <span class="normal-texto">Hasta 10 usuarios como máximo</span>
                     </li>
                 </ul>
                 <a href="{{ $redirectPage }}">
-                    <button type="button" class="btnPlan {{ $classBtn }} mt-3 campoRoundedX" {{ $dis }}>{{ $btnTitleC }}</button>
+                    <button type="button" class="btnPlan {{ $classBtn }} mt-3 campoRoundedX texto-boton" {{ $dis }}>{{ $btnTitleC }}</button>
                 </a>
             </div>
         </div>

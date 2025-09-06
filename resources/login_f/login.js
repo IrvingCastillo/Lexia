@@ -2,6 +2,9 @@ import { showModal, hideModal, sleep } from '@/modales/modalHelper';
 import * as bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
 
+var GLOBAL_URL = 'https://web.lexialegal.site/'
+var TEST_URL = 'http://localhost:8000/'
+
 const btnLogin = document.querySelector('.btnLogin'),
 email = document.getElementById('email'),
 password = document.getElementById('password')
@@ -64,7 +67,7 @@ btnLogin.addEventListener('click', async (e) => {
             showModal(modalSuccess)
             successMsj.textContent = '¡Bienvenido!'
             hideModal(modalSuccess, 3000, () => {
-                window.location.href = 'https://web.lexialegal.site/casos'
+                window.location.href = GLOBAL_URL + 'casos'
             });
         } else {
             throw new Error('No se pudo iniciar sesión')

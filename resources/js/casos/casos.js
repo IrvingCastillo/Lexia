@@ -13,15 +13,19 @@ AgregarArchivo = document.querySelector("#agregarArchivo"),
 template = document.querySelector("#card-template"),
 contenedor = document.querySelector("#contenedor-casos"),
 idCase = document.querySelector("#id_case"),
+idFile = document.querySelector("#id_file"),
 VisualizarArchivos = document.querySelector("#visualizarArchivos"),
 TituloCasoSpan = document.querySelector("#span-titulo"),
 BtnArchivos = document.querySelector('#btnArchivos'),
 BtnEditStatus = document.querySelector("#edit-status"),
-BtnEliminarCaso = document.querySelector("#btnEliminar"),
+BtnEliminar = document.querySelector("#btnEliminar"),
 BtnModalEditCaso = document.querySelector("#btnEditCaso"),
 BtnShowListaCasos = document.querySelector("#showListaCasos"),
 BtnAltaCAso = document.querySelector("#btnAltaCaso"),
 BarraBusqueda = document.querySelector("#barraBusqueda"),
+BtnFiltradoCasos = document.querySelector("#filtradoCasos"),
+filtroItems = document.querySelectorAll(".dropdown-filtro"),
+
 tipo =  document.querySelector("#tipoEliminar"),
 titulo = document.querySelector("#tituloEliminar")
 
@@ -74,6 +78,8 @@ async function ObtenerListaCasos(){
             clone.querySelector(".titulo-caso").textContent = el.caso_nombre;
             clone.querySelector(".descripcion-caso").textContent = el.description;
             clone.querySelector(".estado-caso").textContent = estadosCustom[el.status];
+            const wrapper = clone.querySelector(".card-caso");
+            wrapper.setAttribute("data-status", el.status);
 
             // Ejemplo: agregar event listener al botón
             clone.querySelector(".gestionarCaso").addEventListener("click", () => {
@@ -84,9 +90,9 @@ async function ObtenerListaCasos(){
             });
 
             clone.querySelector(".eliminarCaso").addEventListener("click", () => {
-                 idCase.value = el.id
-                 tipo.innerHTML = "caso?"
-                 titulo.innerHTML = el.caso_nombre
+                idCase.value = el.id
+                tipo.innerHTML = "caso?"
+                titulo.innerHTML = el.caso_nombre
 
             })
 
@@ -149,6 +155,7 @@ async function ObtenerListaAbogados(){
 function showGestionarCaso(el){
     BtnShowListaCasos.style.display = "inline"
     BtnAltaCAso.style.display = "none"
+    BtnFiltradoCasos.style.display = "none"
     // BtnModalEditCaso.style.display = "block"
     TituloCasoSpan.innerHTML = el.caso_nombre
     InfoSuperior.classList.add('cardHide')
@@ -303,8 +310,12 @@ function RenderizarArchivos(list_documents){
         // Event listener para borrar archivo
         clone.querySelector(".borrar-archivo").addEventListener("click", e => {
             e.preventDefault();
-            console.log("Borrar archivo ID:", doc.id);
-            EliminarArchivo(doc.id)
+            console.log("Borrar archivo ID:", doc.id)
+            console.log(doc)
+            idFile.value = doc.id
+            tipo.innerHTML = "archivo?"
+            titulo.innerHTML = doc.name
+            // EliminarArchivo(doc.id)
         });
 
         // Event listener para abrir modal si quieres
@@ -350,6 +361,17 @@ $('.dropdown-menu').on('click', function(e) {
   e.stopPropagation();
 });
 
+$("#btnAltaCaso").on('click', () => {
+    $("#modalNuevoCaso").modal('show')
+})
+
+$("#btnArchivos").on('click', () => {
+    $("#modalArchivoCaso").modal('show')
+    document.getElementById("archivo_caso").value = ""
+    document.querySelector(".showFile").style.display = "none"
+    document.querySelector("#fileName").innerHTML = ""
+})
+
 async function EliminarArchivo(idArchivo){
     showModal(modalCarga)
     await new Promise(r => setTimeout(r, 2000))
@@ -394,15 +416,15 @@ async function EliminarArchivo(idArchivo){
             const res_case_info = await case_info.json()
 
             if (case_info.ok) {
-                successMsj.textContent = res_eliminar.message
-                showModal(modalSuccess)
-                hideModal(modalSuccess, 2000, () => {
-                    $("#modalNuevoCaso").modal({
-                        hide:true
-                    })
-                    console.log(res_eliminar.data)
-                    RenderizarArchivos(res_case_info.data.documents)
-                });
+                // successMsj.textContent = res_eliminar.message
+                // showModal(modalSuccess)
+                // hideModal(modalSuccess, 2000, () => {
+                //     $("#modalNuevoCaso").modal({
+                //         hide:true
+                //     })
+                //     console.log(res_eliminar.data)
+                // });
+                RenderizarArchivos(res_case_info.data.documents)
             }
         }
 
@@ -454,18 +476,44 @@ $(".archivo").on('change', function() {
     }
 })
 
-// document.querySelector("#abrirModalCaso").addEventListener('click', function(){
-//     console.log("hi")
-//     $("#modalNuevoCaso").modal({ show: true})
-//     // $("#attorneys").multiselect()
-// })
 
 
+const menu = document.querySelector('.dropdown-menu.dropdown-filtro');
+const btn = document.getElementById('filtradoCasos');
+const label = document.getElementById('filterLabel');
 
+// Delegación de eventos para capturar clicks en las opciones
+menu.addEventListener('click', (e) => {
+  const item = e.target.closest('a[data-filter]');
+  if (!item) return;
+  e.preventDefault();
+
+  const filtro = item.dataset.filter;   // "todos" | "inicio_caso" | "proceso"...
+  const texto  = item.dataset.label;    // Texto limpio sin iconos
+
+  // Cambiar el texto del botón
+  label.textContent = texto;
+
+  // Filtrar los casos
+  const casos = contenedor.querySelectorAll('.card-caso');
+  casos.forEach(caso => {
+    const estado = caso.getAttribute('data-status');
+    const mostrar = (filtro === 'todos') || (estado === filtro);
+    caso.classList.toggle('d-none', !mostrar); // usar Bootstrap para ocultar
+  });
+
+  // Cerrar el dropdown (opcional, si usas Bootstrap 4 con jQuery)
+  if (typeof $ !== 'undefined' && $(btn).dropdown) {
+    $(btn).dropdown('toggle');
+  }
+});
 
 BtnShowListaCasos.addEventListener("click", ()=> {
+    idCase.value = ""
+    idFile.value = ""
     BarraBusqueda.style.display = "none"
     BtnAltaCAso.style.display = "block"
+    BtnFiltradoCasos.style.display = "inline"
     BtnModalEditCaso.style.display = "none"
     BtnArchivos.style.display = "none"
     InfoInferior.classList.add('cardHide')
@@ -559,64 +607,76 @@ BtnEditStatus.addEventListener('click', async(e) => {
 
 AgregarArchivo.addEventListener('click', async(e) => {
 
-    showModal(modalCarga)
-    await new Promise(r => setTimeout(r, 2000))
-    hideModal(modalCarga)
+    let file_field = document.querySelector('input[name="documents[]"]').files[0]
+    const bodyForm = new FormData()
 
-    try {
-        let file_field = document.querySelector('input[name="documents[]"]').files[0]
-        const me = await fetch('/get-token')
-        const res_me = await me.json()
-
-        let body_case = {
-            "legal_case_id" : idCase.value
-        }
-        const queryParams = new URLSearchParams(body_case).toString();
-
-        const bodyForm = new FormData()
-
-        bodyForm.append('legal_case_id', idCase.value)
-        bodyForm.append('documents[]', file_field)
-
-        const file = await fetch('https://api.lexialegal.site/api/legal-cases/upload/files', {
-            method: "POST",
-            headers: {
-                'Authorization': `Bearer ${res_me.token}`,
-                Accept: 'application/json'
-            },
-            body: bodyForm
-        })
-
-        const res_file = await file.json()
-
-        if (file.ok) {
-            const case_info = await fetch(`https://api.lexialegal.site/api/legal-cases/show/cases?${queryParams}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                'Authorization': `Bearer ${res_me.token}`,
-            }
-        })
-        const res_case_info = await case_info.json()
-
-        if (case_info.ok) {
-            successMsj.textContent = res_file.message
-            showModal(modalSuccess)
-            hideModal(modalSuccess, 2000, () => {
-                $("#modalArchivoCaso").modal({
-                    hide:true
-                })
-                RenderizarArchivos(res_case_info.data.documents)
+    bodyForm.append('legal_case_id', idCase.value)
+    bodyForm.append('documents[]', file_field)
+    if (!file_field) {
+        $("#modalMensajeArchivo").modal("show").on("shown.bs.modal", function () {
+                document.getElementById("mensajeArchivo").innerHTML = "Por favor, sube el archivo"
+                setTimeout(() => {
+                    $("#modalMensajeArchivo").modal("hide");
+                }, 2000);
             });
+    }
+
+    else{
+        $("#modalArchivoCaso").modal("hide")
+        showModal(modalCarga)
+        await new Promise(r => setTimeout(r, 2000))
+        hideModal(modalCarga)
+
+        try {
+            const me = await fetch('/get-token')
+            const res_me = await me.json()
+
+            let body_case = {
+                "legal_case_id" : idCase.value
+            }
+            const queryParams = new URLSearchParams(body_case).toString();
+
+            const file = await fetch('https://api.lexialegal.site/api/legal-cases/upload/files', {
+                method: "POST",
+                headers: {
+                    'Authorization': `Bearer ${res_me.token}`,
+                    Accept: 'application/json'
+                },
+                body: bodyForm
+            })
+
+            const res_file = await file.json()
+
+            if (file.ok) {
+                const case_info = await fetch(`https://api.lexialegal.site/api/legal-cases/show/cases?${queryParams}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    'Authorization': `Bearer ${res_me.token}`,
+                }
+            })
+            const res_case_info = await case_info.json()
+
+            if (case_info.ok) {
+                // successMsj.textContent = res_file.message
+                // showModal(modalSuccess)
+                // hideModal(modalSuccess, 2000, () => {
+                //     $("#modalArchivoCaso").modal({
+                //         hide:true
+                //     })
+                // });
+                RenderizarArchivos(res_case_info.data.documents)
+            }
+        }
+
+
+        } catch (error) {
+            showModal(modalError)
+            hideModal(modalError, 2000)
         }
     }
 
-
-    } catch (error) {
-        showModal(modalError)
-        hideModal(modalError, 2000)
-    }
 })
 
 AgregarCaso.addEventListener('click', async(e) => {
@@ -625,96 +685,115 @@ AgregarCaso.addEventListener('click', async(e) => {
     const form = document.querySelector("#AltaCaso"),
     datos = new FormData(form)
 
-    showModal(modalCarga)
-    await new Promise(r => setTimeout(r, 2000))
-    hideModal(modalCarga)
+    if (!form.checkValidity()) {
+        console.log(form.checkValidity())
+        form.reportValidity();
+        return;
+    }
+    else{
+        setTimeout(() => {
+            hideModal(modalCaso)
+        }, 100);
+        showModal(modalCarga)
+        await new Promise(r => setTimeout(r, 2000))
+        hideModal(modalCarga)
 
-    try {
-        const me = await fetch('/get-token')
-        const res_me = await me.json()
+        try {
+            const me = await fetch('/get-token')
+            const res_me = await me.json()
 
 
-        const res = await fetch('https://api.lexialegal.site/api/legal-cases', {
-            method: "POST",
-            headers: {
-                'Authorization': `Bearer ${res_me.token}`,
-                // 'Content-Type': 'multipart/form-data',
-                Accept: 'application/json'
-            },
-            body: datos
-        })
+            const res = await fetch('https://api.lexialegal.site/api/legal-cases', {
+                method: "POST",
+                headers: {
+                    'Authorization': `Bearer ${res_me.token}`,
+                    // 'Content-Type': 'multipart/form-data',
+                    Accept: 'application/json'
+                },
+                body: datos
+            })
 
-        const data = await res.json()
-        if (res.ok) {
-            successMsj.textContent = data.message
-            showModal(modalSuccess)
-            hideModal(modalSuccess, 2000, () => {
-                $("#modalNuevoCaso").modal({
-                    hide:true
-                })
-                ObtenerListaCasos()
+            const data = await res.json()
+            if (res.ok) {
+                successMsj.textContent = data.message
+                showModal(modalSuccess)
+                hideModal(modalSuccess, 2000, () => {
+                    $("#modalNuevoCaso").modal({
+                        hide:true
+                    })
+                    ObtenerListaCasos()
+                });
+            } else {
+            showModal(modalError);
+            hideModal(modalError, 2000, () => {
+                // showModal(modalCaso)
             });
-        } else {
-        showModal(modalError);
-        hideModal(modalError, 2000, () => {
-            // showModal(modalCaso)
-        });
 
+        }
+
+        } catch (error) {
+            showModal(modalError)
+            hideModal(modalError, 2000)
+        }
     }
 
-    } catch (error) {
-        showModal(modalError)
-        hideModal(modalError, 2000)
-    }
 })
 
 
-BtnEliminarCaso.addEventListener("click", async(e) => {
-    showModal(modalCarga)
-    await new Promise(r => setTimeout(r, 2000))
-    hideModal(modalCarga)
+BtnEliminar.addEventListener("click", async(e) => {
+    let archivoID = idFile.value
+    if (archivoID !== "") {
+        console.log("eliminar archivo")
+        EliminarArchivo(archivoID)
+    }
+    else{
 
-    try {
-        const me = await fetch('/get-token')
-        const res_me = await me.json()
+        showModal(modalCarga)
+        await new Promise(r => setTimeout(r, 2000))
+        hideModal(modalCarga)
 
-        let body_elim = {
-            "legal_case_id": idCase.value
-        }
+        try {
+            const me = await fetch('/get-token')
+            const res_me = await me.json()
 
-        const res = await fetch('https://api.lexialegal.site/api/legal-cases/delete/case', {
-            method: "POST",
-            headers: {
-                'Authorization': `Bearer ${res_me.token}`,
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify(body_elim),
-        })
+            let body_elim = {
+                "legal_case_id": idCase.value
+            }
 
-        const res_delete_register = await res.json()
-
-         if (res.ok) {
-            successMsj.textContent = res_delete_register.message
-            showModal(modalSuccess)
-            hideModal(modalSuccess, 2000, () => {
-            $("#modalEliminar").modal({
-                hide:true
+            const res = await fetch('https://api.lexialegal.site/api/legal-cases/delete/case', {
+                method: "POST",
+                headers: {
+                    'Authorization': `Bearer ${res_me.token}`,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(body_elim),
             })
-            ObtenerListaCasos()
-            });
-        } else {
+
+            const res_delete_register = await res.json()
+
+             if (res.ok) {
+                successMsj.textContent = res_delete_register.message
+                showModal(modalSuccess)
+                hideModal(modalSuccess, 2000, () => {
+                $("#modalEliminar").modal({
+                    hide:true
+                })
+                ObtenerListaCasos()
+                });
+            } else {
+                showModal(modalError);
+                hideModal(modalError, 2000, () => {
+                // showModal(modalCaso)
+                });
+            }
+
+        } catch (error) {
             showModal(modalError);
             hideModal(modalError, 2000, () => {
             // showModal(modalCaso)
             });
         }
-
-    } catch (error) {
-        showModal(modalError);
-        hideModal(modalError, 2000, () => {
-        // showModal(modalCaso)
-        });
     }
 
 
