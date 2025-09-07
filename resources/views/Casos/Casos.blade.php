@@ -18,7 +18,6 @@
 
 </style>
 
-
 <div class="container-fluid bg-white my-5 py-5">
     <input type="text"  id="id_case" hidden>
     <input type="text"  id="id_file" hidden>
@@ -154,7 +153,7 @@
 
 
     <div class="chatbox-fixed" id="time-line" >
-        <div class="card cardChat" style="border-radius: 25px;">
+        <div class="card cardChat" >
             <div class="d-flex justify-content-between align-items-center p-3">
                 <strong class="normal-texto-bold">Timeline</strong>
                 <div class="dropdown d-inline-block ml-2">
@@ -199,7 +198,7 @@
                                                 </div>
                                                 <div class="file-info">
                                                     <div class="file-title normal-texto">Notificar al cliente</div>
-                                                    <div class="file-time normal-texto-light"><span>Se actualizarán los documentos y estado para el cliente</span></div>
+                                                    <div class="file-time normal-texto-light"><small>Se actualizarán los documentos y estado para el cliente</small></div>
                                                 </div>
                                             </div>
                                             <div class="custom-control custom-switch ml-1">
@@ -216,7 +215,7 @@
                                                 </div>
                                                 <div class="file-info">
                                                     <div class="file-title normal-texto">Notificar a los otros abogados</div>
-                                                    <div class="file-time normal-texto-light"><span>Actualizar el estado directamente en el portal de los otros abogados</span></div>
+                                                    <div class="file-time normal-texto-light"><small>Actualizar el estado directamente en el portal de los otros abogados</small></div>
                                                 </div>
                                             </div>
                                             <div class="custom-control custom-switch ml-1">

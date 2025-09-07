@@ -1,5 +1,6 @@
 @php
     if (Auth::user() ){
+        $user = Auth::user()->getAttributes()[0];
         $redirectPage = "#";
     }
     else{
@@ -17,7 +18,7 @@
     <div class="card-deck mb-3 justify-content-center">
         @php
         if (Auth::user()) {
-            if (Auth::user()->lawfirm["plan"]["id"] == 1) {
+            if ($user['lawfirm']["plan"]["id"] == 1) {
                 $btnTitleP = "Plan actual";
                 $dis = " disabled";
                 $bgCard = "bg-blue";
@@ -66,7 +67,7 @@
 
             @php
             if (Auth::user()) {
-                if (Auth::user()->lawfirm["plan"]["id"] == 2) {
+                if ($user['lawfirm']["plan"]["id"] == 2) {
                     echo Auth::user()->lawfirm["plan"]["id"];
                     $btnTitlePr = "Plan actual";
                     $dis = " disabled";
@@ -122,7 +123,7 @@
 
         @php
             if (Auth::user()) {
-                if (Auth::user()->lawfirm["plan"]["id"] == 3) {
+                if ($user['lawfirm']["plan"]["id"] == 3) {
                     echo Auth::user()->lawfirm["plan"]["id"];
                     $btnTitleC = "Plan actual";
                     $dis = " disabled";

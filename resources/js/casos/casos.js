@@ -522,6 +522,7 @@ BtnShowListaCasos.addEventListener("click", ()=> {
     InfoHoras.classList.remove('show')
     BtnShowListaCasos.style.display = "none"
     setTimeout(() => {
+        ObtenerListaCasos()
         InfoSuperior.classList.remove('cardHide')
     }, 2000);
 

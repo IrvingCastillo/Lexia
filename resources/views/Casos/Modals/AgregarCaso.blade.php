@@ -79,9 +79,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group offset-3 d-flex justify-content-between align-items-end">
+                            <div class="offset-3 d-flex justify-content-between align-items-end">
                                 <div class="mb-3">
-                                    <button id="agregarCaso" type="button" class="bg-blue px-4 py-2 campoRoundedX" style="width: 15rem">Agregar</button>
+                                    <button id="agregarCaso" type="button" class="bg-blue px-4 py-2 campoRoundedX texto-boton" style="width: 15rem">Agregar</button>
                                 </div>
                             </div>
                         </div>

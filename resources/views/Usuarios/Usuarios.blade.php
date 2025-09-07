@@ -9,7 +9,7 @@
 
 <div>
     <div class="container-fluid bg-white my-5 py-5">
-        <input type="text" id="id_user" hidden>
+        <input type="text" id="id_user" >
         <div class="d-flex justify-content-between align-items-end">
             <span class="textAzul titulo-texto">Usuarios</span>
             <span data-toggle="modal" data-target="#modalNuevoUsuario" type="button" class="btn btn-sm bg-blue py-1 px-3 align-content-center texto-boton" style="height: 2.2rem;"><i class="fa fa-circle-plus fa-1x pr-1"></i> Agregar Usuario</span>        </div><hr style="margin-top: .5rem">
@@ -44,7 +44,7 @@
                             <span class="small fecha-usuario normal-texto-light"></span>
                         </div>
                         <div class="col-auto">
-                            <button class="btn btn-light btn-sm text-muted btn-remover texto-boton" style="width: 6rem">Remover</button>
+                            <button class="btn btn-light btn-sm text-muted btn-remover texto-boton" data-toggle="modal" data-target="#modalEliminar" style="width: 6rem">Remover</button>
                         </div>
                     </div>
                 </div>
@@ -67,6 +67,7 @@
 
 @include('Usuarios.Modals.AltaUsuario')
 @include('Usuarios.Modals.EditarUsuario')
+@include('Casos.Modals.Eliminar')
 
 @include('Mensajes.success')
 @include('Mensajes.carga')

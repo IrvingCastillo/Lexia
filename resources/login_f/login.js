@@ -67,7 +67,7 @@ btnLogin.addEventListener('click', async (e) => {
             showModal(modalSuccess)
             successMsj.textContent = '¡Bienvenido!'
             hideModal(modalSuccess, 3000, () => {
-                window.location.href = GLOBAL_URL + 'casos'
+                window.location.href = TEST_URL + 'casos'
             });
         } else {
             throw new Error('No se pudo iniciar sesión')

@@ -24704,8 +24704,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 
 .chatbox-fixed.show{
     display: block;
-    animation: slideLeftFadeIn 2.5s ease forwards;
-    height: 500px;
+    animation: slideLeftFadeIn 2s ease forwards;
+    /* height: 500px; */
 }
 .DatosSup{
     display: block;
@@ -24720,7 +24720,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 }
 
 .DatosHoras, .ArchivosCasos{
-    transition: opacity 2s ease, transform 2s ease;
+    transition: opacity 1.5s ease, transform 1.5s ease;
     opacity: 0;
     transform: translateY(0);
 }
@@ -24758,9 +24758,9 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
   border-radius: 25px 25px;
   padding: 1rem;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  height: 450px;
 }
 .messages-container {
-  max-height: 450px;
   overflow-y: auto;
   padding: 0.5rem .5rem;
   background: white;
@@ -24846,7 +24846,7 @@ a.stretched-link:hover {
 .time-line-item {
   position: relative;
   padding-left: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .content-time-line.active{

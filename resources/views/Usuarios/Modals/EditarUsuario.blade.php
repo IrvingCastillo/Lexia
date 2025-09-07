@@ -8,13 +8,13 @@
                 </span>
             </div>
             <div class="modal-body pl-3 pr-3">
-                <form id="AltaUsuarios">
+                <form id="EditarUsuarios">
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label>Nombre</label>
                             <div class="form-group col-md-12 pl-0">
                                 <div class="input-group">
-                                    <input type="text" class="form-control campoRounded" id="nombre_cliente_edit" name="nombre_cliente">
+                                    <input type="text" class="form-control campoRounded" id="nombre_cliente_edit" name="nombre_cliente" maxlength="30" required>
                                 </div>
                             </div>
                         </div>
@@ -22,7 +22,7 @@
                             <label>Apellido Paterno</label>
                             <div class="form-group col-md-12 pl-0">
                                 <div class="input-group">
-                                    <input type="text" class="form-control campoRounded" id="apellido_paterno_edit" name="apellido_paterno">
+                                    <input type="text" class="form-control campoRounded" id="apellido_paterno_edit" name="apellido_paterno" maxlength="20" required>
                                 </div>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                             <label>Apellido Materno</label>
                             <div class="form-group col-md-12 pl-0">
                                 <div class="input-group">
-                                    <input type="text" class="form-control campoRounded" id="apellido_materno_edit" name="apellido_materno">
+                                    <input type="text" class="form-control campoRounded" id="apellido_materno_edit" name="apellido_materno" maxlength="20" required>
                                 </div>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                         <div class="form-group col-md-6">
                             <label>Teléfono</label>
                             <div class="form-group col-md-12 pl-0 d-flex">
-                                <select class="form-control campoRounded col-3"  id="area_code_edit">
+                                <select class="form-control campoRounded col-3"  id="area_code_edit" name="lada">
                                     <option value="+52">+ 52</option>
                                     <option value="+1">+ 1</option>
                                 </select>
@@ -48,7 +48,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text group-text-transparent"><i class="fa fa-phone" style="transform: scaleX(-1)"></i></span>
                                     </div>
-                                    <input type="text" class="form-control rounded-right-input" id="telefono_edit">
+                                    <input type="text" class="form-control rounded-right-input" id="telefono_edit" name="telefono" pattern="[0-9]+" maxlength="10" minlength="10" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
                                 </div>
                             </div>
                         </div>
@@ -56,7 +56,7 @@
                             <label>Correo electrónico</label>
                             <div class="form-group col-md-12 pl-0">
                                 <div class="input-group">
-                                    <input type="text" class="form-control campoRounded" id="email_edit" name="email">
+                                    <input type="email" class="form-control campoRounded" id="email_edit" name="email" required>
                                 </div>
                             </div>
                         </div>
@@ -75,9 +75,9 @@
                             </div>
                         </div> --}}
                         <input type="text" value="usuario" name="tipo_de_permiso" hidden>
-                        <div class="form-group d-flex justify-content-between align-items-end">
+                        <div class="col-12 d-flex justify-content-end align-items-end">
                             <div class="mb-3">
-                                <button type="button" class="bg-blue px-4 py-2 campoRoundedX" data-dismiss="modal" style="width: 15rem" id="editUser">Guardar cambios</button>
+                                <button type="button" class="bg-blue px-4 py-1 campoRoundedX texto-boton" style="width: 15rem" id="editUser">Guardar cambios</button>
                             </div>
                         </div>
                     </div>

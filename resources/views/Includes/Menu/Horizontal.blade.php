@@ -1,5 +1,4 @@
 <header id="page-header">
-    {{-- {{ dd(Auth::user()) }} --}}
         <div class="content-header">
             <div class="d-flex align-items-center">
             </div>
@@ -14,7 +13,7 @@
                         <div class="dropMain" style="min-height: 17rem;">
                             <div class="pt-0 pb-0">
                                 <div class="pl-2 d-flex align-items-center justify-content-between">
-                                    <h5 class="textAzul mb-0 p-1 normal-texto-bold">{{ Auth::user()->nombre_cliente }}</h5>
+                                    <h5 class="textAzul mb-0 p-1 normal-texto-bold">{{ $user['nombre_cliente'] }}</h5>
 
                                 </div>
 
@@ -80,10 +79,10 @@
 
                                 <div class="card campoRounded shadow-sm">
                                     <div class="card-body">
-                                        <span class="p-2 campoRounded normal-texto" style="background: aliceblue">Plan <b class="textAzul normal-texto">{{ Auth::user()->lawfirm["plan"]["name"] }}</b></span>
+                                        <span class="p-2 campoRounded normal-texto" style="background: aliceblue">Plan <b class="textAzul normal-texto">{{ $user['lawfirm']["plan"]["name"] }}</b></span>
                                         <div class="d-flex justify-content-between mt-2">
                                             <span class="normal-texto">Pago Mensual</span>
-                                            <span class="normal-texto">$ {{ Auth::user()->lawfirm["plan"]["price"] }}</span>
+                                            <span class="normal-texto">$ {{ $user['lawfirm']["plan"]["price"] }}</span>
                                         </div>
                                         <div class="d-flex justify-content-between mt-2">
                                             <span class="normal-texto">Siguiente Pago</span>
@@ -101,7 +100,7 @@
                                 </div>
                             </div>
 
-                            <div class="d-flex justify-content-center mt-4">
+                            <div class="d-flex justify-content-center mt-4 mb-2">
                                 <a href="{{ route('modificarPlan') }}">
                                     <button type="button" class="bg-blue px-4 py-2 campoRoundedX texto-boton" style="width: 18rem"><b>Modificar plan</b></button>
                                 </a>
