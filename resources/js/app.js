@@ -1,8 +1,9 @@
 import './bootstrap';
 import './loader.js';
 import { DotLottie } from '@lottiefiles/dotlottie-web';
-import * as modalHelper from '@/modales/modalHelper';
-window.modalHelper = modalHelper;
+import { showModal, hideModal, sleep } from '@/modales/modalHelper';
+import * as bootstrap from 'bootstrap';
+window.bootstrap = bootstrap;
 
 
 const SuccessAnim = document.querySelector('.animSuccess'),
@@ -17,7 +18,17 @@ btnConfiguracion = document.querySelector(".showConf"),
 btnBackSuscripcion = document.querySelector(".backSuscripcion"),
 btnBackConfiguracion = document.querySelector(".backConfiguracion"),
 btnDropMain = document.querySelector(".btnShowDrop"),
-btnCerrarSesion = document.querySelector("#closeSession")
+btnCerrarSesion = document.querySelector("#closeSession"),
+btnsPlanUpdate = document.querySelectorAll(".btnPlan"),
+btnConfirmPlan = document.querySelector("#confirmPlan"),
+idPlan = document.querySelector("#idPlan"),
+successMsj = document.getElementById('mensajeExito'),
+errorMsj = document.getElementById('mensajeError'),
+tipoPlan = document.getElementById('tipoPlan')
+
+const modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'), { backdrop: 'static', keyboard: false }),
+modalError  = new bootstrap.Modal(document.getElementById('modalError')),
+modalSuccess = new bootstrap.Modal(document.getElementById('modalSuccess'));
 
 
 const animationSuccess = new DotLottie({
@@ -42,6 +53,17 @@ const animationLoad = new DotLottie({
     canvas: CargaAnim,
     src: "https://lottie.host/16d17efc-47f1-4ecd-a52e-1c638044e891/Id7GM0IlEM.lottie", // or .json file
 })
+
+
+function StriepWindow(URL, Titulo, features, myWidth, myHeight, isCenter) {
+    if (window.screen) if (isCenter) if (isCenter == "true") {
+        var myLeft = (screen.width - myWidth) / 2;
+        var myTop = (screen.height - myHeight) / 2;
+        features += (features != '') ? ',' : '';
+        features += ',left=' + myLeft + ',top=' + myTop;
+    }
+    window.open(URL, Titulo, features + ((features != '') ? ',' : '') + 'width=' + myWidth + ',height=' + myHeight + ",status = no, toolbar = no, menubar = no, location = no ," + " directories=no");
+}
 
 $('.dropdown-main').on('click', function(e) {
   e.stopPropagation();
@@ -85,8 +107,62 @@ btnBackSuscripcion.addEventListener('click', function (){
     }, 1550)
 })
 
+
+btnConfirmPlan.addEventListener('click', async(e) => {
+    $("#modalCambioPlan").modal("hide")
+    showModal(modalCarga)
+    await new Promise(r => setTimeout(r, 2000))
+    hideModal(modalCarga)
+
+    try {
+        const me = await fetch('/get-token')
+        const res_me = await me.json()
+
+        let body = {
+            "plan_id": parseInt(idPlan.value)
+        }
+
+        const update_plan = await fetch("https://api.lexialegal.site/api/stripe/create-session", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    'Authorization': `Bearer ${res_me.token}`,
+                },
+                body: JSON.stringify(body)
+            })
+
+        const res_update_plan = await update_plan.json()
+console.log(update_plan)
+console.log(res_update_plan)
+        if (update_plan.ok) {
+            StriepWindow(res_update_plan.data.url, "Transacción de pago", "", 1000, 800, 'true');
+            location.reload();
+        }
+        else{
+            showModal(modalSuccess)
+            successMsj.textContent = res_update_plan.message
+            hideModal(modalSuccess, 2000)
+        }
+
+    } catch (error) {
+        showModal(modalSuccess)
+        hideModal(modalSuccess, 2000)
+    }
+})
+
+
+btnsPlanUpdate.forEach(button => {
+    button.addEventListener('click', async(e) => {
+        $("#modalCambioPlan").modal("show")
+        let planId = button.getAttribute('data-plan'),
+        planNombre = button.getAttribute('data-nombre-plan')
+        tipoPlan.innerText = planNombre
+        idPlan.value = planId
+    })
+})
+
 btnCerrarSesion.addEventListener('click', function(){
-    console.log("hola",)
     const dataM = document.querySelector('meta[name="csrf-token"]')
     const descriptionM = dataM.getAttribute('content')
     console.log(descriptionM)

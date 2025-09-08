@@ -40,4 +40,10 @@
     </body>
 </div>
 @include('Mensajes.Pago')
+@include('Mensajes.ConfirmacionPlan')
+@include('Mensajes.Restringir')
+
+@include('Mensajes.success')
+@include('Mensajes.carga')
+@include('Mensajes.error')
 @endsection

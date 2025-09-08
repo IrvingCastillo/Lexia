@@ -13,6 +13,7 @@ PreguntaText = document.querySelector("#pregunta"),
 dropZone = document.getElementById('dropZone'),
 fileInput = document.getElementById('fileInput'),
 fileList = document.getElementById('fileList'),
+PlanId = document.getElementById('planId'),
 Respuesta = document.querySelector("#editor"),
 BtnStart = document.getElementById("startIA"),
 BtnDownloadPdf = document.querySelector("#downloadPdf"),
@@ -21,9 +22,30 @@ BtnShowDropFiles = document.querySelector("#showDropFiles")
 const cargaMsj = document.getElementById('mensajeCarga'),
 successMsj = document.getElementById('mensajeExito')
 
-
-
 let selectedFiles = [];
+
+VerificarStatus()
+
+async function VerificarStatus(){
+    const me = await fetch('/get-token')
+    const res_me = await me.json()
+
+    const data_me = await fetch("https://api.lexialegal.site/api/me", {
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            'Authorization': `Bearer ${res_me.token}`,
+        }
+    })
+
+    const res_data_me = await data_me.json()
+console.log(res_data_me[0])
+    if (res_data_me[0].lawfirm.plan.id === 1) {
+        $("#modalRestriccion").modal("show")
+        PlanId.value = res_data_me[0].lawfirm.plan.id
+        console.log(PlanId.value)
+    }
+}
 
 ExtraerCheck.addEventListener('change', function(){
     if(this.checked == true){
@@ -31,7 +53,7 @@ ExtraerCheck.addEventListener('change', function(){
         ResumirCheck.disabled = true
         PreguntaText.disabled = true
         PreguntaText.value = ""
-        if (selectedFiles.length !== 0) {
+        if (selectedFiles.length !== 0 && PlanId.value != 1) {
             BtnStart.style.display = "block"
         }
         else{
@@ -51,7 +73,7 @@ ResumirCheck.addEventListener('change', function(){
         ExtraerCheck.disabled = true
         PreguntaText.disabled = true
         PreguntaText.value = ""
-        if (selectedFiles.length !== 0) {
+        if (selectedFiles.length !== 0 && PlanId.value != 1) {
             BtnStart.style.display = "block"
         }
         else{
@@ -76,7 +98,7 @@ PreguntaText.addEventListener('input', function(){
         ExtraerCheck.disabled = true
         ResumirCheck.checked = false
         ResumirCheck.disabled = true
-        if (selectedFiles.length !== 0) {
+        if (selectedFiles.length !== 0 && PlanId.value != 1) {
             BtnStart.style.display = "block"
         }
         else{

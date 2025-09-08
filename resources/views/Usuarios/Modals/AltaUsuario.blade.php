@@ -3,7 +3,7 @@
         <div class="modal-content" style="border-radius: 25px 25px 25px 25px !important;">
             <div class="modal-header pb-0">
                 <h1 class="modal-title" id="exampleModalLabel">Agregar Usuario</h1>
-                <span type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </span>
             </div>

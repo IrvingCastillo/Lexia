@@ -23,18 +23,18 @@ btnLogin.addEventListener('click', async (e) => {
     pwd = password.value.trim(),
     datosJson = JSON.stringify({ email: correo, password: pwd });
 
-    showModal(modalCarga)
-    await new Promise(r => setTimeout(r, 2000))
-    hideModal(modalCarga)
 
     if (!correo || !pwd) {
-        showModal(modalError)
+        // showModal(modalError)
         errorMsj.textContent = 'Completa los campos para poder ingresar'
-        hideModal(modalError, 2000)
+        // hideModal(modalError, 2000)
         return;
     }
 
     try{
+        showModal(modalCarga)
+        await new Promise(r => setTimeout(r, 2000))
+        hideModal(modalCarga)
         const res = await fetch('https://api.lexialegal.site/api/login', {
             method: "POST",
             headers: {

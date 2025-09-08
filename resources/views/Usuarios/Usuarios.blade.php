@@ -9,15 +9,15 @@
 
 <div>
     <div class="container-fluid bg-white my-5 py-5">
-        <input type="text" id="id_user" >
+        <input type="text" id="id_user" hidden>
         <div class="d-flex justify-content-between align-items-end">
-            <span class="textAzul titulo-texto">Usuarios</span>
-            <span data-toggle="modal" data-target="#modalNuevoUsuario" type="button" class="btn btn-sm bg-blue py-1 px-3 align-content-center texto-boton" style="height: 2.2rem;"><i class="fa fa-circle-plus fa-1x pr-1"></i> Agregar Usuario</span>        </div><hr style="margin-top: .5rem">
+            <div class="titulo-texto textAzul">Usuarios</div>
+            <span id="showAltaUsuario" type="button" class="btn btn-sm bg-blue py-1 px-3 align-content-center texto-boton" style="height: 2.2rem;"><i class="fa fa-circle-plus fa-1x pr-1"></i> Agregar Usuario</span>        </div><hr style="margin-top: .5rem">
 
 
         <div id="listadoUsuarios">
             <template id="usuario-template">
-                <div class="card shadow-sm p-3 mb-3 mx-2" style="max-width: 400px;">
+                <div class="card shadow-sm p-3 mb-3 mx-2">
                     <div class="row g-0 align-items-center">
                         <!-- Avatar + Nombre -->
                         <div class="col-2">

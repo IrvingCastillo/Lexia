@@ -15,7 +15,7 @@
                                 <label>Nombre del caso</label>
                                 <div class="form-group col-md-12 pl-0">
                                     <div class="input-group">
-                                        <input type="text" class="form-control campoRounded" name="caso_nombre" required>
+                                        <input type="text" class="form-control campoRounded" name="caso_nombre" id="caso_nombre" required>
                                     </div>
                                 </div>
                             </div>
@@ -25,7 +25,7 @@
                                 <label>Nombre del cliente</label>
                                 <div class="form-group col-md-12 pl-0">
                                     <div class="input-group">
-                                        <input type="text" class="form-control campoRounded" name="client_name" required>
+                                        <input type="text" class="form-control campoRounded" name="client_name" id="client_name" required>
                                     </div>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
                                 <label>Descripción</label>
                                 <div class="form-group col-md-12 pl-0">
                                     <div class="input-group">
-                                        <input type="text" class="form-control campoRounded" name="description">
+                                        <input type="text" class="form-control campoRounded" name="description" id="description">
                                     </div>
                                 </div>
                             </div>
@@ -45,7 +45,7 @@
                                 <label>Fecha</label>
                                 <div class="form-group col-md-12 pl-0">
                                     <div class="input-group">
-                                        <input type="date" class="form-control campoRounded" name="case_date">
+                                        <input type="date" class="form-control campoRounded" name="case_date" id="case_date">
                                     </div>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                                 <label>Tipo del caso</label>
                                 <div class="form-group col-md-12 pl-0">
                                     <div class="input-group">
-                                        <input type="text" class="form-control campoRounded" name="case_type" required>
+                                        <input type="text" class="form-control campoRounded" name="case_type" id="case_type" required>
                                     </div>
                                 </div>
                             </div>
@@ -65,10 +65,10 @@
                                 <div class="form-group col-md-12 pl-0">
                                     <div class="input-group">
                                         <select class="form-control campoRounded" name="attorneys[]" id="attorneys" multiple>
-                                            <option value=1>Ulises</option>
+                                            {{-- <option value=1>Ulises</option>
                                             <option value=2>Juan</option>
                                             <option value=3>Roberto</option>
-                                            <option value=4>Miguel</option>
+                                            <option value=4>Miguel</option> --}}
                                             {{-- <option value=5>Julio</option>
                                             <option value=6>Rubén</option>
                                             <option value=7>Ana</option>

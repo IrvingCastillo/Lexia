@@ -1,5 +1,6 @@
 @php
     if (Auth::user() ){
+        // dd(Auth::user());
         $user = Auth::user()->getAttributes()[0];
         $redirectPage = "#";
     }
@@ -28,6 +29,9 @@
             else{
                 $btnTitleP = "Seleccionar";
                 $dis = " ";
+                $bgCard = " ";
+                $colorText = " ";
+                $classBtn = "btnPlanInactivo";
             }
         }
         @endphp
@@ -58,7 +62,7 @@
                 </ul>
 
                 <a href="{{ $redirectPage }}">
-                <button type="button" class="btnPlan {{ $classBtn }} campoRoundedX texto-boton" {{ $dis }}>
+                <button type="button" data-plan="1" data-nombre-plan="Personal" class="btnPlan {{ $classBtn }} campoRoundedX texto-boton" {{ $dis }}>
                     {{ $btnTitleP }}
                 </button>
                 </a>
@@ -68,7 +72,6 @@
             @php
             if (Auth::user()) {
                 if ($user['lawfirm']["plan"]["id"] == 2) {
-                    echo Auth::user()->lawfirm["plan"]["id"];
                     $btnTitlePr = "Plan actual";
                     $dis = " disabled";
                     $bgCard = "bg-blue";
@@ -82,6 +85,13 @@
                     $colorText = "";
                     $classBtn = "btnPlanInactivo";
                 }
+            }
+            else{
+                $btnTitlePr = "Seleccionar";
+                $dis = " ";
+                $bgCard = "";
+                $colorText = "";
+                $classBtn = "btnPlanInactivo";
             }
             @endphp
 
@@ -97,9 +107,9 @@
                         <i class="far fa-check-circle fa-1x"></i>
                         <span  class="position-relative normal-texto">
                             Inteligencia Artificial para casos jurídicos
-                            <i id="infoBtn" type="button" class="fas fa-info-circle ms-2" style="color:#132c47; cursor:pointer;"></i>
+                            <i id="infoBtn" type="button" class="fas fa-info-circle ms-2 {{ $colorText }}" style="color:#132c47; cursor:pointer;"></i>
 
-                            <div id="customTooltip" class="custom-tooltip shadow-sm">
+                            <div id="customTooltip" class="custom-tooltip shadow-sm text-muted">
                                 Escritos legales generados automáticamente con solo ingresar datos clave.
                             </div>
                         </span>
@@ -114,7 +124,7 @@
                     </li><br>
                 </ul>
                 <a href="{{ $redirectPage }}">
-                    <button type="button" class="btnPlan {{ $classBtn }} campoRoundedX texto-boton" {{ $dis }}>{{ $btnTitlePr }}</button>
+                    <button type="button" data-plan="2" data-nombre-plan="Profesional" class="btnPlan {{ $classBtn }} campoRoundedX texto-boton" {{ $dis }}>{{ $btnTitlePr }}</button>
                 </a>
             </div>
         </div>
@@ -124,7 +134,6 @@
         @php
             if (Auth::user()) {
                 if ($user['lawfirm']["plan"]["id"] == 3) {
-                    echo Auth::user()->lawfirm["plan"]["id"];
                     $btnTitleC = "Plan actual";
                     $dis = " disabled";
                     $bgCard = "bg-blue";
@@ -169,7 +178,7 @@
                     </li>
                 </ul>
                 <a href="{{ $redirectPage }}">
-                    <button type="button" class="btnPlan {{ $classBtn }} mt-3 campoRoundedX texto-boton" {{ $dis }}>{{ $btnTitleC }}</button>
+                    <button type="button" data-plan="3" data-nombre-plan="Corporativo" class="btnPlan {{ $classBtn }} mt-3 campoRoundedX texto-boton" {{ $dis }}>{{ $btnTitleC }}</button>
                 </a>
             </div>
         </div>

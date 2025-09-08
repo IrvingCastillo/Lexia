@@ -41,10 +41,23 @@ ObtenerListaCasos()
 ObtenerListaAbogados()
 
 async function ObtenerListaCasos(){
-
     try {
         const me = await fetch('/get-token')
         const res_me = await me.json()
+
+        const data_me = await fetch("https://api.lexialegal.site/api/me", {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                'Authorization': `Bearer ${res_me.token}`,
+            }
+        })
+
+        const res_data_me = await data_me.json()
+
+        if (res_data_me[0].lawfirm.status === "Expirado") { //Vigente
+            $("#modalMensajePago").modal("show")
+        }
 
         const get_cases = await fetch('https://api.lexialegal.site/api/legal-cases', {
             method:"GET",
@@ -362,6 +375,7 @@ $('.dropdown-menu').on('click', function(e) {
 });
 
 $("#btnAltaCaso").on('click', () => {
+    limpiarModal()
     $("#modalNuevoCaso").modal('show')
 })
 
@@ -459,6 +473,20 @@ function ActualizarContador() {
   const tiempoFormateado = `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
 
   document.getElementById('reloj').textContent = tiempoFormateado;
+}
+
+function limpiarModal(){
+    const camposModal = ["caso_nombre", "client_name", "description", "case_date", "case_type"]
+
+    camposModal.forEach(campo => {
+        document.querySelector(`#${campo}`).value = ""
+    })
+
+    $("#attorneys option:selected").each(function(){
+        let Idmod = $(this).val()
+        $("#attorneys").multiselect('deselect', Idmod, true)
+    })
+
 }
 
 setInterval(ActualizarContador, 1000);
@@ -687,7 +715,6 @@ AgregarCaso.addEventListener('click', async(e) => {
     datos = new FormData(form)
 
     if (!form.checkValidity()) {
-        console.log(form.checkValidity())
         form.reportValidity();
         return;
     }

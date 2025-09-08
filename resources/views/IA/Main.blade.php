@@ -1,9 +1,5 @@
 @extends('dashboard')
 
-<style>
-
-</style>
-
 @section('Contenido')
 @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
@@ -11,6 +7,7 @@
 @vite(['resources/css/app.css', 'resources/js/ia/ia.js'])
 
 <div class="container-fluid bg-white my-5 py-5">
+    <input type="text" id="planId" hidden>
     <span id="showDropFiles" type="button" class="btn btn-sm py-1 px-3 texto-boton" style="background: #f5f5f5; border-radius: 5px; display:none;"><i class="fa fa-arrow-left"> Regresar</i></span>
     <div class="" id="listadoDocumento">
         <div class="card mt-5">
@@ -67,7 +64,7 @@
     <div class="cardHide mt-4" id="divEditor">
         <div class="">
             <h2 class="textAzul font-size15 mb-0 titulo-texto">Editor de documento</h2>
-            <div class="card w-full" style="height: 55vh; overflow-y: scroll;  scrollbar-color: #132c47 transparent; scrollbar-width: thin;">
+            <div class="card w-full" style="height: 55vh;">
                 <div id="editor" class="p-3">
                 </div>
             </div>
@@ -82,10 +79,10 @@
 
 </div>
 
+@include('Mensajes.Archivos')
 @include('Mensajes.success')
 @include('Mensajes.carga')
 @include('Mensajes.error')
-@include('Mensajes.Archivos')
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>

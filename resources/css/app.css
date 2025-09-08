@@ -24980,9 +24980,9 @@ a.stretched-link:hover {
 
     /* inicio usuarios modulo */
 
-        #contenedor-usuarios .card {
-            flex: 1 1 300px; /* ancho mínimo 300px, crece según espacio */
-            max-width: 350px;
-        }
+    #contenedor-usuarios .card {
+        flex: 1 1 400px; /* ancho mínimo 300px, crece según espacio */
+        max-width: 430px;
+    }
 
     /* fin usuarios modulo */
