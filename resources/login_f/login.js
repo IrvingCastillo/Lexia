@@ -14,7 +14,8 @@ modalError  = new bootstrap.Modal(document.getElementById('modalError')),
 modalSuccess = new bootstrap.Modal(document.getElementById('modalSuccess'));
 
 const errorMsj = document.getElementById('errorLogin'),
-successMsj = document.getElementById('mensajeExito')
+successMsj = document.getElementById('mensajeExito'),
+cargaMsj = document.getElementById('mensajeCarga')
 
 btnLogin.addEventListener('click', async (e) => {
     e.preventDefault()
@@ -34,7 +35,7 @@ btnLogin.addEventListener('click', async (e) => {
     try{
         showModal(modalCarga)
         await new Promise(r => setTimeout(r, 2000))
-        hideModal(modalCarga)
+        // hideModal(modalCarga)
         const res = await fetch('https://api.lexialegal.site/api/login', {
             method: "POST",
             headers: {
@@ -64,11 +65,11 @@ btnLogin.addEventListener('click', async (e) => {
         const respuesta = await guardarTokenRes.json();
 
         if (respuesta) {
-            showModal(modalSuccess)
-            successMsj.textContent = '¡Bienvenido!'
-            hideModal(modalSuccess, 3000, () => {
+            // showModal(modalSuccess)
+            cargaMsj.textContent = '¡Bienvenido!'
+            // hideModal(modalCarga, 2000, () => {
                 window.location.href = GLOBAL_URL + 'casos'
-            });
+            // });
         } else {
             throw new Error('No se pudo iniciar sesión')
         }

@@ -71,7 +71,7 @@
                     <h1 class="hero-title">Rápida, Inteligente y Legal</h1>
                     <p class="hero-subtitle">La app que transforma tu despacho, tu aliado digital en cada caso.</p>
                     <div class="d-flex gap-3 flex-wrap">
-                        <a href="{{ route('registro') }}" class="btn btn-demo btn-lg">
+                        <a href="{{ route('registro') }}" class="btn btn-demo btn-lg" style="z-index:1040">
                             <i class="fas fa-play me-2"></i> Empieza ya
                         </a>
                     </div>

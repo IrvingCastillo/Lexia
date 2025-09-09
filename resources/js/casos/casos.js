@@ -24,7 +24,7 @@ BtnShowListaCasos = document.querySelector("#showListaCasos"),
 BtnAltaCAso = document.querySelector("#btnAltaCaso"),
 BarraBusqueda = document.querySelector("#barraBusqueda"),
 BtnFiltradoCasos = document.querySelector("#filtradoCasos"),
-filtroItems = document.querySelectorAll(".dropdown-filtro"),
+filtroItems = document.querySelector('.dropdown-menu.dropdown-filtro'),
 
 tipo =  document.querySelector("#tipoEliminar"),
 titulo = document.querySelector("#tituloEliminar")
@@ -506,12 +506,10 @@ $(".archivo").on('change', function() {
 
 
 
-const menu = document.querySelector('.dropdown-menu.dropdown-filtro');
-const btn = document.getElementById('filtradoCasos');
 const label = document.getElementById('filterLabel');
 
 // Delegación de eventos para capturar clicks en las opciones
-menu.addEventListener('click', (e) => {
+filtroItems.addEventListener('click', (e) => {
   const item = e.target.closest('a[data-filter]');
   if (!item) return;
   e.preventDefault();
@@ -531,8 +529,8 @@ menu.addEventListener('click', (e) => {
   });
 
   // Cerrar el dropdown (opcional, si usas Bootstrap 4 con jQuery)
-  if (typeof $ !== 'undefined' && $(btn).dropdown) {
-    $(btn).dropdown('toggle');
+  if (typeof $ !== 'undefined' && $(BtnFiltradoCasos).dropdown) {
+    $(BtnFiltradoCasos).dropdown('toggle');
   }
 });
 
@@ -550,6 +548,7 @@ BtnShowListaCasos.addEventListener("click", ()=> {
     InfoHoras.classList.remove('show')
     BtnShowListaCasos.style.display = "none"
     setTimeout(() => {
+        label.textContent = "Todos los casos"
         ObtenerListaCasos()
         InfoSuperior.classList.remove('cardHide')
     }, 2000);

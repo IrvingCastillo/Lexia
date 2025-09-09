@@ -1,11 +1,15 @@
-<div class="modal fade" id="modalRestriccion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+{{-- <div class="modal fade" id="modalRestriccion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false"> --}}
+<div class="modal fade" id="modalRestriccion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content" style="border-radius: 25px 25px 25px 25px !important; background: #132c47; color:whitesmoke">
             <div class="modal-header pb-0">
                 <h1 class="modal-title" id="exampleModalLabel"></h1>
-                <span type="button" class="close text-white" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </span>
+                <a href="{{ route('casos') }}">
+                    <span type="button" class="close text-white" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </span>
+                </a>
             </div>
             <div class="modal-body pl-3 pr-3">
                 <div class="modal-body pl-3 pr-3" style="color: #f5f3ed">
@@ -21,7 +25,7 @@
                             Aquí tienes apoyo de la inteligencia artificial
                         </div><br>
                         <div class="d-flex justify-content-center normal-texto-bold">
-                            <a href="" style="text-decoration: none">¡Te ayuda a generar escritos legales con solo ingresar datos clave!</a>
+                            <a href="#" style="text-decoration: none">¡Te ayuda a generar escritos legales con solo ingresar datos clave!</a>
                         </div>
                     </div>
                 </div>

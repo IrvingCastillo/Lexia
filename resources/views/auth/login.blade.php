@@ -12,8 +12,24 @@
 <div class="container-fluid bg-white py-5 my-5">
     <div class="row no-gutters">
         <div class="col-md-6 split-left">
-            <div class="col-6 mr-5">
-                <img src="{{ asset('images/login.png') }}" alt="" style="width: 33rem;">
+            <div class="floating-shapes">
+                <div class="shape"></div>
+                <div class="shape"></div>
+                <div class="shape"></div>
+                <div class="shape"></div>
+                <div class="shape"></div>
+            </div>
+            <div class="hero-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+
+            <div class="col-10 mr-5 hero-visual-content">
+                <img class="hero-header-image img-secondary" src="{{ asset('images/landing/lexia-hero-image.png') }}" alt="" >
             </div>
         </div>
 

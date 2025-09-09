@@ -111,6 +111,14 @@
                 </template>
 
                 <div id="contenedor-casos"></div>
+                <div id="loader" class="text-center my-5" style="display:none;">
+                    <span class="text-muted normal-texto">Cargando casos...</span>
+                </div>
+                <div id="no-mas-casos" class="text-center my-5" style="display:none;">
+                    <span class="text-muted normal-texto">No hay más casos</span>
+                </div>
+
+                <div id="sentinel"></div>
             </div>
 
         </div>
