@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -59,9 +61,9 @@ Route::get('/planes', function(){
     return view('auth.planes');
 })->name('planes');
 
-Route::get('/landing', function(){
-    return view('auth.landing');
-})->name('landing');
+// Route::get('/landing', function(){
+//     return view('auth.landing');
+// })->name('landing');
 
 Route::get('/registro', function(){
     return view('auth.registro');
@@ -97,6 +99,9 @@ Route::post('/guardar-token', function (Request $request) {
     return response()->json(['message' => 'Token guardado en sesión']);
 })->name('guardar.token');
 
+Route::fallback(function () {
+    return Redirect::to('/casos'); // O a una vista de error 404
+});
 
 /* Auth::routes(); */
 

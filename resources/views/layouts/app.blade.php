@@ -17,7 +17,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-white">
-    <div id="page-loader" style="text-align:center; width: 100%; height: 130%; z-index: 1000000 !important; position: absolute; background: #BFBFBF; opacity: 0.4; top:50%; left:50%; transform:translate(-50%, -50%)">
+    <div id="page-loader" style="text-align:center; width: 100%; height: 180%; z-index: 1000000 !important; position: absolute; background: #BFBFBF; opacity: 0.4; top:50%; left:50%; transform:translate(-50%, -50%)">
         <div class="d-flex justify-content-center">
             <canvas id="pageLoad" class="Carga"  style="width: 550px; height:550px"></canvas>
         </div>

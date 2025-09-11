@@ -11,6 +11,7 @@ modalError  = new bootstrap.Modal(document.getElementById('modalError')),
 modalSuccess = new bootstrap.Modal(document.getElementById('modalSuccess')),
 successMsj = document.getElementById('mensajeExito'),
 errorMsj = document.getElementById('mensajeError'),
+cargaMsj = document.getElementById('mensajeCarga'),
 
 tipo =  document.querySelector("#tipoEliminar"),
 titulo = document.querySelector("#tituloEliminar")
@@ -132,8 +133,8 @@ async function RenderizarUsuarios(list_users){
 
 async function EliminarUsuario(id){
     showModal(modalCarga)
-    await new Promise(r => setTimeout(r, 2000))
-    hideModal(modalCarga)
+    // await new Promise(r => setTimeout(r, 2000))
+    // hideModal(modalCarga)
 
     try {
         const me = await fetch('/get-token')
@@ -156,11 +157,10 @@ async function EliminarUsuario(id){
         const res_del_user = await del_user.json()
 
         if (del_user.ok) {
-            showModal(modalSuccess)
-            successMsj.textContent = res_del_user.message
-            hideModal(modalSuccess, 2000)
-
-            ObtenerUsuarios()
+            cargaMsj.textContent = res_del_user.message
+            hideModal(modalCarga, 2000, () => {
+                ObtenerUsuarios()
+            })
         }
 
     } catch (error) {
@@ -198,8 +198,8 @@ BtnAgregarUsuario.addEventListener("click", async(e) => {
         $("#modalNuevoUsuario").modal("hide")
         successMsj.textContent = ''
         showModal(modalCarga)
-        await new Promise(r => setTimeout(r, 2000))
-        hideModal(modalCarga)
+        // await new Promise(r => setTimeout(r, 2000))
+        // hideModal(modalCarga)
 
         try {
             let formulario = document.querySelector("#AltaUsuarios"),
@@ -232,9 +232,9 @@ BtnAgregarUsuario.addEventListener("click", async(e) => {
 
             if (add_user.ok) {
                 console.log(res_add_user.data)
-                successMsj.textContent = res_add_user.message
-                showModal(modalSuccess)
-                hideModal(modalSuccess, 2000, () => {
+                cargaMsj.textContent = res_add_user.message
+                // showModal(modalSuccess)
+                hideModal(modalCarga, 2000, () => {
                     $("#modalNuevoUsuario").modal({
                         hide:true
                     })
@@ -279,8 +279,8 @@ BtnEditarUser.addEventListener("click", async(e) => {
             }, 100);
             successMsj.textContent = ''
             showModal(modalCarga)
-            await new Promise(r => setTimeout(r, 2000))
-            hideModal(modalCarga)
+            // await new Promise(r => setTimeout(r, 2000))
+            // hideModal(modalCarga)
 
             let datosCompletos = Object.fromEntries(datos.entries())
             let datosJson = JSON.stringify(datosCompletos)
@@ -304,9 +304,9 @@ BtnEditarUser.addEventListener("click", async(e) => {
             console.log(res_edit_user)
 
             if (edit_user.ok) {
-                successMsj.textContent = res_edit_user.message
-                showModal(modalSuccess)
-                hideModal(modalSuccess, 2000, () => {
+                cargaMsj.textContent = res_edit_user.message
+                // showModal(modalSuccess)
+                hideModal(modalCarga, 2000, () => {
                     // $("#modalEditarUsuario").modal({
                     //     hide:true
                     // })

@@ -6,8 +6,13 @@ window.bootstrap = bootstrap;
 const modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'), { backdrop: 'static', keyboard: false }),
 modalError  = new bootstrap.Modal(document.getElementById('modalError'))
 
-CalendarioEventos();
+const bntAgregarCita = document.querySelector("#agregarCita")
 
+const cargaMsj = document.getElementById('mensajeCarga')
+
+
+CalendarioEventos();
+ObtenerClientes()
 
 function CalendarioEventos() {
     $('#calendar').fullCalendar( 'destroy' );
@@ -45,3 +50,67 @@ function CalendarioEventos() {
             }
     });
 }
+
+
+async function ObtenerClientes(){
+    const me = await fetch('/get-token')
+    const res_me = await me.json()
+
+    const get_clients = await fetch("https://api.lexialegal.site/api/clients", {
+        method:"GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            'Authorization': `Bearer ${res_me.token}`,
+        }
+    })
+
+    const res_get_clients = await get_clients.json()
+
+    console.log(res_get_clients)
+}
+
+bntAgregarCita.addEventListener("click", async(e) => {
+    cargaMsj.textContent = ''
+    // showModal(modalCarga)
+    // await new Promise(r => setTimeout(r, 2000))
+    // hideModal(modalCarga)
+
+
+    const form = document.querySelector("#AltaCita")
+
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+    else{
+        try {
+            const me = await fetch('/get-token')
+            const res_me = await me.json()
+
+            let body = {
+
+            }
+
+            const make_appointment = await fetch("https://api.lexialegal.site/api/appointments/create", {
+                method: "POST",
+                headers: {
+                    'Authorization': `Bearer ${res_personal_t.token}`,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+                body: JSON.stringify(body)
+            })
+
+            const res_make_appointment = await make_appointment.json()
+
+            console.log(make_appointment)
+            console.log(res_make_appointment)
+
+        } catch (error) {
+            showModal(modalError)
+            hideModal(modalError, 2000)
+        }
+    }
+
+})

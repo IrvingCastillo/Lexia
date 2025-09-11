@@ -11,7 +11,7 @@
                 <form id="AltaUsuarios">
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label>Nombre</label>
+                            <label class="normal-texto">Nombre</label>
                             <div class="form-group col-md-12 pl-0">
                                 <div class="input-group">
                                     <input type="text" class="form-control campoRounded" id="nombre_cliente" name="nombre_cliente" maxlength="30" required>
@@ -19,7 +19,7 @@
                             </div>
                         </div>
                         <div class="form-group col-md-4">
-                            <label>Apellido Paterno</label>
+                            <label class="normal-texto">Apellido Paterno</label>
                             <div class="form-group col-md-12 pl-0">
                                 <div class="input-group">
                                     <input type="text" class="form-control campoRounded" id="apellido_paterno" name="apellido_paterno" maxlength="20" required>
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <div class="form-group col-md-4">
-                            <label>Apellido Materno</label>
+                            <label class="normal-texto">Apellido Materno</label>
                             <div class="form-group col-md-12 pl-0">
                                 <div class="input-group">
                                     <input type="text" class="form-control campoRounded" id="apellido_materno" name="apellido_materno" maxlength="20" required>
@@ -38,7 +38,7 @@
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label>Teléfono</label>
+                            <label class="normal-texto">Teléfono</label>
                             <div class="form-group col-md-12 pl-0 d-flex">
                                 <select class="form-control campoRounded col-3"  id="area_code" name="lada">
                                     <option value="+52">+ 52</option>
@@ -53,7 +53,7 @@
                             </div>
                         </div>
                         <div class="form-group col-md-6">
-                            <label>Correo electrónico</label>
+                            <label class="normal-texto">Correo electrónico</label>
                             <div class="form-group col-md-12 pl-0">
                                 <div class="input-group">
                                     <input type="email" class="form-control campoRounded" id="email" name="email" required>

@@ -12,7 +12,7 @@
                     <form id="AltaCaso">
                         <div class="form-row">
                             <div class="form-group mb-0 col-md-12">
-                                <label>Nombre del caso</label>
+                                <label class="normal-texto">Nombre del caso</label>
                                 <div class="form-group col-md-12 pl-0">
                                     <div class="input-group">
                                         <input type="text" class="form-control campoRounded" name="caso_nombre" id="caso_nombre" required>
@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group mb-0 col-md-12">
-                                <label>Nombre del cliente</label>
+                                <label class="normal-texto">Nombre del cliente</label>
                                 <div class="form-group col-md-12 pl-0">
                                     <div class="input-group">
                                         <input type="text" class="form-control campoRounded" name="client_name" id="client_name" required>
@@ -32,7 +32,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group mb-0 col-md-12">
-                                <label>Descripción</label>
+                                <label class="normal-texto">Descripción</label>
                                 <div class="form-group col-md-12 pl-0">
                                     <div class="input-group">
                                         <input type="text" class="form-control campoRounded" name="description" id="description">
@@ -42,7 +42,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group mb-0 col-md-6">
-                                <label>Fecha</label>
+                                <label class="normal-texto">Fecha</label>
                                 <div class="form-group col-md-12 pl-0">
                                     <div class="input-group">
                                         <input type="date" class="form-control campoRounded" name="case_date" id="case_date">
@@ -50,7 +50,7 @@
                                 </div>
                             </div>
                             <div class="form-group mb-0 col-md-6">
-                                <label>Tipo del caso</label>
+                                <label class="normal-texto">Tipo del caso</label>
                                 <div class="form-group col-md-12 pl-0">
                                     <div class="input-group">
                                         <input type="text" class="form-control campoRounded" name="case_type" id="case_type" required>

@@ -25,71 +25,50 @@
                     <input type="text" class="form-control rounded-right-input" placeholder="Buscar Pago" id="searchPayment">
                 </div>
 
-                <div id="ListaPagos">
-                    <div class="pt-1 shadow-sm mt-3 "  style="height: 45vh; border:1px solid #f5f5f5; border-radius: 15px 15px; overflow-y: scroll;  scrollbar-color: #132c47 transparent; scrollbar-width: thin;">
-                        <div class="card mb-3 border-0 ">
-                            <div class="card-body border-bottom position-relative" style="border: 1px solid transparent;">
-                                <div class="d-flex justify-content-between">
-                                    <div class="file-item">
-                                        <i class="far fa-file-alt file-icon"></i>
-                                        <div class="file-info">
-                                            <div class="file-title normal-texto textAzul">Primer Pago mes</div>
-                                            <div class="file-time normal-texto-light"><span>Caso Ulises</span></div>
+                <div id="listadoPagos" class="mt-1" style="height: 45vh; border:1px solid #f5f5f5; border-radius: 15px 15px; overflow-y: scroll;  scrollbar-color: #132c47 transparent; scrollbar-width: thin;">
+
+                    <!-- Template oculto -->
+                    <template id="pago-template">
+                        <div class="card mb-3 border-0">
+                            <div class="card-body border-bottom">
+                                <!-- Botón eliminar pago -->
+                                <a href="#" class="text-muted position-absolute borrar-pago btn-delete" style="top: 1rem; right: 1rem;">
+                                    <i class="fa fa-trash trash-icon" data-toggle="modal" data-target="#modalEliminarPago"></i>
+                                </a>
+                                <div class="file-item">
+                                    <i class="far fa-file-alt file-icon"></i>
+                                    <div class="file-info">
+                                        <!-- Título del pago -->
+                                        <div class="file-title textAzul">
+                                            <span class="titulo-pago normal-texto-bold"></span>
+                                        </div>
+                                        <!-- Caso relacionado -->
+                                        <div class="file-time mt-2">
+                                            <span class="caso-pago normal-texto-light"></span>
                                         </div>
                                     </div>
-                                    <span>15/05/2025</span>
                                 </div>
+                                <!-- Fecha del pago -->
+                                <span class="fecha-pago position-absolute normal-texto-light" style="right: 15px; top: 70%; transform: translateY(-50%);"></span>
                             </div>
                         </div>
-                        <div class="card mb-3 border-0 ">
-                            <div class="card-body border-bottom position-relative" style="border: 1px solid transparent;">
-                                <div class="d-flex justify-content-between">
-                                    <div class="file-item">
-                                        <i class="far fa-file-alt file-icon"></i>
-                                        <div class="file-info">
-                                            <div class="file-title normal-texto textAzul">Segundo Pago mes</div>
-                                            <div class="file-time normal-texto-light"><span>Caso Ulises</span></div>
-                                        </div>
-                                    </div>
-                                    <span>15/05/2025</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-3 border-0 ">
-                            <div class="card-body border-bottom position-relative" style="border: 1px solid transparent;">
-                                <div class="d-flex justify-content-between">
-                                    <div class="file-item">
-                                        <i class="far fa-file-alt file-icon"></i>
-                                        <div class="file-info">
-                                            <div class="file-title normal-texto">Tercer Pago mes</div>
-                                            <div class="file-time normal-texto-light"><span>Caso Ulises</span></div>
-                                        </div>
-                                    </div>
-                                    <span>15/05/2025</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-3 border-0 ">
-                            <div class="card-body border-bottom position-relative" style="border: 1px solid transparent;">
-                                <div class="d-flex justify-content-between">
-                                    <div class="file-item">
-                                        <i class="far fa-file-alt file-icon"></i>
-                                        <div class="file-info">
-                                            <div class="file-title">Primer Pago mes</div>
-                                            <div class="file-time"><span>Caso Ulises</span></div>
-                                        </div>
-                                    </div>
-                                    <span>15/05/2025</span>
-                                </div>
-                            </div>
-                        </div>
+                    </template>
+
+                    <!-- Contenedor donde se insertan los pagos -->
+                    <div id="contenedor-pagos"></div>
+
+                    <!-- Mensaje cuando no hay pagos -->
+                    <div id="mensaje-vacio-pagos" class="text-center text-muted py-4 normal-texto" style="display: none;">
+                        <i class="far fa-credit-card fa-2x d-block mb-2"></i>
+                        No hay pagos registrados
                     </div>
                 </div>
+
             </div>
         </div>
 
         <div class="col-sm-3">
-            <form id="AltaPagp">
+            <form id="AltaPago">
                 <div class="card px-2 pb-2" style=" border-radius: 8px 8px;">
                     <div>
                         <div class="d-flex">
@@ -107,7 +86,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text group-text-transparent"> <i class="fas fa-dollar"></i> </span>
                             </div>
-                            <input type="text" class="form-control rounded-right-input" placeholder="0.00" id="ammount" name="ammount">
+                            <input type="text" class="form-control rounded-right-input" placeholder="0.00" id="amount" name="amount" oninput="this.value = this.value.replace(/\D/g, '').replace(/([0-9])([0-9]{2})$/, '$1.$2').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ',');">
                         </div>
                     </div>
                     <div class="mt-3">
@@ -124,12 +103,12 @@
                         <span class="textAzul mr-3 normal-texto">Fecha</span>
                         <input type="date" class="form-control" id="payment_date" name="payment_date">
                     </div>
-                    <div class="mt-3">
+                    {{-- <div class="mt-3">
                         <span class="textAzul mr-3 normal-texto">Caso</span>
                         <select name="case" id="case" class="form-control">
-                            {{-- <option value="" selected>Nombre del caso <i class="fa fa-arrow-down" style="font-size: .8rem"></i></option> --}}
+                            {{-- <option value="" selected>Nombre del caso <i class="fa fa-arrow-down" style="font-size: .8rem"></i></option> --}
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="mt-3 py-3">
                         <span class="textAzul mr-3 normal-texto">Descripción</span>
                         <textarea name="payment_description" id="payment_description" rows="3" class="form-control" placeholder="Opcional" style="min-height: 35px"></textarea>
@@ -140,7 +119,7 @@
 
         </div>
 
-        <div class="col-md-8" style="margin-top: -15vh">
+        <div class="col-md-8" style="margin-top: -5vh">
             <div class="">
                 <div class="d-flex justify-content-md-start">
                     <div class="titulo-texto textAzul">Estadísticas</div>

@@ -58,16 +58,35 @@ Pill1.addEventListener("click", function() {
     TituloNavegacion.innerHTML = "Registro"
 })
 Pill2.addEventListener("click", function() {
-    Paginacion.innerHTML = ''
-    Paginacion.innerHTML = '2'
-    BtnStep3.classList.remove('active')
-    TituloNavegacion.innerHTML = "Registro"
+    if (NombreCliente.value != "" && ApellidoPaterno.value != "" && ApellidoMaterno.value != "" && RazonSocial.value != "") {
+        console.log("dentro")
+        StepTwo()
+        Paginacion.innerHTML = ''
+        Paginacion.innerHTML = '2'
+        BtnStep3.classList.remove('active')
+        TituloNavegacion.innerHTML = "Registro"
+    }
+    else if (NombreCliente.value == "" && ApellidoPaterno.value == "" && ApellidoMaterno.value == "" && RazonSocial.value == "")  {
+        Pill2.onclick = null
+    }
 })
 Pill3.addEventListener("click", function() {
-    Paginacion.innerHTML = ''
-    Paginacion.innerHTML = '3'
-    BtnStep2.classList.remove('active')
-    TituloNavegacion.innerHTML = "Elige tu plan"
+    if (Correo.value != "" && Telefono.value != "" && Ciudad.value != "" ) {
+        if( ValidarContraseña(Contrasena.value) && ValidarCorreo(Correo.value)){
+            StepThree()
+            Paginacion.innerHTML = ''
+            Paginacion.innerHTML = '3'
+            BtnStep2.classList.remove('active')
+            TituloNavegacion.innerHTML = "Elige tu plan"
+        }
+        else{
+            BtnStep3.disabled = true
+            BtnStep3.style.opacity = ".2"
+        }
+    }
+    else if (ValidarContraseña(Contrasena.value) && ValidarCorreo(Correo.value) && Telefono.value.length == 10 && Ciudad.value == "" ) {
+        Pill3.onclick = null
+    }
 })
 
 
@@ -127,12 +146,15 @@ NombreDespacho.addEventListener('focusout', function(){
     }
 })
 
-RazonSocial.addEventListener('focusout', function(){
+RazonSocial.addEventListener('input', function(){
     if (RazonSocial.value == "") {
         NoValidado(RazonSocial, ErrorRazon)
     }
     else{
         Validado(RazonSocial, ErrorRazon)
+    }
+    if (NombreCliente.value != "" && ApellidoPaterno.value != "" && ApellidoMaterno.value != "" && RazonSocial.value != "") {
+        StepTwo()
     }
 })
 
@@ -159,37 +181,63 @@ Correo.addEventListener('focusout', function(){
 
     if (Correo.value == "") {
         NoValidado(Correo, ErrorEmail)
+        BtnStep3.disabled = true
+        BtnStep3.style.opacity = ".2"
     }
     else if(correoValidado == false){
         NoValidado(Correo, ErrorEmail, "El correo no coincide con el formato requerido")
+        BtnStep3.disabled = true
+        BtnStep3.style.opacity = ".2"
     }
     else if(correoValidado){
         Validado(Correo, ErrorEmail)
+        if (ValidarContraseña(Contrasena.value)  && Telefono.value.length == 10 && Ciudad.value != "" ) {
+            StepThree()
+        }
     }
 })
 
-Contrasena.addEventListener('focusout', function(){
-    let PasswordValidated = ValidarContraseña(Contrasena.value)
+Contrasena.addEventListener('input', function(){
+    let PasswordValidated
+        console.log(Contrasena.value.length)
+    if (Contrasena.value.length > 7) {
+        console.log("entra al if")
+        PasswordValidated = ValidarContraseña(Contrasena.value)
+    }
     if (Contrasena.value == "") {
         NoValidado(Contrasena, ErrorPassword)
+        BtnStep3.disabled = true
+        BtnStep3.style.opacity = ".2"
     }
     else if(PasswordValidated == false){
         NoValidado(Contrasena, ErrorPassword, "La contraseña no coincide con el formato requerido")
+        BtnStep3.disabled = true
+        BtnStep3.style.opacity = ".2"
     }
     else if(PasswordValidated){
         Validado(Contrasena, ErrorPassword)
+        if (ValidarCorreo(Correo.value)  && Telefono.value.length == 10  && Ciudad.value != "" ) {
+            StepThree()
+        }
     }
 })
 
-Telefono.addEventListener('focusout', function(){
+Telefono.addEventListener('input', function(){
     if (Telefono.value == "") {
         NoValidado(Telefono, ErrorTelefono)
+        BtnStep3.disabled = true
+        BtnStep3.style.opacity = ".2"
     }
     else if(Telefono.value.length < 10){
         NoValidado(Telefono, ErrorTelefono, "EL número de teléfono está incompleto")
+        BtnStep3.disabled = true
+        BtnStep3.style.opacity = ".2"
     }
     else{
         Validado(Telefono, ErrorTelefono)
+        if (ValidarContraseña(Contrasena.value) && ValidarCorreo(Correo.value) && Telefono.value.length == 10 && Ciudad.value != "" ) {
+            StepThree()
+        }
     }
 })
 
@@ -208,6 +256,9 @@ Ciudad.addEventListener('focusout', function(){
     }
     else{
         Validado(Ciudad, ErrorCiudad)
+    }
+    if (ValidarContraseña(Contrasena.value) && ValidarCorreo(Correo.value)  && Telefono.value.length == 10 && Ciudad.value != "" ) {
+        StepThree()
     }
 })
 
@@ -248,6 +299,19 @@ Terminos.addEventListener('click', function(){
     }
 })
 
+function StepTwo(){
+    BtnStep2.disabled = false
+    BtnStep2.style.opacity = 1
+    Pill2.dataset.target = "#reg2"
+    Pill2.dataset.toggle = "pill"
+}
+
+function StepThree(){
+    BtnStep3.disabled = false
+    BtnStep3.style.opacity = 1
+    Pill3.dataset.target = "#reg3"
+    Pill3.dataset.toggle = "pill"
+}
 
 function NoValidado(inputCampo, errorCampo, mensaje = "El campo no puede quedar vacío"){
     inputCampo.classList.remove('Validado')

@@ -310,7 +310,7 @@ input[type="checkbox"] {
 
 #nombre_cliente.NoValidado,#apellido_paterno.NoValidado, #apellido_materno.NoValidado, #nombre_despacho.NoValidado, #razon_social.NoValidado, #rfc.NoValidado, #email.NoValidado,
 #password.NoValidado, #telefono.NoValidado, #estado.NoValidado, #ciudad.NoValidado,
-#plan_seleccionado.NoValidado, #password_new.NoValidado, #confirm_password.NoValidado{
+#plan_seleccionado.NoValidado, #password_new.NoValidado, #confirm_password.NoValidado, #email_login.NoValidado{
     /* border: 3px solid #f34925; */
     border: 2px solid #dc3545 ;
   box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
@@ -325,7 +325,7 @@ input[type="checkbox"] {
 
 #nombre_cliente.Validado,#apellido_paterno.Validado, #apellido_materno.Validado, #nombre_despacho.Validado, #razon_social.Validado, #rfc.Validado , #email.Validado,
 #password.Validado, #telefono.Validado, #estado.Validado, #ciudad.Validado,
-#plan_seleccionado.Validado, #password_new.Validado, #confirm_password.Validado{
+#plan_seleccionado.Validado, #password_new.Validado, #confirm_password.Validado, #email_login.Validado{
     /* border: 3px solid #79de44; */
     border: 2px solid #28a745 ;
     box-shadow: 0 0 3px rgba(40, 167, 69, 0.5);

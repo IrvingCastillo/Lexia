@@ -45,13 +45,9 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"> <i class="fas fa-envelope"></i> </span>
                                 </div>
-                                <input type="email" class="form-control inputLogin emailLogin campoRounded border border-0" id="email" name="email" placeholder="Email" required>
+                                <input type="email" class="form-control inputLogin emailLogin campoRounded border border-0" id="email_login" name="email" placeholder="Email" required>
                             </div>
-                            @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            <span class="text-left text-danger text-sm fw-bold" id="errorEmailLogin"></span>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
@@ -64,7 +60,7 @@
                                 </div>
                             </div>
                         </div>
-                        <span class="d-flex justify-content-center col-md-12 text-danger text-sm text-bold pb-3" id="errorLogin"></span>
+                        <span class="d-flex justify-content-center col-md-12 text-danger text-sm text-bold pb-3 fw-bold" id="errorLogin"></span>
                         <button class="btnLogin campoRounded texto-boton">Continuar</button>
                     </form>
 

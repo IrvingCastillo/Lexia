@@ -35,6 +35,7 @@ modalSuccess = new bootstrap.Modal(document.getElementById('modalSuccess')),
 modalPago = new bootstrap.Modal(document.getElementById('modalMensajePago')),
 modalCaso = new bootstrap.Modal(document.getElementById('modalNuevoCaso')),
 successMsj = document.getElementById('mensajeExito'),
+cargaMsj = document.getElementById('mensajeCarga'),
 emptyMsj = document.getElementById('mensaje-vacio')
 
 ObtenerListaCasos()
@@ -75,7 +76,7 @@ async function ObtenerListaCasos(){
         BtnArchivos.style.display = "none"
         BarraBusqueda.style.display = "none"
         list_res.data.forEach(el => {
-            const clone = template.content.cloneNode(true);
+            const cloneCaso = template.content.cloneNode(true);
 
             const estadosRaw = ["inicio_caso", "revision_documentos", "proceso", "sentencia"]
 
@@ -88,28 +89,28 @@ async function ObtenerListaCasos(){
             }
 
             // Llenamos los valores dinámicos
-            clone.querySelector(".titulo-caso").textContent = el.caso_nombre;
-            clone.querySelector(".descripcion-caso").textContent = el.description;
-            clone.querySelector(".estado-caso").textContent = estadosCustom[el.status];
-            const wrapper = clone.querySelector(".card-caso");
+            cloneCaso.querySelector(".titulo-caso").textContent = el.caso_nombre;
+            cloneCaso.querySelector(".descripcion-caso").textContent = el.description;
+            cloneCaso.querySelector(".estado-caso").textContent = estadosCustom[el.status];
+            const wrapper = cloneCaso.querySelector(".card-caso");
             wrapper.setAttribute("data-status", el.status);
 
             // Ejemplo: agregar event listener al botón
-            clone.querySelector(".gestionarCaso").addEventListener("click", () => {
+            cloneCaso.querySelector(".gestionarCaso").addEventListener("click", () => {
                  idCase.value = el.id
                     setTimeout(()=> {
                         showGestionarCaso(el)
                     }, 500)
             });
 
-            clone.querySelector(".eliminarCaso").addEventListener("click", () => {
+            cloneCaso.querySelector(".eliminarCaso").addEventListener("click", () => {
                 idCase.value = el.id
                 tipo.innerHTML = "caso?"
                 titulo.innerHTML = el.caso_nombre
 
             })
 
-            contenedor.appendChild(clone);
+            contenedor.appendChild(cloneCaso);
             // showModal(modalPago)
         });
 
@@ -187,44 +188,45 @@ function showGestionarCaso(el){
     RenderizarTimeLine(el.status)
     RenderizarNotificaciones(el)
     // ActualizarContador()
+    console.log(el.documents.length)
     if(el.documents.length > 0){
-        console.log(el)
-        emptyMsj.style.display = "none";
-
         RenderizarArchivos(el.documents)
+        emptyMsj.style.display = "none";
     }
     else{
+        console.log("display mensaje")
+        document.querySelector("#contenedor-archivos").innerHTML = ""
         emptyMsj.style.display = "block";
     }
 }
 
 function RenderizarNotificaciones(element_case){
     console.log(element_case)
-    const contenedor = document.getElementById("contenedor-toggles");
-    contenedor.innerHTML = ""; // 🔹 Limpia valores previos
+    const contenedorNotificaciones = document.getElementById("contenedor-toggles");
+    contenedorNotificaciones.innerHTML = ""; // 🔹 Limpia valores previos
 
-    const template = document.getElementById("toggles-template");
-    const clone = template.content.cloneNode(true);
+    const templateNotificaciones = document.getElementById("toggles-template");
+    const cloneNotificaciones = templateNotificaciones.content.cloneNode(true);
 
     // Setear los valores según la respuesta del back
-    clone.querySelector("#config_notify_email").checked = !!element_case.notify_email;
-    clone.querySelector("#config_notify_client").checked = !!element_case.notify_client;
-    clone.querySelector("#config_notify_attorneys").checked = !!element_case.notify_attorneys;
+    cloneNotificaciones.querySelector("#config_notify_email").checked = !!element_case.notify_email;
+    cloneNotificaciones.querySelector("#config_notify_client").checked = !!element_case.notify_client;
+    cloneNotificaciones.querySelector("#config_notify_attorneys").checked = !!element_case.notify_attorneys;
 
-    contenedor.appendChild(clone);
+    contenedorNotificaciones.appendChild(cloneNotificaciones);
 }
 
 function RenderizarTimeLine(status) //status, fechas = {}  parametros
     {
-    const contenedor = document.getElementById("timeline-container");
-    contenedor.innerHTML = ""; // Limpia el timeline anterior
+    const contenedorTimeLine = document.getElementById("timeline-container");
+    contenedorTimeLine.innerHTML = ""; // Limpia el timeline anterior
 
     // Clonamos el template
-    const template = document.getElementById("timeline-template");
-    const clone = template.content.cloneNode(true);
+    const templateTimeLine = document.getElementById("timeline-template");
+    const cloneTimeLine = templateTimeLine.content.cloneNode(true);
 
     // Obtenemos todos los <li>
-    const steps = clone.querySelectorAll("li.time-line-item");
+    const steps = cloneTimeLine.querySelectorAll("li.time-line-item");
 
     let activeFound = false;
     steps.forEach(step => {
@@ -272,24 +274,24 @@ function RenderizarTimeLine(status) //status, fechas = {}  parametros
     }
 
     // Insertamos el nuevo timeline ya limpio
-    contenedor.appendChild(clone);
+    contenedorTimeLine.appendChild(cloneTimeLine);
 }
 
 function RenderizarArchivos(list_documents){
-    const template = document.querySelector("#file-template");
-    const contenedor = document.querySelector("#contenedor-archivos");
+    const templateArchivos = document.querySelector("#file-template");
+    const contenedorArchivos = document.querySelector("#contenedor-archivos");
 
     // Limpiar contenedor antes de renderizar
-    contenedor.innerHTML = "";
+    contenedorArchivos.innerHTML = "";
 
-    if (!list_documents || list_documents.length === 0) {
+    if (!list_documents || list_documents.length == 0) {
         emptyMsj.style.display = "block";
         return;
     }
     emptyMsj.style.display = "none";
 
     list_documents.forEach(doc => {
-        const clone = template.content.cloneNode(true);
+        const clone = templateArchivos.content.cloneNode(true);
         let visualizador;
 
         if (doc.type === "application/pdf") {
@@ -339,7 +341,7 @@ function RenderizarArchivos(list_documents){
             // aquí puedes cargar el archivo en el modal
         });
 
-        contenedor.appendChild(clone);
+        contenedorArchivos.appendChild(clone);
     });
 }
 
@@ -387,9 +389,8 @@ $("#btnArchivos").on('click', () => {
 })
 
 async function EliminarArchivo(idArchivo){
+    cargaMsj.textContent = ''
     showModal(modalCarga)
-    await new Promise(r => setTimeout(r, 2000))
-    hideModal(modalCarga)
     try {
         const personal_t = await fetch('/get-token')
         const res_personal_t = await personal_t.json()
@@ -430,14 +431,8 @@ async function EliminarArchivo(idArchivo){
             const res_case_info = await case_info.json()
 
             if (case_info.ok) {
-                // successMsj.textContent = res_eliminar.message
-                // showModal(modalSuccess)
-                // hideModal(modalSuccess, 2000, () => {
-                //     $("#modalNuevoCaso").modal({
-                //         hide:true
-                //     })
-                //     console.log(res_eliminar.data)
-                // });
+                cargaMsj.textContent = res_eliminar.message
+                hideModal(modalCarga, 1000)
                 RenderizarArchivos(res_case_info.data.documents)
             }
         }
@@ -557,9 +552,10 @@ BtnShowListaCasos.addEventListener("click", ()=> {
 
 
 BtnEditStatus.addEventListener('click', async(e) => {
+    cargaMsj.textContent = ''
     showModal(modalCarga)
-    await new Promise(r => setTimeout(r, 2000))
-    hideModal(modalCarga)
+    // await new Promise(r => setTimeout(r, 2000))
+    // hideModal(modalCarga)
 
 
     try {
@@ -615,14 +611,10 @@ BtnEditStatus.addEventListener('click', async(e) => {
         })
 
         const res_change_status = await change_status.json()
+        console.log(res_change_status)
         if (change_status.ok) {
-            successMsj.textContent = res_change_status.message
-            showModal(modalSuccess)
-            hideModal(modalSuccess, 2000, () => {
-                $("#modalNuevoCaso").modal({
-                    hide:true
-                })
-                console.log(res_change_status.data)
+            cargaMsj.textContent = res_change_status.message
+            hideModal(modalCarga, 2500, () => {
                 RenderizarTimeLine(res_change_status.data.status)
             });
         }
@@ -634,7 +626,7 @@ BtnEditStatus.addEventListener('click', async(e) => {
 })
 
 AgregarArchivo.addEventListener('click', async(e) => {
-
+    cargaMsj.textContent = ''
     let file_field = document.querySelector('input[name="documents[]"]').files[0]
     const bodyForm = new FormData()
 
@@ -652,8 +644,6 @@ AgregarArchivo.addEventListener('click', async(e) => {
     else{
         $("#modalArchivoCaso").modal("hide")
         showModal(modalCarga)
-        await new Promise(r => setTimeout(r, 2000))
-        hideModal(modalCarga)
 
         try {
             const me = await fetch('/get-token')
@@ -687,14 +677,10 @@ AgregarArchivo.addEventListener('click', async(e) => {
             const res_case_info = await case_info.json()
 
             if (case_info.ok) {
-                // successMsj.textContent = res_file.message
-                // showModal(modalSuccess)
-                // hideModal(modalSuccess, 2000, () => {
-                //     $("#modalArchivoCaso").modal({
-                //         hide:true
-                //     })
-                // });
-                RenderizarArchivos(res_case_info.data.documents)
+                cargaMsj.textContent = res_file.message
+                hideModal(modalCarga, 2000, () => {
+                    RenderizarArchivos(res_case_info.data.documents)
+                });
             }
         }
 
@@ -708,7 +694,7 @@ AgregarArchivo.addEventListener('click', async(e) => {
 })
 
 AgregarCaso.addEventListener('click', async(e) => {
-    successMsj.textContent = ''
+    cargaMsj.textContent = ''
 
     const form = document.querySelector("#AltaCaso"),
     datos = new FormData(form)
@@ -722,8 +708,6 @@ AgregarCaso.addEventListener('click', async(e) => {
             hideModal(modalCaso)
         }, 100);
         showModal(modalCarga)
-        await new Promise(r => setTimeout(r, 2000))
-        hideModal(modalCarga)
 
         try {
             const me = await fetch('/get-token')
@@ -742,9 +726,8 @@ AgregarCaso.addEventListener('click', async(e) => {
 
             const data = await res.json()
             if (res.ok) {
-                successMsj.textContent = data.message
-                showModal(modalSuccess)
-                hideModal(modalSuccess, 2000, () => {
+                cargaMsj.textContent = data.message
+                hideModal(modalCarga, 2000, () => {
                     $("#modalNuevoCaso").modal({
                         hide:true
                     })
@@ -768,6 +751,7 @@ AgregarCaso.addEventListener('click', async(e) => {
 
 
 BtnEliminar.addEventListener("click", async(e) => {
+    cargaMsj.textContent = ""
     let archivoID = idFile.value
     if (archivoID !== "") {
         console.log("eliminar archivo")
@@ -776,8 +760,6 @@ BtnEliminar.addEventListener("click", async(e) => {
     else{
 
         showModal(modalCarga)
-        await new Promise(r => setTimeout(r, 2000))
-        hideModal(modalCarga)
 
         try {
             const me = await fetch('/get-token')
@@ -800,9 +782,8 @@ BtnEliminar.addEventListener("click", async(e) => {
             const res_delete_register = await res.json()
 
              if (res.ok) {
-                successMsj.textContent = res_delete_register.message
-                showModal(modalSuccess)
-                hideModal(modalSuccess, 2000, () => {
+                cargaMsj.textContent = res_delete_register.message
+                hideModal(modalCarga, 2000, () => {
                 $("#modalEliminar").modal({
                     hide:true
                 })

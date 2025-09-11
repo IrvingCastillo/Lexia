@@ -1,14 +1,10 @@
 {
-  "_bootstrap.esm-CU4uQQQ5.js": {
-    "file": "assets/bootstrap.esm-CU4uQQQ5.js",
-    "name": "bootstrap.esm"
-  },
   "_index-Cg2d-qVn.js": {
     "file": "assets/index-Cg2d-qVn.js",
     "name": "index"
   },
-  "_modalHelper-CU9kZDFG.js": {
-    "file": "assets/modalHelper-CU9kZDFG.js",
+  "_modalHelper-BcTsQW5J.js": {
+    "file": "assets/modalHelper-BcTsQW5J.js",
     "name": "modalHelper"
   },
   "resources/css/app.css": {
@@ -17,53 +13,49 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-CZEvz8D8.js",
+    "file": "assets/app-NOjBkXi9.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_bootstrap.esm-CU4uQQQ5.js",
-      "_index-Cg2d-qVn.js",
-      "_modalHelper-CU9kZDFG.js"
+      "_modalHelper-BcTsQW5J.js",
+      "_index-Cg2d-qVn.js"
     ]
   },
   "resources/js/calendario/calendario.js": {
-    "file": "assets/calendario-LxItzxDv.js",
+    "file": "assets/calendario-jW7i2Nat.js",
     "name": "calendario",
     "src": "resources/js/calendario/calendario.js",
     "isEntry": true,
     "imports": [
-      "_bootstrap.esm-CU4uQQQ5.js"
+      "_modalHelper-BcTsQW5J.js"
     ]
   },
   "resources/js/casos/casos.js": {
-    "file": "assets/casos-CUOhsH4c.js",
+    "file": "assets/casos-GxGiqJyr.js",
     "name": "casos",
     "src": "resources/js/casos/casos.js",
     "isEntry": true,
     "imports": [
-      "_modalHelper-CU9kZDFG.js",
-      "_bootstrap.esm-CU4uQQQ5.js"
+      "_modalHelper-BcTsQW5J.js"
     ]
   },
   "resources/js/finanzas/finanzas.js": {
-    "file": "assets/finanzas-C0jfn3bg.js",
+    "file": "assets/finanzas-DIkePcVF.js",
     "name": "finanzas",
     "src": "resources/js/finanzas/finanzas.js",
     "isEntry": true,
     "imports": [
-      "_modalHelper-CU9kZDFG.js",
-      "_bootstrap.esm-CU4uQQQ5.js"
+      "_modalHelper-BcTsQW5J.js"
     ]
   },
   "resources/js/ia/ia.js": {
-    "file": "assets/ia-CcVmzNAc.js",
+    "file": "assets/ia-BXHhjJVe.js",
     "name": "ia",
     "src": "resources/js/ia/ia.js",
     "isEntry": true,
     "imports": [
-      "_modalHelper-CU9kZDFG.js",
-      "_bootstrap.esm-CU4uQQQ5.js"
+      "_modalHelper-BcTsQW5J.js"
     ]
   },
   "resources/js/loader.js": {
@@ -82,43 +74,39 @@
     "isEntry": true
   },
   "resources/js/nuevaContrasena/nuevaContrasena.js": {
-    "file": "assets/nuevaContrasena-DijrLwi1.js",
+    "file": "assets/nuevaContrasena-Dvw42YWx.js",
     "name": "nuevaContrasena",
     "src": "resources/js/nuevaContrasena/nuevaContrasena.js",
     "isEntry": true,
     "imports": [
-      "_modalHelper-CU9kZDFG.js",
-      "_bootstrap.esm-CU4uQQQ5.js"
+      "_modalHelper-BcTsQW5J.js"
     ]
   },
   "resources/js/recuperarContrasena/recuperarContrasena.js": {
-    "file": "assets/recuperarContrasena-ClcB2F_e.js",
+    "file": "assets/recuperarContrasena-CWr6_BL_.js",
     "name": "recuperarContrasena",
     "src": "resources/js/recuperarContrasena/recuperarContrasena.js",
     "isEntry": true,
     "imports": [
-      "_modalHelper-CU9kZDFG.js",
-      "_bootstrap.esm-CU4uQQQ5.js"
+      "_modalHelper-BcTsQW5J.js"
     ]
   },
   "resources/js/registro/registro.js": {
-    "file": "assets/registro-BZRRnI3r.js",
+    "file": "assets/registro-DUTBZ7n9.js",
     "name": "registro",
     "src": "resources/js/registro/registro.js",
     "isEntry": true,
     "imports": [
-      "_modalHelper-CU9kZDFG.js",
-      "_bootstrap.esm-CU4uQQQ5.js"
+      "_modalHelper-BcTsQW5J.js"
     ]
   },
   "resources/js/usuarios/usuarios.js": {
-    "file": "assets/usuarios-CXyvx0ms.js",
+    "file": "assets/usuarios-BeFkggd9.js",
     "name": "usuarios",
     "src": "resources/js/usuarios/usuarios.js",
     "isEntry": true,
     "imports": [
-      "_modalHelper-CU9kZDFG.js",
-      "_bootstrap.esm-CU4uQQQ5.js"
+      "_modalHelper-BcTsQW5J.js"
     ]
   },
   "resources/landing/animations.css": {
@@ -143,18 +131,17 @@
     "isEntry": true
   },
   "resources/login_f/login.css": {
-    "file": "assets/login-_Yf1coQK.css",
+    "file": "assets/login-Y2W8R9eb.css",
     "src": "resources/login_f/login.css",
     "isEntry": true
   },
   "resources/login_f/login.js": {
-    "file": "assets/login-DOGYgwHu.js",
+    "file": "assets/login-DXkrkJtS.js",
     "name": "login",
     "src": "resources/login_f/login.js",
     "isEntry": true,
     "imports": [
-      "_modalHelper-CU9kZDFG.js",
-      "_bootstrap.esm-CU4uQQQ5.js"
+      "_modalHelper-BcTsQW5J.js"
     ]
   }
 }

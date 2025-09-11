@@ -10,6 +10,7 @@ CargaAnim = document.querySelector('#pageLoad')
 //     src: "https://lottie.host/16d17efc-47f1-4ecd-a52e-1c638044e891/Id7GM0IlEM.lottie", // or .json file
 // })
 
+
 document.addEventListener("DOMContentLoaded", () => {
 
 

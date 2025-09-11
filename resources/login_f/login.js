@@ -6,8 +6,10 @@ var GLOBAL_URL = 'https://web.lexialegal.site/'
 var TEST_URL = 'http://localhost:8000/'
 
 const btnLogin = document.querySelector('.btnLogin'),
-email = document.getElementById('email'),
-password = document.getElementById('password')
+email = document.getElementById('email_login'),
+password = document.getElementById('password'),
+errorEmailLogin = document.getElementById('errorEmailLogin')
+
 
 const modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'), { backdrop: 'static', keyboard: false }),
 modalError  = new bootstrap.Modal(document.getElementById('modalError')),
@@ -16,6 +18,34 @@ modalSuccess = new bootstrap.Modal(document.getElementById('modalSuccess'));
 const errorMsj = document.getElementById('errorLogin'),
 successMsj = document.getElementById('mensajeExito'),
 cargaMsj = document.getElementById('mensajeCarga')
+
+email.addEventListener('focusout', function(){
+    let correoValidado = ValidarCorreo(email.value)
+    if (!correoValidado) {
+        NoValidado(email, errorEmailLogin, "Escribe un correo válido")
+    }
+    else{
+        Validado(email, errorEmailLogin)
+    }
+})
+
+function NoValidado(inputCampo, errorCampo, mensaje = "El campo no puede quedar vacío"){
+    inputCampo.classList.remove('Validado')
+    inputCampo.classList.add('NoValidado')
+    errorCampo.innerHTML = mensaje
+}
+
+function Validado(inputCampo, errorCampo){
+    inputCampo.classList.remove('NoValidado')
+    inputCampo.classList.add('Validado')
+    errorCampo.innerHTML = ""
+}
+
+
+function ValidarCorreo(correo){
+    const regex = /^[a-zA-z0-9_.+-]+@[a-zA-z0-9-]+\.[a-zA-z0-9-.]+$/
+    return regex.test(correo)
+}
 
 btnLogin.addEventListener('click', async (e) => {
     e.preventDefault()
