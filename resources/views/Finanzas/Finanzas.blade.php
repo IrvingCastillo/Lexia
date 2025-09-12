@@ -10,6 +10,7 @@
 
 
 <div class="container-fluid bg-white my-5 py-5">
+    <input type="text"  id="id_pago" hidden>
     <div class="d-flex justify-content-md-start">
         <div class="titulo-texto textAzul">Pagos</div>
     </div>
@@ -32,8 +33,8 @@
                         <div class="card mb-3 border-0">
                             <div class="card-body border-bottom">
                                 <!-- Botón eliminar pago -->
-                                <a href="#" class="text-muted position-absolute borrar-pago btn-delete" style="top: 1rem; right: 1rem;">
-                                    <i class="fa fa-trash trash-icon" data-toggle="modal" data-target="#modalEliminarPago"></i>
+                                <a href="#" class="text-muted position-absolute borrar-pago btn-delete eliminarPago" style="top: 1rem; right: 1rem;">
+                                    <i class="fa fa-trash trash-icon" data-toggle="modal" data-target="#modalEliminar"></i>
                                 </a>
                                 <div class="file-item">
                                     <i class="far fa-file-alt file-icon"></i>
@@ -86,11 +87,11 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text group-text-transparent"> <i class="fas fa-dollar"></i> </span>
                             </div>
-                            <input type="text" class="form-control rounded-right-input" placeholder="0.00" id="amount" name="amount" oninput="this.value = this.value.replace(/\D/g, '').replace(/([0-9])([0-9]{2})$/, '$1.$2').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ',');">
+                            <input type="text" class="form-control rounded-right-input" placeholder="0.00" id="amount" name="amount" oninput="this.value = this.value.replace(/\D/g, '').replace(/([0-9])([0-9]{2})$/, '$1.$2').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ',');" required>
                         </div>
                     </div>
                     <div class="mt-3">
-                        <span class="textAzul mr-3 normal-texto">Estado</span>
+                        <span class="textAzul mr-3 normal-texto">Estado</span><br>
                         <div class="btn-toggle-group">
                             <input type="radio" id="porPagar" name="estado" value="notpayed">
                             <label for="porPagar" class="btn-toggle">Por Pagar</label>
@@ -101,7 +102,7 @@
                     </div>
                     <div class="mt-3">
                         <span class="textAzul mr-3 normal-texto">Fecha</span>
-                        <input type="date" class="form-control" id="payment_date" name="payment_date">
+                        <input type="date" class="form-control" id="payment_date" name="payment_date" required>
                     </div>
                     {{-- <div class="mt-3">
                         <span class="textAzul mr-3 normal-texto">Caso</span>
@@ -113,7 +114,7 @@
                         <span class="textAzul mr-3 normal-texto">Descripción</span>
                         <textarea name="payment_description" id="payment_description" rows="3" class="form-control" placeholder="Opcional" style="min-height: 35px"></textarea>
                     </div>
-                    <button type="button" class="bg-blue text-center px-4 py-1 texto-boton campoRoundedX" style="opacity: .3" id="addPayment" disabled>Agregar</button>
+                    <button type="button" class="bg-blue text-center px-4 py-1 texto-boton campoRoundedX"  id="addPayment">Agregar</button>
                 </div>
             </form>
 
@@ -134,17 +135,17 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <span class="text-muted">Balance</span>
-                                    <h5 class="mb-0 text-success font-weight-bold">$700.00</h5>
+                                    <h5 class="mb-0 text-success font-weight-bold" id="info-maximo"></h5>
                                 </div>
                                 <div>
                                     <span class="mr-3">
                                     <span style="display:inline-block;width:12px;height:12px;background:#0c2d48;border-radius:3px;margin-right:5px;"></span>
                                     Pagado
                                     </span>
-                                    <span>
+                                    {{-- <span>
                                     <span style="display:inline-block;width:12px;height:12px;background:#6c757d;border-radius:3px;margin-right:5px;"></span>
                                     Por pagar
-                                    </span>
+                                    </span> --}}
                                 </div>
                             </div>
                         </div>
@@ -153,9 +154,10 @@
             </div>
         </div>
     </div>
+    @include('Mensajes.carga')
+    @include('Mensajes.error')
 </div>
 
-@include('Mensajes.carga')
-@include('Mensajes.error')
+@include('Casos.Modals.Eliminar')
 
 @stop
