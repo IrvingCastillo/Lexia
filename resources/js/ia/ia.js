@@ -20,7 +20,8 @@ BtnDownloadPdf = document.querySelector("#downloadPdf"),
 BtnShowDropFiles = document.querySelector("#showDropFiles")
 
 const cargaMsj = document.getElementById('mensajeCarga'),
-successMsj = document.getElementById('mensajeExito')
+successMsj = document.getElementById('mensajeExito'),
+errorMsj = document.getElementById('mensajeError')
 
 let selectedFiles = [];
 
@@ -39,7 +40,7 @@ async function VerificarStatus(){
     })
 
     const res_data_me = await data_me.json()
-console.log(res_data_me[0])
+
     if (res_data_me[0].lawfirm.plan.id === 1) {
         $("#modalRestriccion").modal("show")
         PlanId.value = res_data_me[0].lawfirm.plan.id
@@ -110,12 +111,12 @@ PreguntaText.addEventListener('input', function(){
 
 
 BtnStart.addEventListener('click', async(e) => {
-    document.getElementById("listadoDocumento").classList.add('cardHide')
-    setTimeout(()=> {
-        document.getElementById("divEditor").classList.remove('cardHide')
-        BtnShowDropFiles.style.display = "inline"
-        // EscribirTexto(respuestaBack, 50)
-    }, 2500)
+    // document.getElementById("listadoDocumento").classList.add('cardHide')
+    // setTimeout(()=> {
+    //     document.getElementById("divEditor").classList.remove('cardHide')
+    //     BtnShowDropFiles.style.display = "inline"
+    //     // EscribirTexto(respuestaBack, 50)
+    // }, 2500)
     await ObtenerRespuesta()
 })
 
@@ -275,9 +276,18 @@ function renderFileList() {
     `;
     li.querySelector("button").addEventListener("click", () => {
         if (selectedFiles.length === 1) {
-            console.log(selectedFiles.length)
             BtnStart.style.display = "none"
             fileInput.value = ""
+            if (ResumirCheck.checked) {
+                ResumirCheck.checked = false
+            }
+            if (ExtraerCheck.checked) {
+                ExtraerCheck.checked = false
+            }
+            ResumirCheck.disabled = false
+            ExtraerCheck.disabled = false
+
+
         }
       selectedFiles.splice(index, 1);
       renderFileList();
@@ -329,15 +339,30 @@ async function ObtenerRespuesta(){
         if(askIA.ok){
             successMsj.innerText = ""
             successMsj.innerText = "¡Ya casi está listo!"
+             document.getElementById("listadoDocumento").classList.add('cardHide')
+            setTimeout(()=> {
+                document.getElementById("divEditor").classList.remove('cardHide')
+                BtnShowDropFiles.style.display = "inline"
+                // EscribirTexto(respuestaBack, 50)
+            }, 2500)
             setTimeout(() => {
                 hideModal(modalSuccess)
                 EscribirTexto(res_askIA.answer, 3)
             }, 1500);
         }
+        else{
+            hideModal(modalSuccess)
+            errorMsj.innerText = res_askIA.message
+            showModal(modalError)
+            hideModal(modalError, 2000)
+        }
 
     } catch (error) {
+        console.log(error)
+        hideModal(modalSuccess)
+        errorMsj.innerText = error
         showModal(modalError)
-        hideModal(modalError, 2000)
+        hideModal(modalError, 3000)
     }
 }
 

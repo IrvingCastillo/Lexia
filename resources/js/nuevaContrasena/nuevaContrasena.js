@@ -15,6 +15,7 @@ modalError  = new bootstrap.Modal(document.getElementById('modalError')),
 modalSuccess = new bootstrap.Modal(document.getElementById('modalSuccess'))
 
 const errorMsj = document.getElementById('mensajeError'),
+cargaMsj = document.getElementById('mensajeCarga'),
 successMsj = document.getElementById('mensajeExito')
 
 function ValidarContraseña(contraseña) {
@@ -83,6 +84,7 @@ function Verificar(){
 
 BtnGuardar.addEventListener('click', async (e) => {
     e.preventDefault();
+    cargaMsj.textContent = ""
 
     let formulario = document.querySelector("#RecuperarContrasenaForm"),
     datos = new FormData(formulario)
@@ -91,8 +93,8 @@ BtnGuardar.addEventListener('click', async (e) => {
     let datosJson = JSON.stringify(datosCompletos)
 
     showModal(modalCarga)
-    await new Promise(r => setTimeout(r, 2000))
-    hideModal(modalCarga)
+    // await new Promise(r => setTimeout(r, 2000))
+    // hideModal(modalCarga)
 
     try {
         const me = await fetch('/get-token')
@@ -110,9 +112,9 @@ BtnGuardar.addEventListener('click', async (e) => {
     const res_reset_pass = reset_pass.json()
 
     if(reset_pass.ok){
-        showModal(modalSuccess)
-        successMsj.textContent = '¡Contraseña reestablecida!'
-        hideModal(modalSuccess, 4000, () => {
+        // showModal(modalSuccess)
+        cargaMsj.textContent = '¡Contraseña reestablecida!'
+        hideModal(modalCarga, 4000, () => {
             window.location.href =  GLOBAL_URL + 'login'
         });
     } else {

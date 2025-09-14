@@ -44,7 +44,8 @@ const animationError = new DotLottie({
     loop: true,
     canvas: ErrorAnim,
     // src: "https://lottie.host/16d17efc-47f1-4ecd-a52e-1c638044e891/Id7GM0IlEM.lottie", // or .json file
-    src: "https://lottie.host/56f3f712-d49d-4d0d-a1c8-b8bd8ad1e184/kOVctgJg6M.lottie", // or .json file
+    // src: "https://lottie.host/56f3f712-d49d-4d0d-a1c8-b8bd8ad1e184/kOVctgJg6M.lottie", // or .json file
+    src: "", // or .json file
 })
 
 const animationLoad = new DotLottie({
@@ -166,6 +167,5 @@ btnsPlanUpdate.forEach(button => {
 btnCerrarSesion.addEventListener('click', function(){
     const dataM = document.querySelector('meta[name="csrf-token"]')
     const descriptionM = dataM.getAttribute('content')
-    console.log(descriptionM)
 })
 

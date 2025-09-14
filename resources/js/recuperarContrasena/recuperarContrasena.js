@@ -14,6 +14,7 @@ modalError = new bootstrap.Modal(document.getElementById('modalError')),
 modalSuccess = new bootstrap.Modal(document.getElementById('modalSuccess'))
 
 const successMsj = document.getElementById('mensajeExito'),
+cargaMsj = document.getElementById('mensajeCarga'),
 errorMsj = document.getElementById('mensajeError')
 
 Correo.addEventListener('input', function () {
@@ -49,8 +50,8 @@ function ValidarCorreo(correo) {
     return regex.test(correo);
 }
 
-BtnRecuperar.addEventListener('click', async function (event) {
-    event.preventDefault();
+BtnRecuperar.addEventListener("click", async (e) => {
+    e.preventDefault();
 
     let formulario = document.querySelector("#RecuperarContrasenaForm"),
     datos = new FormData(formulario);
@@ -59,8 +60,8 @@ BtnRecuperar.addEventListener('click', async function (event) {
     const datosJson = JSON.stringify(datosCompletos);
 
     showModal(modalCarga);
-    await new Promise(r => setTimeout(r, 2000))
-    hideModal(modalCarga);
+    // await new Promise(r => setTimeout(r, 2000))
+    // hideModal(modalCarga);
 
     try{
         const me = await fetch('/get-token')
@@ -80,14 +81,15 @@ BtnRecuperar.addEventListener('click', async function (event) {
 
         console.log(send_email);
         if(send_email.ok){
-            showModal(modalSuccess);
-            successMsj.textContent = 'Un enlace de recuperación se ha enviado al correo electrónico proporcionado';
-            hideModal(modalSuccess, 5000, () => {
+            // showModal(modalSuccess);
+            cargaMsj.textContent = 'Un enlace de recuperación se ha enviado al correo electrónico proporcionado';
+            hideModal(modalCarga, 5000, () => {
                 window.location.href = GLOBAL_URL + 'login';
             });
         }
         else{
-            showModal(modalError);
+            hideModal(modalCarga)
+            showModal(modalError, 100);
             errorMsj.textContent = res_send_email.message
             hideModal(modalError, 2500);
         }

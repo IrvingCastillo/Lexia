@@ -63,14 +63,17 @@ async function ObtenerUsuarios(){
         const res_get_clients = await get_clients.json()
 
         if (get_clients.ok) {
-            //creacion de cards
-            console.log(res_get_clients)
             RenderizarUsuarios(res_get_clients.data)
-            // RenderizarUsuarios(usuarios)
+        }
+        else{
+            errorMsj.innerText = res_get_clients.message
+            showModal(modalError)
+            hideModal(modalError, 2000)
         }
 
 
     } catch (error) {
+        errorMsj.innerText = res_get_clients.message
         showModal(modalError)
         hideModal(modalError, 2000)
     }
@@ -94,11 +97,17 @@ async function RenderizarUsuarios(list_users){
 
     list_users.forEach(usuario => {
         const clone = template.content.cloneNode(true);
-
+        let rol = ""
+        if (usuario.roles.length > 0) {
+            rol = usuario.roles[0].name
+        }
+        else{
+            rol = "Usuario"
+        }
         // Asignar datos dinámicos
         clone.querySelector(".avatar-usuario").src = usuario.avatar || "https://media.istockphoto.com/id/1300845620/es/vector/icono-de-usuario-plano-aislado-sobre-fondo-blanco-s%C3%ADmbolo-de-usuario-ilustraci%C3%B3n-vectorial.jpg?s=612x612&w=0&k=20&c=grBa1KTwfoWBOqu1n0ewyRXQnx59bNHtHjvbsFc82gk=";
         clone.querySelector(".nombre-usuario").textContent = usuario.nombre_cliente;
-        clone.querySelector(".rol-usuario").textContent = usuario.roles[0].name;
+        clone.querySelector(".rol-usuario").textContent = rol;
         clone.querySelector(".telefono-usuario").textContent = usuario.profile.telefono;
         clone.querySelector(".fecha-usuario").textContent = "";
 
@@ -133,8 +142,6 @@ async function RenderizarUsuarios(list_users){
 
 async function EliminarUsuario(id){
     showModal(modalCarga)
-    // await new Promise(r => setTimeout(r, 2000))
-    // hideModal(modalCarga)
 
     try {
         const me = await fetch('/get-token')
@@ -158,13 +165,20 @@ async function EliminarUsuario(id){
 
         if (del_user.ok) {
             cargaMsj.textContent = res_del_user.message
-            hideModal(modalCarga, 2000, () => {
+            hideModal(modalCarga, 3000, () => {
                 ObtenerUsuarios()
             })
         }
+        else{
+            hideModal(modalCarga)
+            errorMsj.innerText = res_del_user.message
+            showModal(modalError)
+            hideModal(modalError, 3000)
+        }
 
     } catch (error) {
-        console.log(error)
+        hideModal(modalCarga)
+        errorMsj.innerText = error
         showModal(modalError)
         hideModal(modalError, 2000)
     }
@@ -189,17 +203,13 @@ BtnAgregarUsuario.addEventListener("click", async(e) => {
     datos = new FormData(form)
 
     if (!form.checkValidity()) {
-        console.log("alv")
-        console.log(form.checkValidity())
         form.reportValidity();
         return;
     }
     else{
         $("#modalNuevoUsuario").modal("hide")
-        successMsj.textContent = ''
+        cargaMsj.textContent = ''
         showModal(modalCarga)
-        // await new Promise(r => setTimeout(r, 2000))
-        // hideModal(modalCarga)
 
         try {
             let formulario = document.querySelector("#AltaUsuarios"),
@@ -217,7 +227,6 @@ BtnAgregarUsuario.addEventListener("click", async(e) => {
             const me = await fetch('/get-token')
             const res_me = await me.json()
 
-    console.log(datosJson)
             const add_user = await fetch("https://api.lexialegal.site/api/usuarios/agregar/integrantes", {
                 method: "POST",
                 headers: {
@@ -231,9 +240,7 @@ BtnAgregarUsuario.addEventListener("click", async(e) => {
             const res_add_user = await add_user.json()
 
             if (add_user.ok) {
-                console.log(res_add_user.data)
                 cargaMsj.textContent = res_add_user.message
-                // showModal(modalSuccess)
                 hideModal(modalCarga, 2000, () => {
                     $("#modalNuevoUsuario").modal({
                         hide:true
@@ -242,14 +249,16 @@ BtnAgregarUsuario.addEventListener("click", async(e) => {
                 });
             }
             else{
+                hideModal(modalCarga)
                 errorMsj.textContent = res_add_user.message
                 showModal(modalError)
                 hideModal(modalError, 4000)
             }
 
         } catch (error) {
+            hideModal(modalCarga)
             showModal(modalError)
-            errorMsj.textContent = 'La contraseña o correo son incorrectos'
+            errorMsj.textContent = error
             hideModal(modalError, 2000)
         }
 
@@ -266,8 +275,6 @@ BtnEditarUser.addEventListener("click", async(e) => {
     datos.append("user_id", userId.value)
 
     if (!form.checkValidity()) {
-        console.log("alv")
-        console.log(form.checkValidity())
         form.reportValidity();
         return;
     }
@@ -279,8 +286,6 @@ BtnEditarUser.addEventListener("click", async(e) => {
             }, 100);
             successMsj.textContent = ''
             showModal(modalCarga)
-            // await new Promise(r => setTimeout(r, 2000))
-            // hideModal(modalCarga)
 
             let datosCompletos = Object.fromEntries(datos.entries())
             let datosJson = JSON.stringify(datosCompletos)
@@ -300,9 +305,6 @@ BtnEditarUser.addEventListener("click", async(e) => {
 
             const res_edit_user = await edit_user.json()
 
-            console.log(edit_user)
-            console.log(res_edit_user)
-
             if (edit_user.ok) {
                 cargaMsj.textContent = res_edit_user.message
                 // showModal(modalSuccess)
@@ -314,9 +316,10 @@ BtnEditarUser.addEventListener("click", async(e) => {
                 });
             }
             else{
-            showModal(modalError)
-            errorMsj.textContent = res_edit_user.message
-            hideModal(modalError, 3000)
+                hideModal(modalCarga)
+                showModal(modalError)
+                errorMsj.textContent = res_edit_user.message
+                hideModal(modalError, 3000)
             }
 
 

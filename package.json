@@ -14,6 +14,7 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
-        "@lottiefiles/dotlottie-web": "^0.48.0"
+        "@lottiefiles/dotlottie-web": "^0.48.0",
+        "timepicker-ui": "^3.0.1"
     }
 }

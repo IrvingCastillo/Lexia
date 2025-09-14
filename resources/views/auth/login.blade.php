@@ -60,7 +60,7 @@
                                 </div>
                             </div>
                         </div>
-                        <span class="d-flex justify-content-center col-md-12 text-danger text-sm text-bold pb-3 fw-bold" id="errorLogin"></span>
+                        <span class="d-flex justify-content-center col-md-12 text-danger text-sm normal-texto-bold pb-3" id="errorLogin"></span>
                         <button class="btnLogin campoRounded texto-boton">Continuar</button>
                     </form>
 

@@ -9,8 +9,8 @@
         <x-nav-guess color="claro"></x-nav-guess>
     </div>
 
-    <div class="container-fluid bg-white d-flex justify-content-center my-5 py-5">
-        <div class="card cardRegistro my-5">
+    <div class="container-fluid bg-white d-flex justify-content-center my-5">
+        <div class="card cardRegistro">
             <div class="card-body">
                 <div class="ml-4">
                     <h1 id="tituloNavegacion" class="body-titulo"></h1>
@@ -36,23 +36,20 @@
                         {{-- {{ csrf_field() }} --}}
                         <div class="tab-content" id="pill-tabContent">
                             <div class="tab-pane fade show active" id="reg1" role="tabpanel" aria-labelledby="pill-reg1-tab">
-                                <div class="d-flex justify-content-between">
-                                    <div class="form-group col-5 p-0 mr-1">
-                                        <label for="nombre_cliente" class="normal-texto-bold">Nombre</label>
-                                        <input type="text" class="form-control" id="nombre_cliente" name="nombre_cliente" maxlength="50" placeholder="Ingresa tu(s) nombre(s)" oninput="this.value = this.value.replace(/[^a-zA-z]+$/g, '');" required>
-                                        <span class="text-left text-danger text-sm fw-bold" id="errorNombre"></span>
-                                    </div>
-                                    <div class="form-group mr-1">
-                                        <label for="apellido_paterno" class="normal-texto-bold">Apellido Paterno</label>
-                                        <input type="text" class="form-control" id="apellido_paterno" name="apellido_paterno" maxlength="50" placeholder="Apellido Paterno" oninput="this.value = this.value.replace(/[^a-zA-z]+$/g, '');" required>
-                                        <span class="text-left text-danger text-sm fw-bold" id="errorApellidoPaterno"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="apellido_materno" class="normal-texto-bold">Apellido Materno</label>
-                                        <input type="text" class="form-control" id="apellido_materno" name="apellido_materno" maxlength="50" placeholder="Apellido Materno" oninput="this.value = this.value.replace(/[^a-zA-z]+$/g, '');" required>
-                                        <span class="text-left text-danger text-sm fw-bold" id="errorApellidoMaterno"></span>
-                                    </div>
-
+                                <div class="form-group p-0 mr-1">
+                                    <label for="nombre_cliente" class="normal-texto-bold">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre_cliente" name="nombre_cliente" maxlength="50" placeholder="Ingresa tu(s) nombre(s)" oninput="this.value = this.value.replace(/[^a-zA-z]+$/g, '');" required>
+                                    <span class="text-left text-danger text-sm fw-bold" id="errorNombre"></span>
+                                </div>
+                                <div class="form-group mr-1">
+                                    <label for="apellido_paterno" class="normal-texto-bold">Apellido Paterno</label>
+                                    <input type="text" class="form-control" id="apellido_paterno" name="apellido_paterno" maxlength="50" placeholder="Apellido Paterno" oninput="this.value = this.value.replace(/[^a-zA-z]+$/g, '');" required>
+                                    <span class="text-left text-danger text-sm fw-bold" id="errorApellidoPaterno"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="apellido_materno" class="normal-texto-bold">Apellido Materno</label>
+                                    <input type="text" class="form-control" id="apellido_materno" name="apellido_materno" maxlength="50" placeholder="Apellido Materno" oninput="this.value = this.value.replace(/[^a-zA-z]+$/g, '');" required>
+                                    <span class="text-left text-danger text-sm fw-bold" id="errorApellidoMaterno"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="despacho" class="normal-texto-bold">Nombre del despacho</label>
@@ -102,7 +99,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-3 offset-1">
+                                    <div class="form-group col-md-3 offset-md-1">
                                         <label>Estado</label>
                                         <div class="form-group col-md-12 pl-0">
                                             <div class="">
@@ -145,7 +142,7 @@
                                             <span class="text-left text-danger text-sm fw-bold" id="errorEstado"></span>
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-4 offset-1">
+                                    <div class="form-group col-md-4 offset-md-1">
                                         <div class="form-group">
                                             <label for="correo" class="normal-texto-bold">Ciudad</label>
                                             <input type="text" class="form-control" id="ciudad" name="ciudad" maxlength="20"  oninput="this.value = this.value.replace(/[^a-zA-z]+$/g, ' ');">

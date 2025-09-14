@@ -1,8 +1,22 @@
 @extends('dashboard')
 @section('Contenido')
 @vite(['resources/css/app.css', 'resources/js/calendario/calendario.js'])
+@push('styles')
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.14.0/jquery.timepicker.min.css"> --}}
+@endpush
 
+<style>
+.ui-timepicker-list li {
+  text-align: center;
+}
 
+/* centrar dropdown completo respecto al input */
+.ui-timepicker-wrapper {
+  width: 250px;
+  font-family: 'Inter';
+}
+
+</style>
 <div>
     <div class="container-fluid bg-white my-5 py-5">
         {{-- <nav>
@@ -32,9 +46,14 @@
 
     </div>
 
+    @include('Mensajes.carga')
+    @include('Mensajes.error')
 </div>
 @include('Calendario.Modals.AgregarEvento')
-@include('Mensajes.carga')
-@include('Mensajes.error')
+@include('Calendario.Modals.EditarEvento')
 
 @stop
+
+@push('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.14.0/jquery.timepicker.min.js"></script>
+@endpush

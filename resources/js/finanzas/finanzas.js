@@ -65,15 +65,6 @@ async function ObtenerListaPagos(){
 
         const res_data_me = await data_me.json()
 
-        let body = {
-            "user_id": 28,
-            // "type": "income",
-            // "status": "completed",
-            "date_from": "2025-09-08",
-            "date_to": "2023-09-10",
-            "per_page": 1,
-        }
-
         const get_payments = await fetch("https://api.lexialegal.site/api/financial/movements", {
             method: "GET",
             headers: {
@@ -155,7 +146,7 @@ function RenderizarPagos(todosLosPagos){
 
 function GenerarGrafica(datosGrafica){
     const montos = datosGrafica.map(p => parseFloat(p.amount));
-    const montoTotal = montos.reduce((acc, val) => acc + val, 0);
+    const montoTotalAnual = montos.reduce((acc, val) => acc + val, 0);
     const montoMaximo = Math.max(...montos);
     const suggestedMax = Math.ceil(montoMaximo / 1000) * 1000;
 
@@ -182,7 +173,7 @@ function GenerarGrafica(datosGrafica){
     const labels = semestre === 0 ? labelsAnio.slice(0, 6) : labelsAnio.slice(6);
     const pagado = semestre === 0 ? dataPagado.slice(0, 6) : dataPagado.slice(6);
     // const porPagar = semestre === 0 ? dataPorPagar.slice(0, 6) : dataPorPagar.slice(6);
-
+    const montoTotalSemestre = pagado.reduce((acc, val) => acc + val, 0);
     const ctx = document.getElementById("grafica").getContext("2d");
 
     // 🧹 Si ya existe una gráfica, destruirla antes de crear la nueva
@@ -229,7 +220,7 @@ function GenerarGrafica(datosGrafica){
         }
     }
     });
-    document.getElementById("info-maximo").innerText = ` $${montoTotal.toLocaleString()}`;
+    document.getElementById("info-maximo").innerText = ` $${montoTotalSemestre.toLocaleString()}`;
 
 
 }
@@ -292,18 +283,14 @@ BtnAgregarPago.addEventListener("click", async(e) => {
             }
             else{
                 hideModal(modalCarga)
-                showModal(modalError, 100)
+                showModal(modalError)
                 errorMsj.textContent = res_pago.message
                 hideModal(modalError, 2300)
             }
-
-
-
         } catch (error) {
-            let error_response = error
-            console.log(error_response)
+            hideModal(modalCarga)
             showModal(modalError)
-            errorMsj.textContent = error_response
+            errorMsj.textContent = error
             hideModal(modalError, 2000)
         }
     }
@@ -348,12 +335,14 @@ BtnEliminar.addEventListener("click", async(e) => {
 
         }
         else{
+            hideModal(modalCarga)
             showModal(modalError);
             errorMsj.textContent = res_elim_pago.message
             hideModal(modalError, 2000);
         }
 
     } catch (error) {
+        hideModal(modalCarga)
         showModal(modalError)
         errorMsj.textContent = error_response
         hideModal(modalError, 2000)

@@ -64,7 +64,7 @@
                                 <div class="col-12 my-2">
                                     <form method="post" action="{{ route('logout') }}"> {{-- logout --}}
                                          @csrf
-                                        <button type="submit" class="btn bg-blue campoRounded texto-boton" style="width: 100%">Cerrar Sesión</button>
+                                        <button type="submit" id="closeSession" class="btn bg-blue campoRounded texto-boton" style="width: 100%">Cerrar Sesión</button>
                                     </form>
                                 </div>
                             </div>
@@ -84,9 +84,20 @@
                                             <span class="normal-texto">Pago Mensual</span>
                                             <span class="normal-texto">$ {{ $user['lawfirm']["plan"]["price"] }}</span>
                                         </div>
+                                        @php
+                                            if ($user['lawfirm']['latest_payment']['status'] === "pending") {
+                                                $pago = "Pago pendiente";
+                                                $class = " text-danger ";
+                                            } else {
+                                                $pago = "";
+                                                $class = "";
+                                            }
+
+                                            // dd($user['lawfirm']['latest_payment'['status']]);
+                                        @endphp
                                         <div class="d-flex justify-content-between mt-2">
                                             <span class="normal-texto">Siguiente Pago</span>
-                                            <span class="normal-texto-light">23 de Diciembre de 2025</span>
+                                            <span class="normal-texto-light {{ $class }}">{{ $pago }}</span>
                                         </div>
                                     </div>
                                 </div>

@@ -15,6 +15,7 @@ export default defineConfig({
                 'resources/login_f/login.js',
                 'resources/js/nuevaContrasena/nuevaContrasena.js',
                 'resources/js/recuperarContrasena/recuperarContrasena.js',
+                'resources/js/cambiarContrasena/cambiarContrasena.js',
                 'resources/js/registro/registro.js',
                 'resources/js/casos/casos.js',
                 'resources/js/ia/ia.js',

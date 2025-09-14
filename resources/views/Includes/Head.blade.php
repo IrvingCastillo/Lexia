@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="{{ asset('dist/bootstrap/css/bootstrap.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/oneui.css') }}">
 <link rel="stylesheet" href="{{ asset('dist/jquery-ui-1.11.4/jquery-ui.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.14.0/jquery.timepicker.min.css">
 
 
 @stack('styles')

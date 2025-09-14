@@ -198,7 +198,7 @@ a {
 
 
 .nav-pills .nav-link {
-    width: 55px;
+    width: 55px !important;
     border-radius: 50px;
     border: 0;
     font-weight: 500;
@@ -207,6 +207,70 @@ a {
     transition: background-color 0.3s ease;
     margin: 0 5px;                 /* Espacio entre pills */
 }
+
+
+@media (min-width: 768px) {
+  .nav-pills .nav-link {
+    width: 45px !important;
+    padding: 0.25rem 0.95rem;
+    margin: 0 4px;
+  }
+  .navbar-expand-lg .container-fluid{
+    height: 150px !important;
+  }
+  .cardRegistro{
+    margin-top: 8rem !important;
+    width: 80vw ;
+  }
+  #tituloNavegacion{
+    font-size: 2.5rem ;
+    margin-left: -1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .nav-pills .nav-link {
+    width: 30px !important;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.95rem;
+    margin: 0 3px;
+  }
+  .navbar-expand-lg .container-fluid{
+    height: 170px !important;
+  }
+  .cardRegistro{
+    margin-top: 8rem !important;
+    width: 80vw !important;
+  }
+  .navbar-expand-lg .container-fluid .d-flex{
+    gap: 0 !important;
+  }
+  #tituloNavegacion{
+    font-size: 2.5rem ;
+    margin-left: -1rem;
+  }
+  .navbar-expand-lg .container-fluid .d-flex{
+    gap: 0 !important;
+  }
+  #btnSuscribirse{
+    margin-top: 60% !important;
+  }
+  .btn-signin{
+    color: white !important;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.4s ease;
+    position: relative;
+    padding: 12px 15px !important;
+    border-radius: 25px;
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    margin: 0 5px;
+  }
+}
+
+
 
 .nav-pills .nav-link.active {
     background-color: var(--azul) !important;
@@ -231,7 +295,7 @@ a {
     padding-bottom: 5rem !important;
     margin-bottom: 2rem !important;
     border-radius: var(--boderAngosto) !important;
-    margin-top: 1rem !important;
+    margin-top: 1rem ;
 }
 
 .btnPlan:hover{

@@ -8,12 +8,12 @@
     "name": "modalHelper"
   },
   "resources/css/app.css": {
-    "file": "assets/app-BWr9Q-sx.css",
+    "file": "assets/app-BzpL-vWV.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-NOjBkXi9.js",
+    "file": "assets/app-Be3jHfGP.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -23,7 +23,7 @@
     ]
   },
   "resources/js/calendario/calendario.js": {
-    "file": "assets/calendario-jW7i2Nat.js",
+    "file": "assets/calendario-CU_Pp_vE.js",
     "name": "calendario",
     "src": "resources/js/calendario/calendario.js",
     "isEntry": true,
@@ -31,8 +31,17 @@
       "_modalHelper-BcTsQW5J.js"
     ]
   },
+  "resources/js/cambiarContrasena/cambiarContrasena.js": {
+    "file": "assets/cambiarContrasena-BkJx18gh.js",
+    "name": "cambiarContrasena",
+    "src": "resources/js/cambiarContrasena/cambiarContrasena.js",
+    "isEntry": true,
+    "imports": [
+      "_modalHelper-BcTsQW5J.js"
+    ]
+  },
   "resources/js/casos/casos.js": {
-    "file": "assets/casos-GxGiqJyr.js",
+    "file": "assets/casos-Ckb_Lj8q.js",
     "name": "casos",
     "src": "resources/js/casos/casos.js",
     "isEntry": true,
@@ -41,7 +50,7 @@
     ]
   },
   "resources/js/finanzas/finanzas.js": {
-    "file": "assets/finanzas-BsIFOwhk.js",
+    "file": "assets/finanzas-C2zckHYP.js",
     "name": "finanzas",
     "src": "resources/js/finanzas/finanzas.js",
     "isEntry": true,
@@ -50,7 +59,7 @@
     ]
   },
   "resources/js/ia/ia.js": {
-    "file": "assets/ia-BXHhjJVe.js",
+    "file": "assets/ia-DMfCVSne.js",
     "name": "ia",
     "src": "resources/js/ia/ia.js",
     "isEntry": true,
@@ -74,7 +83,7 @@
     "isEntry": true
   },
   "resources/js/nuevaContrasena/nuevaContrasena.js": {
-    "file": "assets/nuevaContrasena-Dvw42YWx.js",
+    "file": "assets/nuevaContrasena-BINf0Jfa.js",
     "name": "nuevaContrasena",
     "src": "resources/js/nuevaContrasena/nuevaContrasena.js",
     "isEntry": true,
@@ -83,7 +92,7 @@
     ]
   },
   "resources/js/recuperarContrasena/recuperarContrasena.js": {
-    "file": "assets/recuperarContrasena-CWr6_BL_.js",
+    "file": "assets/recuperarContrasena-DvZ9TYRP.js",
     "name": "recuperarContrasena",
     "src": "resources/js/recuperarContrasena/recuperarContrasena.js",
     "isEntry": true,
@@ -101,7 +110,7 @@
     ]
   },
   "resources/js/usuarios/usuarios.js": {
-    "file": "assets/usuarios-BeFkggd9.js",
+    "file": "assets/usuarios-BOw9iG7s.js",
     "name": "usuarios",
     "src": "resources/js/usuarios/usuarios.js",
     "isEntry": true,
@@ -131,7 +140,7 @@
     "isEntry": true
   },
   "resources/login_f/login.css": {
-    "file": "assets/login-Y2W8R9eb.css",
+    "file": "assets/login-kW3QptmG.css",
     "src": "resources/login_f/login.css",
     "isEntry": true
   },

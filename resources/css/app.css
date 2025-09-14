@@ -24986,3 +24986,26 @@ a.stretched-link:hover {
     }
 
     /* fin usuarios modulo */
+.fc-button{
+    background: var(--azul);
+    color: var(--gris);
+}
+
+.fc-content{
+    /* background: var(--azul); */
+    color: var(--gris);
+    font-weight: 700;
+    padding-left: .5rem;
+}
+
+#new_password.Validado, #new_password_confirm.Validado{
+    border: 2px solid #28a745 ;
+    box-shadow: 0 0 3px rgba(40, 167, 69, 0.5);
+    border-radius: .375rem;
+}
+
+#new_password.NoValidado, #new_password_confirm.NoValidado{
+    border: 2px solid #dc3545 ;
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+    border-radius: .375rem;
+}
