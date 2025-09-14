@@ -51,6 +51,7 @@
 </div>
 @include('Calendario.Modals.AgregarEvento')
 @include('Calendario.Modals.EditarEvento')
+@include('Calendario.Modals.ErrorEvento')
 
 @stop
 

@@ -69,7 +69,8 @@ btnChange.addEventListener("click", async(e)=> {
 
         let body = {
             "current_password": contraActual.value.trim(),
-            "new_password": contraNueva.value.trim()
+            "new_password": contraNueva.value.trim(),
+            "new_password_confirmation": confirmContra.value.trim()
         }
 
         const new_pass = await fetch("https://api.lexialegal.site/api/users/profile/password", {
@@ -87,7 +88,7 @@ btnChange.addEventListener("click", async(e)=> {
         if (new_pass.ok) {
             cargaMsj.textContent = res_new_pass.message
             hideModal(modalCarga, 1500, ()=> {
-                // window.location.href = '/' + 'logout'
+                window.location.href = GLOBAL_URL + 'logout'
             })
         }
         else{

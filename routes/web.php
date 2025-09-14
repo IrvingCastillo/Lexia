@@ -30,7 +30,7 @@ Route::get('/get-token', function () {
 });
 
 
-Route::post('logout', function(Request $request){
+Route::match(['get','post'],'/logout', function(Request $request){
 if (session('auth_token')) {
     try {
         $client = new \GuzzleHttp\Client();

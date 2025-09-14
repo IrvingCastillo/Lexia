@@ -60,15 +60,19 @@ async function CalendarioEventos() {
             // events: response.data,
             events: response.data.map(ev => {
                 console.log(ev)
+                // console.log(date_format)
+                let d = new Date(ev.date)
+                let date_format = d.toISOString().split("T")[0]
+                let date_start = date_format + "T" + ev.start_time + ":00"
                 return {
                     id: ev.id,            // si tienes id
-                    start: ev.date,      // asumiendo se manda
+                    start: date_start,      // asumiendo se manda
                     // end: ev.end,          // asumiendo se manda
                     title: ev.body || ev.title || 'Sin título',
                     notes: ev.notes || 'Sin notas',
                     provider: ev.provider || '',
-                    start_hour: ev.start_hour || '',
-                    end_hour: ev.end_hour || '',
+                    // start_hour: ev.start_time || '',
+                    end_hour: ev.end_time || '',
                 };
             }),
             timeFormat: 'HH:mm',
@@ -77,13 +81,12 @@ async function CalendarioEventos() {
                 'HH:mm'        // lower level of text
                 ],
                 eventDrop(event, delta, revertFunc, jsEvent, ui, view){
-                    console.log(event)
+                    // console.log(event)
                     console.log("Nueva fecha de fin:", event.start.format("YYYY-MM-DD"));
                     //para editar en caso de que se arrastre
 
                 },
                 eventClick: function (calEvent, jsEvent, view) {
-                        console.log(calEvent)
                         idCitaEdit.value = calEvent.id
                         LlenarModal(calEvent)
                          $('.start_hour_edit').timepicker({
@@ -107,31 +110,42 @@ async function CalendarioEventos() {
                         $('#modalEditarEvento').modal('show')
                 },
                 dayClick: function(date, jsEvent, view) {
-                    LimpiarModal()
-                    $('.start_hour').timepicker({
-                        timeFormat: 'H:i',
-                        stepMinute: 30 ,
-                        minTime: '09',
-                        maxTime: '6:00pm',
-                        dynamic: false,
-                        dropdown: true,
-                        scrollbar: false
-                    });
-                    $('.end_hour').timepicker({
-                        timeFormat: 'H:i',
-                        stepMinute: 30 ,
-                        minTime: '09',
-                        maxTime: '6:00pm',
-                        dynamic: false,
-                        dropdown: true,
-                        scrollbar: false
-                    });
-                    setTimeout(() => {
-                        document.querySelector("#date").value = date.format()
-                        $('#modalAgregarEvento').modal('show');
-                    }, 100);
-                    diaEvento.innerHTML = date.format()
-                    diaEvento.value = date.format()
+
+                    let today = new Date()
+                    let today_format = today.toISOString().split("T")[0]
+                    let date_click = date.format("YYYY-MM-DD")
+
+                    if (date_click < today_format) {
+                        $("#modalErrorEvento").modal("show")
+                    }
+                    else{
+                        LimpiarModal()
+                        $('.start_hour').timepicker({
+                            timeFormat: 'H:i',
+                            stepMinute: 30 ,
+                            minTime: '09',
+                            maxTime: '6:00pm',
+                            dynamic: false,
+                            dropdown: true,
+                            scrollbar: false
+                        });
+                        $('.end_hour').timepicker({
+                            timeFormat: 'H:i',
+                            stepMinute: 30 ,
+                            minTime: '09',
+                            maxTime: '6:00pm',
+                            dynamic: false,
+                            dropdown: true,
+                            scrollbar: false
+                        });
+                        setTimeout(() => {
+                            document.querySelector("#date").value = date.format()
+                            $('#modalAgregarEvento').modal('show');
+                        }, 100);
+                        diaEvento.innerHTML = date.format()
+                        diaEvento.value = date.format()
+                    }
+
                 }
         });
     })
@@ -170,15 +184,14 @@ async function ObtenerClientes(){
 }
 
 function LlenarModal(datos){
-    // let d = new Date(datos.date)
-    // let fecha = d.toISOString().split("T")[0]
-
+//     console.log(datos)
+// console.log(datos.start.format("HH:mm"))
     $('.start_hour_edit').val('');
     $('.end_hour_edit').val('');
     document.querySelector("#body_asunto_edit").value = datos.title
     document.querySelector("#notes_edit").value = datos.notes
     document.querySelector("#date_edit").value = datos.start.format("YYYY-MM-DD")
-    document.querySelector("#startHour_edit").value = (datos.start_hour) ? datos.start_hour : ''
+    document.querySelector("#startHour_edit").value = datos.start.format("HH:mm")
     document.querySelector("#endHour_edit").value = (datos.end_hour) ? datos.end_hour : ''
 }
 function LimpiarModal(){
@@ -232,6 +245,8 @@ bntAgregarCita.addEventListener("click", async(e) => {
                 "status": "confirmed",
                 "notes" : document.querySelector("#notes").value,
                 "date_local" : fecha_local,
+                "start_time" : document.querySelector("#startHour").value,
+                "end_time" : document.querySelector("#endHour").value,
                 "timezone": "America\/Mexico_City",
                 "destinatario": document.querySelector("#destinatario").value
             }
@@ -291,7 +306,6 @@ bntEditarCita.addEventListener("click", async(e) => {
         })
 
         const res_data_me = await data_me.json()
-
         let fecha_local = `${document.querySelector("#date_edit").value} ${document.querySelector("#startHour_edit").value}`.toString()
         let body = {
             "user_id": res_data_me[0].id,
@@ -299,11 +313,12 @@ bntEditarCita.addEventListener("click", async(e) => {
             "status": "confirmed",
             "notes" : document.querySelector("#notes_edit").value,
             "date_local" : fecha_local,
+            "start_time" : document.querySelector("#startHour_edit").value,
+            "end_time" : document.querySelector("#endHour_edit").value,
             "timezone": "America\/Mexico_City",
             "destinatario": document.querySelector("#destinatario_edit").value,
             "appointment_id": idCitaEdit.value
         }
-
         const edit_appointment = await fetch("https://api.lexialegal.site/api/appointments/update", {
             method: "POST",
             headers: {

@@ -104,6 +104,7 @@ btnLogin.addEventListener('click', async (e) => {
             throw new Error('No se pudo iniciar sesión')
         }
         } catch (err) {
+            hideModal(modalCarga)
             showModal(modalError)
             errorMsj.textContent = 'La contraseña o correo son incorrectos'
             hideModal(modalError, 2000)
