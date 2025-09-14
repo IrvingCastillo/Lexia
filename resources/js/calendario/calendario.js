@@ -37,8 +37,6 @@ async function ObtenerListaEventos(){
     })
 
     const res_get_appointments = await get_appointments.json()
-console.log(get_appointments)
-console.log(res_get_appointments)
     return res_get_appointments
 
 }
@@ -59,15 +57,20 @@ async function CalendarioEventos() {
             weekNumbers: false,
             editable: false,
             eventLimit: true,
-            events: response.data,
-            // events: [
-            //     { 'title': "Cita Miguel Alvarez", start: "2025-09-11" },
-            //     { 'title': "Cita Luis Mendoza", start: "2025-09-11" },
-            //     { 'title': "Cita Luis Perez", start: "2025-09-11" },
-            //     { 'title': "Cita Luis Ramirez", start: "2025-09-11" },
-            //     { 'title': "Cita Amanda Sanchez", start: "2025-09-11" },
-            //     { 'title': "Cita Ana Torres", start: "2025-09-12" }
-            // ],
+            // events: response.data,
+            events: response.data.map(ev => {
+                console.log(ev)
+                return {
+                    id: ev.id,            // si tienes id
+                    start: ev.date,      // asumiendo se manda
+                    // end: ev.end,          // asumiendo se manda
+                    title: ev.body || ev.title || 'Sin título',
+                    notes: ev.notes || 'Sin notas',
+                    provider: ev.provider || '',
+                    start_hour: ev.start_hour || '',
+                    end_hour: ev.end_hour || '',
+                };
+            }),
             timeFormat: 'HH:mm',
             slotLabelFormat: [
                 'MMMM YYYY', // top level of text
@@ -136,9 +139,15 @@ async function CalendarioEventos() {
 
 $('.start_hour').on('changeTime', function() {
   let startVal = $(this).val();
-  console.log(startVal)
   if (startVal) {
     $('.end_hour').timepicker('option', 'minTime', startVal);
+  }
+});
+
+$('.start_hour_edit').on('changeTime', function() {
+  let startVal = $(this).val();
+  if (startVal) {
+    $('.end_hour_edit').timepicker('option', 'minTime', startVal);
   }
 });
 
@@ -161,17 +170,16 @@ async function ObtenerClientes(){
 }
 
 function LlenarModal(datos){
-    console.log(datos.date)
-    let d = new Date(datos.date)
-    let fecha = d.toISOString().split("T")[0]
+    // let d = new Date(datos.date)
+    // let fecha = d.toISOString().split("T")[0]
 
     $('.start_hour_edit').val('');
     $('.end_hour_edit').val('');
-    document.querySelector("#body_asunto_edit").value = datos.body
+    document.querySelector("#body_asunto_edit").value = datos.title
     document.querySelector("#notes_edit").value = datos.notes
-    document.querySelector("#date_edit").value = fecha
-    document.querySelector("#startHour_edit").value = ""
-    document.querySelector("#endHour_edit").value = ""
+    document.querySelector("#date_edit").value = datos.start.format("YYYY-MM-DD")
+    document.querySelector("#startHour_edit").value = (datos.start_hour) ? datos.start_hour : ''
+    document.querySelector("#endHour_edit").value = (datos.end_hour) ? datos.end_hour : ''
 }
 function LimpiarModal(){
     diaEvento.innerHTML = ''
@@ -253,9 +261,6 @@ bntAgregarCita.addEventListener("click", async(e) => {
                 hideModal(modalError, 2000)
             }
 
-            console.log(make_appointment)
-            console.log(res_make_appointment)
-
         } catch (error) {
             console.log(error)
             showModal(modalError)
@@ -288,7 +293,6 @@ bntEditarCita.addEventListener("click", async(e) => {
         const res_data_me = await data_me.json()
 
         let fecha_local = `${document.querySelector("#date_edit").value} ${document.querySelector("#startHour_edit").value}`.toString()
-console.log(res_data_me)
         let body = {
             "user_id": res_data_me[0].id,
             "body": document.querySelector("#body_asunto_edit").value,
