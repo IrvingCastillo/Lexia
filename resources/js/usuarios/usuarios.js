@@ -104,12 +104,14 @@ async function RenderizarUsuarios(list_users){
         else{
             rol = "Usuario"
         }
-        // Asignar datos dinámicos
-        clone.querySelector(".avatar-usuario").src = usuario.avatar || "https://media.istockphoto.com/id/1300845620/es/vector/icono-de-usuario-plano-aislado-sobre-fondo-blanco-s%C3%ADmbolo-de-usuario-ilustraci%C3%B3n-vectorial.jpg?s=612x612&w=0&k=20&c=grBa1KTwfoWBOqu1n0ewyRXQnx59bNHtHjvbsFc82gk=";
+console.log(usuario)
+        let fecha_creacion = new Date(usuario.created_at)
+        fecha_creacion = fecha_creacion.toISOString().split("T")[0]
+        clone.querySelector(".avatar-usuario").src = usuario.profile.photo || "https://media.istockphoto.com/id/1300845620/es/vector/icono-de-usuario-plano-aislado-sobre-fondo-blanco-s%C3%ADmbolo-de-usuario-ilustraci%C3%B3n-vectorial.jpg?s=612x612&w=0&k=20&c=grBa1KTwfoWBOqu1n0ewyRXQnx59bNHtHjvbsFc82gk=";
         clone.querySelector(".nombre-usuario").textContent = usuario.nombre_cliente;
         clone.querySelector(".rol-usuario").textContent = rol;
         clone.querySelector(".telefono-usuario").textContent = usuario.profile.telefono;
-        clone.querySelector(".fecha-usuario").textContent = "";
+        clone.querySelector(".fecha-usuario").textContent = formatearFecha(fecha_creacion);
 
         // Eventos de botones
         clone.querySelector(".btn-editar").addEventListener("click", () => {
@@ -196,6 +198,22 @@ $("#showAltaUsuario").on('click', ()=> {
     $("#modalNuevoUsuario").modal("show")
     limpiarAltaModal()
 })
+
+
+function formatearFecha(fechaStr) {
+  const meses = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
+
+  // Convertir string a objeto Date
+  const fecha = new Date(fechaStr);
+
+  // Obtener partes de la fecha
+  const dia = fecha.getDate().toString().padStart(2, '0');
+  const mes = meses[fecha.getMonth()];
+  const año = fecha.getFullYear();
+
+  // Formato final
+  return `${dia} ${mes} ${año}`;
+}
 
 
 BtnAgregarUsuario.addEventListener("click", async(e) => {

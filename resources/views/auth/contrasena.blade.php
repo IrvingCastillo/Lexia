@@ -29,7 +29,7 @@
                                     <input type="email" class="form-control inputLogin rounded-right border border-0" id="email_recuperacion" name="email" placeholder="Email" minlength="8" required>
                                 </div>
                                 <span class="text-left text-danger text-sm text-bold" id="errorEmailRecuperacion"></span>
-                                <button type="button" id="btnEnviarCorreoRecuperar" class="texto-boton btnBackPass mt-2" disabled>Recuperar contraseña</button>
+                                <button type="button" id="btnEnviarCorreoRecuperar" class="texto-boton btnBackPass mt-3" disabled>Recuperar contraseña</button>
                             </div>
                         </form>
                         <div class="d-flex justify-content-center col-md-12">

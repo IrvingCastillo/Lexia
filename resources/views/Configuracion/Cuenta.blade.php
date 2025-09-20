@@ -23,9 +23,12 @@
             <small class="text-muted normal-texto-light">{{ isset($user["rfc"]) ? $user["rfc"] : 'Sin registrar' }}</small>
         </div><hr>
         <div>
-            <p class="textAzul font-size1 mb-0 normal-texto">Eliminar cuenta</p>
+            <a href="#" data-toggle="modal" data-target="#modalEliminarCuenta"><p class="textAzul font-size1 mb-0 normal-texto">Eliminar cuenta</p></a>
             <small class="text-danger normal-texto-light">Se eliminará tus usuarios y registros</small>
         </div><hr>
     </div>
 </div>
+
+@include('Configuracion.Modals.EliminarCuenta')
+
 @stop

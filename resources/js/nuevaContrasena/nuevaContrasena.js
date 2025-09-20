@@ -93,8 +93,6 @@ BtnGuardar.addEventListener('click', async (e) => {
     let datosJson = JSON.stringify(datosCompletos)
 
     showModal(modalCarga)
-    // await new Promise(r => setTimeout(r, 2000))
-    // hideModal(modalCarga)
 
     try {
         const me = await fetch('/get-token')
@@ -112,18 +110,19 @@ BtnGuardar.addEventListener('click', async (e) => {
     const res_reset_pass = reset_pass.json()
 
     if(reset_pass.ok){
-        // showModal(modalSuccess)
         cargaMsj.textContent = '¡Contraseña reestablecida!'
-        hideModal(modalCarga, 4000, () => {
+        hideModal(modalCarga, 3000, () => {
             window.location.href =  GLOBAL_URL + 'login'
         });
     } else {
+        hideModal(modalCarga)
         showModal(modalError)
         errorMsj.textContent = res_reset_pass.message
         hideModal(modalError, 2000)
     }
     } catch (err) {
         console.error(err)
+        hideModal(modalCarga)
         showModal(modalError)
         // errorMsj.textContent = 'Ha ocurrido un error'
         hideModal(modalError, 2000)

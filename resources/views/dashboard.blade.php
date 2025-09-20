@@ -39,6 +39,7 @@
         @include('Includes.Footer')
     </body>
 </div>
+@include('Includes.Menu.Modals.Documentos')
 @include('Mensajes.Pago')
 @include('Mensajes.ConfirmacionPlan')
 @include('Mensajes.Restringir')

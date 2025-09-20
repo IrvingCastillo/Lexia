@@ -59,7 +59,7 @@ async function CalendarioEventos() {
             eventLimit: true,
             // events: response.data,
             events: response.data.map(ev => {
-                console.log(ev)
+                // console.log(ev)
                 // console.log(date_format)
                 let d = new Date(ev.date)
                 let date_format = d.toISOString().split("T")[0]
@@ -82,31 +82,50 @@ async function CalendarioEventos() {
                 ],
                 eventDrop(event, delta, revertFunc, jsEvent, ui, view){
                     // console.log(event)
-                    console.log("Nueva fecha de fin:", event.start.format("YYYY-MM-DD"));
+                    // console.log("Nueva fecha de fin:", event.start.format("YYYY-MM-DD"));
                     //para editar en caso de que se arrastre
 
                 },
                 eventClick: function (calEvent, jsEvent, view) {
+                        let today = new Date()
+                        let today_format = today.toISOString().split("T")[0]
+                        let event_date = calEvent.start.format("YYYY-MM-DD")
+
+                        const campos = ["body_asunto_edit", "notes_edit", "date_edit", "startHour_edit", "endHour_edit"]
+                        if (event_date < today_format) {
+                            campos.forEach(campo => {
+                                document.getElementById(`${campo}`).disabled = true
+                            })
+                            document.getElementById("editarCita").style.display = "none"
+                            document.getElementById("btnEliminar").style.display = "none"
+                        }
+                        else{
+                            campos.forEach(campo => {
+                                document.getElementById(`${campo}`).disabled = false
+                            })
+                            document.getElementById("editarCita").style.display = "block"
+                            document.getElementById("btnEliminar").style.display = "inline"
+                        }
                         idCitaEdit.value = calEvent.id
                         LlenarModal(calEvent)
                          $('.start_hour_edit').timepicker({
-                        timeFormat: 'H:i',
-                        stepMinute: 30 ,
-                        minTime: '09',
-                        maxTime: '6:00pm',
-                        dynamic: false,
-                        dropdown: true,
-                        scrollbar: false
-                    });
-                    $('.end_hour_edit').timepicker({
-                        timeFormat: 'H:i',
-                        stepMinute: 30 ,
-                        minTime: '09',
-                        maxTime: '6:00pm',
-                        dynamic: false,
-                        dropdown: true,
-                        scrollbar: false
-                    });
+                            timeFormat: 'H:i',
+                            stepMinute: 30 ,
+                            minTime: '09',
+                            maxTime: '6:00pm',
+                            dynamic: false,
+                            dropdown: true,
+                            scrollbar: false
+                        });
+                        $('.end_hour_edit').timepicker({
+                            timeFormat: 'H:i',
+                            stepMinute: 30 ,
+                            minTime: '09',
+                            maxTime: '6:00pm',
+                            dynamic: false,
+                            dropdown: true,
+                            scrollbar: false
+                        });
                         $('#modalEditarEvento').modal('show')
                 },
                 dayClick: function(date, jsEvent, view) {
@@ -180,12 +199,10 @@ async function ObtenerClientes(){
 
     const res_get_clients = await get_clients.json()
 
-    console.log(res_get_clients)
+    // console.log(res_get_clients)
 }
 
 function LlenarModal(datos){
-//     console.log(datos)
-// console.log(datos.start.format("HH:mm"))
     $('.start_hour_edit').val('');
     $('.end_hour_edit').val('');
     document.querySelector("#body_asunto_edit").value = datos.title

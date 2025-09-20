@@ -21,10 +21,13 @@ btnDropMain = document.querySelector(".btnShowDrop"),
 btnCerrarSesion = document.querySelector("#closeSession"),
 btnsPlanUpdate = document.querySelectorAll(".btnPlan"),
 btnConfirmPlan = document.querySelector("#confirmPlan"),
+btnEliminarCuenta = document.querySelector("#btnEliminarCuenta"),
 idPlan = document.querySelector("#idPlan"),
 successMsj = document.getElementById('mensajeExito'),
 errorMsj = document.getElementById('mensajeError'),
-tipoPlan = document.getElementById('tipoPlan')
+cargaMsj = document.getElementById('mensajeCarga'),
+tipoPlan = document.getElementById('tipoPlan'),
+TersmCond = document.getElementById('temrs_cond')
 
 const modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'), { backdrop: 'static', keyboard: false }),
 modalError  = new bootstrap.Modal(document.getElementById('modalError')),
@@ -135,8 +138,6 @@ btnConfirmPlan.addEventListener('click', async(e) => {
             })
 
         const res_update_plan = await update_plan.json()
-console.log(update_plan)
-console.log(res_update_plan)
         if (update_plan.ok) {
             StriepWindow(res_update_plan.data.url, "Transacción de pago", "", 1000, 800, 'true');
             location.reload();
@@ -164,8 +165,65 @@ btnsPlanUpdate.forEach(button => {
     })
 })
 
-btnCerrarSesion.addEventListener('click', function(){
-    const dataM = document.querySelector('meta[name="csrf-token"]')
-    const descriptionM = dataM.getAttribute('content')
+TersmCond.addEventListener('click', ()=> {
+    $("#modalDocumentos").modal("show")
 })
 
+// btnCerrarSesion.addEventListener('click', function(){
+//     const dataM = document.querySelector('meta[name="csrf-token"]')
+//     const descriptionM = dataM.getAttribute('content')
+// })
+
+btnEliminarCuenta.addEventListener('click', async(e) => {
+    showModal(modalCarga)
+
+    try {
+
+        const me = await fetch('/get-token')
+        const res_me = await me.json()
+
+        const data_me = await fetch("https://api.lexialegal.site/api/me", {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                'Authorization': `Bearer ${res_me.token}`,
+            }
+        })
+
+        const res_data_me = await data_me.json()
+        console.log(res_data_me[0].lawfirm.id)
+        let body = {
+            id: res_data_me[0].lawfirm.id
+        }
+
+        const delete_account = await fetch("https://api.lexialegal.site/api/subscriptions/architecto", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                'Authorization': `Bearer ${res_me.token}`
+            },
+            body: JSON.stringify(body)
+        })
+
+        const res_delete_account = await delete_account.json()
+
+        if (delete_account.ok) {
+            cargaMsj.innerHTML = res_delete_account.message
+            // hideModal(modalCarga, 2000, ()=> {
+            //     window.location.href =  '/' + 'login'
+            // })
+        } else {
+            hideModal(modalCarga)
+            errorMsj.innerHTML = res_delete_account.message
+            showModal(modalError)
+            hideModal(modalError, 3000)
+        }
+
+    } catch (error) {
+        errorMsj.innerHTML = error
+        hideModal(modalCarga)
+        showModal(modalError)
+        hideModal(modalError, 3000)
+    }
+})

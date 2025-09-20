@@ -62,8 +62,8 @@ btnLogin.addEventListener('click', async (e) => {
         return;
     }
 
+    showModal(modalCarga)
     try{
-        showModal(modalCarga)
         await new Promise(r => setTimeout(r, 2000))
         // hideModal(modalCarga)
         const res = await fetch('https://api.lexialegal.site/api/login', {
@@ -77,37 +77,40 @@ btnLogin.addEventListener('click', async (e) => {
         const data = await res.json();
         const tokenRecibido = data.access_token;
         if (!tokenRecibido) {
-            throw new Error('Inicio de sesión fallido');
-        }
-
-        const guardarTokenRes = await fetch('/guardar-token', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            },
-            body: JSON.stringify({
-                token: tokenRecibido,
-                // expires_in: data.expires_in
-                })
-        });
-
-        const respuesta = await guardarTokenRes.json();
-
-        if (respuesta) {
-            // showModal(modalSuccess)
-            cargaMsj.textContent = '¡Bienvenido!'
-            // hideModal(modalCarga, 2000, () => {
-                window.location.href = GLOBAL_URL + 'casos'
-            // });
-        } else {
-            throw new Error('No se pudo iniciar sesión')
-        }
-        } catch (err) {
+            errorMsj.innerHTML = data.error
             hideModal(modalCarga)
             showModal(modalError)
-            errorMsj.textContent = 'La contraseña o correo son incorrectos'
-            hideModal(modalError, 2000)
+            hideModal(modalError, 3000)
+            //errorLogin
+        }
+        else{
+            const guardarTokenRes = await fetch('/guardar-token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    token: tokenRecibido,
+                    // expires_in: data.expires_in
+                    })
+            });
+
+            const respuesta = await guardarTokenRes.json();
+
+            if (guardarTokenRes.ok) {
+                cargaMsj.textContent = '¡Bienvenido!'
+                window.location.href = GLOBAL_URL + 'casos'
+            } else {
+                throw new Error('No se pudo iniciar sesión')
+            }
+        }
+
+        } catch (err) {
+            errorMsj.innerHTML = err
+            hideModal(modalCarga)
+            showModal(modalError)
+            hideModal(modalError, 3000)
         }
 
 

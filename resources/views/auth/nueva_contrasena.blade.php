@@ -1,15 +1,16 @@
 @extends('layouts.app')
 
 @section('contenido')
-@vite(['resources/login_f/login.css', 'resources/js/nuevaContrasena/nuevaContrasena.js'])
+@vite(['resources/login_f/login.css', 'resources/js/nuevaContrasena/nuevaContrasena.js', 'resources/landing/main.css', 'resources/landing/animations.css', 'resources/landing/components.css', 'resources/landing/main.js'])
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <div>
         <div class="navLogin">
         <x-nav-guess color="blue"></x-nav-guess>
     </div>
 
-    <div class="container-fluid bg-white">
-        <div class="container py-5 divContrasena d-grid justify-content-center align-items-center">
+    <div class="container-fluid bg-white mt-5 pt-5">
+        <div class="container mt-5 pt-5 divContrasena d-grid justify-content-center align-items-center">
             {{-- <div class="vh-100 d-flex justify-content-center align-items-center"> --}}
             <div>
                 <div class="card shadow campoRounded" style="padding-bottom: 5rem">

@@ -36,7 +36,7 @@
                     <!-- Línea inferior -->
                     <div class="row mt-3 align-items-center">
                         <div class="col-4">
-                            <i class="fa fa-clock me-1"></i>
+                            <i class="fa fa-phone me-1"></i>
                             <span class="small telefono-usuario normal-texto-light"></span>
                         </div>
                         <div class="col-4">

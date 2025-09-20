@@ -1,3 +1,14 @@
+@php
+    $user = Auth::user()->getAttributes()[0];
+    $foto = "";
+    if ($user['profile']['photo'] != null) {
+        $foto = asset($user['profile']['photo']);
+    }
+    else{
+        $foto = asset('images/usuario.png');
+    }
+    // dd($user);
+@endphp
 <header id="page-header">
         <div class="content-header">
             <div class="d-flex align-items-center">
@@ -5,7 +16,7 @@
             <div class="d-flex align-items-center">
                 <div class="dropdown d-inline-block ml-2">
                     <button type="button" class="btn btn-sm btn-dual rounded-circle btnShowDrop" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ asset('images/usuario.png') }}" alt="Header Avatar" style="width: 19px;">
+                        <img src="{{ $foto }}" alt="Header Avatar" style="width: 19px;">
                     </button>
 
                     <div class="dropdown-menu dropdown-main dropdown-menu-right font-size-sm" aria-labelledby="page-header-user-dropdown" >
@@ -134,7 +145,7 @@
                                         <i class="fas fa-angle-right mr-2"></i>
                                     </span>
                                 </a><hr>
-                                <a class="dropdown-item d-flex align-items-center justify-content-between" href="{{ route('cuenta') }}">
+                                <a class="dropdown-item d-flex align-items-center justify-content-between" href="#" id="temrs_cond">
                                     <span>
                                         <span class="normal-texto">Términos y condiciones</span>
                                     </span>

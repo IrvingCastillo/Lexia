@@ -32,10 +32,10 @@
                     <a href="#" class="social-icon">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                    <a href="#" class="social-icon">
+                    <a href="https://www.instagram.com/lexia.app/" class="social-icon">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="#" class="social-icon">
+                    <a href="https://www.facebook.com/profile.php?id=61578446630770" class="social-icon">
                         <i class="fab fa-facebook-f"></i>
                     </a>
                 </div>

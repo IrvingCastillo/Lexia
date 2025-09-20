@@ -73,9 +73,9 @@ Route::get('/recuperar_contrasena', function(){
     return view('auth.contrasena');
 })->name('recuperarContrasena');
 
-Route::get('/nueva_contrasena', function(){
-    return view('auth.nueva_contrasena');
-})->name('nuevaContrasena');
+// Route::get('/nueva_contrasena', function(){
+//     return view('auth.nueva_contrasena');
+// })->name('nuevaContrasena');
 
 Route::get('/pago_aprobado', function(){
     return view('auth.pagoAprobado');

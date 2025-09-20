@@ -101,7 +101,7 @@
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <small class="text-muted mt-5 normal-texto-light">Estado Actual: <strong class="text-dark estado-caso normal-texto-light"></strong></small>
+                            <small class="text-muted mt-5 normal-texto-light">Estado Actual: <strong class="text-dark estado-caso normal-texto"></strong></small>
                             <div class="text-right mt-4">
                                 <button type="button" class="bg-blue px-4 py-2 gestionarCaso texto-boton">Gestionar Caso</button>
                             </div>
