@@ -56,12 +56,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-row">
+                        <div class="form-row" hidden>
                             <div class="form-group mb-0 col-md-6">
                                 <label class="normal-texto">Destinatario:</label>
                                 <div class="form-group col-md-12 pl-0">
                                     <div class="input-group">
-                                        <input type="text" class="form-control campoRoundedX" name="destinatario" id="destinatario" value="5" required>
+                                        <input type="text" class="form-control campoRoundedX" name="destinatario" id="destinatario" value="5">
                                     </div>
                                 </div>
                             </div>
