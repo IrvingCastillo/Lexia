@@ -41,7 +41,8 @@ var TEST_URL = 'http://localhost:8000/'
     ErrorEstado = document.querySelector("#errorEstado"),
     ErrorCiudad = document.querySelector("#errorCiudad"),
     ErrorPlan = document.querySelector("#errorPlan"),
-    ErrorTerminos = document.querySelector("#errorTerminos")
+    ErrorTerminos = document.querySelector("#errorTerminos"),
+    errorMsj = document.getElementById('mensajeError')
 
 const modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'), { backdrop: 'static', keyboard: false }),
 modalError  = new bootstrap.Modal(document.getElementById('modalError')),
@@ -59,7 +60,6 @@ Pill1.addEventListener("click", function() {
 })
 Pill2.addEventListener("click", function() {
     if (NombreCliente.value != "" && ApellidoPaterno.value != "" && ApellidoMaterno.value != "" && RazonSocial.value != "") {
-        console.log("dentro")
         StepTwo()
         Paginacion.innerHTML = ''
         Paginacion.innerHTML = '2'
@@ -199,9 +199,7 @@ Correo.addEventListener('focusout', function(){
 
 Contrasena.addEventListener('input', function(){
     let PasswordValidated
-        console.log(Contrasena.value.length)
     if (Contrasena.value.length > 7) {
-        console.log("entra al if")
         PasswordValidated = ValidarContraseña(Contrasena.value)
     }
     if (Contrasena.value == "") {
@@ -393,7 +391,7 @@ BtnSuscribirse.addEventListener('click', async (e) => {
     let datosJson = JSON.stringify(datosCompletos)
 
     showModal(modalCarga)
-    await new Promise(r => setTimeout(r, 2000))
+    await new Promise(r => setTimeout(r, 3000))
     hideModal(modalCarga)
 
     try {
@@ -407,12 +405,11 @@ BtnSuscribirse.addEventListener('click', async (e) => {
     });
 
     const data = await res.json();
-    console.log(data);
 
     const tokenRecibido = data.access_token;
 
     if (!tokenRecibido) {
-        throw new Error('Registro fallido');
+        errorMsj.innerText = data.message
     }
 
     const guardarTokenRes = await fetch('/guardar-token', {
@@ -432,7 +429,7 @@ BtnSuscribirse.addEventListener('click', async (e) => {
         showModal(modalSuccess);
         document.getElementById('mensajeExito').value = data.message;
 
-        hideModal(modalSuccess, 2000, () => {
+        hideModal(modalSuccess, 3000, () => {
             window.location.href = GLOBAL_URL +'casos';
         });
 
@@ -440,7 +437,6 @@ BtnSuscribirse.addEventListener('click', async (e) => {
         throw new Error('El usuario no pudo ser creado');
     }
     } catch (err) {
-        console.error(err);
         showModal(modalError);
         hideModal(modalError, 2000);
     }
